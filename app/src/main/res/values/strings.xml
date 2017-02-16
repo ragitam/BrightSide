@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Brightside</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_wifi">WiFi</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="username">Username</string>
+    <string name="pass">Password</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="sign_in">Sign In</string>
+    <string name="email">Email</string>
+    <string name="Sign_up">Sign Up</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_lamp">Add Lamp</string>
+</resources>
