@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.mavri.brightside.LoginActivity"
+    tools:context="com.triplefighter.brightside.LoginActivity"
     android:background="@drawable/background">
 
     <LinearLayout
