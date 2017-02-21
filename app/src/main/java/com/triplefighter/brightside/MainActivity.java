@@ -102,12 +102,17 @@ public class MainActivity extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             //return PlaceholderFragment.newInstance(position + 1);
 
-            /*switch(position){
+            switch(position){
                 case 0:
-                    return new Home();
+                    Home home= new Home();
+                            return home;
                 case 1:
-                    return new Alarm();
-            }*/
+                    Alarm alarm= new Alarm();
+                    return alarm;
+                case 2:
+                    Statistic statistic=new Statistic();
+                    return statistic;
+            }
             return new Home();
         }
 

@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                 progressDialog.setMessage("Please Wait");
                 progressDialog.show();
 
-                startActivity(new Intent(getApplicationContext(),selectBridge.class));
+                startActivity(new Intent(getApplicationContext(),MainActivity.class));
             }
         });
         register.setOnClickListener(new View.OnClickListener() {
