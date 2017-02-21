@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }else if(id==R.id.wifi){
             startActivity(new Intent(getApplicationContext(),selectBridge.class));
+
             return true;
         }
 
