@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "59497320144",
+    "firebase_url": "https://brightside-35274.firebaseio.com",
+    "project_id": "brightside-35274",
+    "storage_bucket": "brightside-35274.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:59497320144:android:4f5855aac329d95e",
+        "android_client_info": {
+          "package_name": "com.triplefighter.brightside"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "59497320144-ufugpock0mbun1m2ukup308jk3ecdltb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbf5TXhruRHpxMDzJMbnK794SBfdPVIlw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

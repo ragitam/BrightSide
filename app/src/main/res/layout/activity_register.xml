@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/line_32p"/>
         <EditText
+            android:id="@+id/emailText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
@@ -47,6 +48,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/line_32p"/>
         <EditText
+            android:id="@+id/usernameText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/username"
@@ -68,6 +70,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/line_32p"/>
         <EditText
+            android:id="@+id/passText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/pass"
