@@ -1,5 +1,6 @@
 package com.triplefighter.brightside;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
             alertDialog.show();
             return true;
         }else if(id==R.id.wifi){
+            startActivity(new Intent(getApplicationContext(),selectBridge.class));
             return true;
         }
 
