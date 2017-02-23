@@ -9,15 +9,15 @@
     <string name="sign_in">Sign In</string>
     <string name="email">Email</string>
     <string name="Sign_up">Sign Up</string>
-    <string name="txt_select_smartbridge">Please select a bridge to use for this app</string>
+    <string name="txt_select_smartbridge">Pilih Bridge yang akan digunakan</string>
     <string name="title_error">Error</string>
     <string name="connecting">Connecting ...</string>
     <string name="search_progress">Searching ...</string>
     <string name="btn_ok">Ok</string>
-    <string name="press_pushlink_button">Press the link button on the bridge</string>
+    <string name="press_pushlink_button">Tekan tombol link pada Bridge</string>
+    <string name="menu_find_bridge">Cari Bridge Baru</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_lamp">Add Lamp</string>
-    <string name="menu_find_bridge">Find Bridge</string>
 </resources>
