@@ -52,11 +52,11 @@ public class RegisterActivity extends AppCompatActivity {
                 final String passwd = pass.getText().toString().trim();
 
                 if(TextUtils.isEmpty(ema)){
-                    email.setError("Required");
+                    email.setError("Masukkan Alamat Email!");
                 }if(TextUtils.isEmpty(usernm)){
-                    username.setError("Required");
+                    username.setError("Masukkan Username!");
                 }if(TextUtils.isEmpty(passwd)){
-                    pass.setError("Required");
+                    pass.setError("Masukkan Password!");
                 }if(passwd.length() < 6){
                     progressDialog.cancel();
                     Toast.makeText(getApplicationContext(), "Password minimum 6 kata!", Toast.LENGTH_SHORT).show();
@@ -72,7 +72,7 @@ public class RegisterActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (!task.isSuccessful()) {
                                     progressDialog.cancel();
-                                    Toast.makeText(RegisterActivity.this, "Authentication failed." + task.getException(),
+                                    Toast.makeText(RegisterActivity.this, "Email anda telah digunakan.",
                                             Toast.LENGTH_SHORT).show();
                                 }else{
                                     UserInformation userInformation = new UserInformation(ema, usernm);
@@ -82,7 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     databaseReference.child("Data User").child(user.getUid()).setValue(userInformation);
                                     mAuth.signOut();
                                     finish();
-                                    Toast.makeText(RegisterActivity.this, "Your account successfully registered",
+                                    Toast.makeText(RegisterActivity.this, "Registrasi akun anda berhasil.",
                                             Toast.LENGTH_SHORT).show();
                                 }
                             }

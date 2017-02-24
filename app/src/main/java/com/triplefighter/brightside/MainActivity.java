@@ -93,6 +93,10 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(),selectBridge.class));
 
             return true;
+        }else if(id == R.id.logOut){
+            mAuth.signOut();
+            finish();
+            startActivity(new Intent(this, LoginActivity.class));
         }
 
         return super.onOptionsItemSelected(item);

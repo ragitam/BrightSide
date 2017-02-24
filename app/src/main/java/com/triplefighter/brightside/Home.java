@@ -53,11 +53,9 @@ public class Home extends Fragment {
 
         sdk = PHHueSDK.create();
         bridge = sdk.getInstance().getSelectedBridge();
-        //String url = "http://" + bridge.getResourceCache().getBridgeConfiguration().getIpAddress() + "/api/"+prefs.getUsername();
 
         brightness=(SeekBar) v.findViewById(R.id.brightness);
         brightness_num = (TextView) v.findViewById(R.id.brightness_num);
-        //brightness_num.setText(url);
         brightness.setProgress(0);
         brightness.setMax(100);
         brightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
