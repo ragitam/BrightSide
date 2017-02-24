@@ -17,6 +17,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ToggleButton;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+
 public class MainActivity extends AppCompatActivity {
     ToggleButton power_but;
     /**
@@ -33,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private FirebaseAuth mAuth;
+    private DatabaseReference ref, reff;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +57,12 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
         power_but=(ToggleButton) findViewById(R.id.power_button);
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if(user == null){
+            startActivity(new Intent(this, LoginActivity.class));
+        }
     }
 
 

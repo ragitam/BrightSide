@@ -42,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
         username = (EditText)findViewById(R.id.usernameText);
         pass = (EditText)findViewById(R.id.passText);
         register = (Button)findViewById(R.id.sign_up);
+        progressDialog = new ProgressDialog(this);
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,9 +70,6 @@ public class RegisterActivity extends AppCompatActivity {
                         .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                // If sign in fails, display a message to the user. If sign in succeeds
-                                // the auth state listener will be notified and logic to handle the
-                                // signed in user can be handled in the listener.
                                 if (!task.isSuccessful()) {
                                     progressDialog.cancel();
                                     Toast.makeText(RegisterActivity.this, "Authentication failed." + task.getException(),

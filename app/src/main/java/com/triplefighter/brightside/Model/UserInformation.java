@@ -7,7 +7,7 @@ public class UserInformation {
     public UserInformation() {
     }
 
-    public UserInformation(String username, String email) {
+    public UserInformation(String email, String username) {
         this.username = username;
         this.email = email;
     }
