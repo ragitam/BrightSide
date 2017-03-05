@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Spinner;
+import android.widget.Switch;
 
 
 /**
@@ -15,7 +16,8 @@ import android.widget.Spinner;
 public class Alarm extends Fragment {
 
     String[] mode_list=new String[]{"None", "Economic","Sleep Mode"};
-    Spinner mode,repeat_mode;
+    Spinner lamp_name;
+    Switch repeat_alarm;
     //ArrayAdapter<String> adapter=new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,mode_list);
     public Alarm() {
         // Required empty public constructor
@@ -27,8 +29,8 @@ public class Alarm extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_alarm_detail,container,false);
-        mode=(Spinner) view.findViewById(R.id.mode);
-        repeat_mode=(Spinner) view.findViewById(R.id.repeat);
+        lamp_name=(Spinner) view.findViewById(R.id.lamp_name);
+        repeat_alarm=(Switch) view.findViewById(R.id.repeat_alarm);
         //mode.setAdapter(adapter);
         return inflater.inflate(R.layout.fragment_alarm_detail, container, false);
     }
