@@ -6,6 +6,10 @@
     android:background="@color/colorPrimary">
 
     <!-- TODO: Update blank fragment layout -->
-
+    <ListView
+        android:id="@+id/list_lamp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
 
 </FrameLayout>
