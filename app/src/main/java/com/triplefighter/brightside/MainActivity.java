@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-        //power_but=(ToggleButton) findViewById(R.id.power_button);
+        power_but=(ToggleButton) findViewById(R.id.power_button);
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                     Home home= new Home();
                             return home;
                 case 1:
-                    AlarmList alarm= new AlarmList();
+                    Alarm alarm= new Alarm();
                     return alarm;
                 case 2:
                     Statistic statistic=new Statistic();

@@ -1,27 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    tools:context="com.triplefighter.brightside.Statistic"
     android:background="@color/colorPrimary">
 
-    <LinearLayout
+    <!-- TODO: Update blank fragment layout -->
+    <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="1">
-
+        android:layout_height="match_parent"
+        android:columnCount="2"
+        android:rowCount="20">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Usage"
                 android:textSize="20dp"
-                android:layout_gravity="center_horizontal"
                 android:textColor="@color/light_blue" />
             <TextView
                 android:id="@+id/usage_kwh"
@@ -29,27 +30,25 @@
                 android:layout_height="wrap_content"
                 android:text="15"
                 android:textSize="50dp"
-                android:layout_gravity="center_horizontal"
                 android:textColor="@color/colorAccent"
                 android:layout_marginTop="10dp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:text="kWh"
                 android:textSize="15dp"
                 android:textColor="@color/colorAccent" />
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_weight="1">
+            android:gravity="center"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:text="Cost"
                 android:textSize="20dp"
                 android:textColor="@color/light_blue" />
@@ -57,7 +56,6 @@
                 android:id="@+id/usage_cost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:text="16.260"
                 android:textSize="35dp"
                 android:textColor="@color/colorAccent"
@@ -65,76 +63,65 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:text="Rupiah"
                 android:textSize="15dp"
                 android:textColor="@color/colorAccent" />
-
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="1">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Lamps On"
-                android:textSize="20dp"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/light_blue" />
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:layout_gravity="center_horizontal">
-                <TextView
-                    android:id="@+id/lamps_on"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="5"
-                    android:textSize="50dp"
-                    android:layout_gravity="bottom"
-                    android:textColor="@color/colorAccent"
-                    android:layout_marginTop="10dp" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="/"
-                    android:textSize="20dp"
-                    android:layout_gravity="bottom"
-                    android:textColor="@color/light_blue"
-                    android:layout_marginTop="10dp" />
-                <TextView
-                    android:id="@+id/lamps_total"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="10"
-                    android:textSize="20dp"
-                    android:layout_gravity="bottom"
-                    android:textColor="@color/light_blue"
-                    android:layout_marginTop="10dp" />
-            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_weight="1">
+            android:gravity="center"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:text="Lamps On"
+                android:textSize="20dp"
+                android:textColor="@color/light_blue" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/lamps_used"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5"
+                        android:textSize="50dp"
+                        android:textColor="@color/colorAccent"
+                        android:layout_marginTop="10dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/"
+                        android:textSize="20dp"
+                        android:textColor="@color/light_blue"
+                        android:alpha="0.5"
+                        android:layout_marginTop="10dp" />
+                    <TextView
+                        android:id="@+id/total_lamps"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10"
+                        android:textSize="20dp"
+                        android:alpha="0.5"
+                        android:textColor="@color/light_blue"
+                        android:layout_marginTop="10dp" />
+                </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Status"
                 android:textSize="20dp"
                 android:textColor="@color/light_blue" />
@@ -142,13 +129,12 @@
                 android:id="@+id/usage_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:text="Economic"
-                android:textSize="29dp"
+                android:textSize="30dp"
                 android:textColor="@color/colorAccent"
-                android:layout_marginTop="20dp" />
+                android:layout_marginTop="30dp" />
 
         </LinearLayout>
-    </LinearLayout>
+    </GridLayout>
 
-</LinearLayout>
+</FrameLayout>
