@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -41,8 +42,8 @@ public class LoginActivity extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
 
-        ema = (EditText) findViewById(R.id.email);
-        passwd = (EditText) findViewById(R.id.password);
+        ema = (EditText) findViewById(R.id.emailText);
+        passwd = (EditText) findViewById(R.id.passText);
         signIn = (Button) findViewById(R.id.submit);
         btn_register = (Button) findViewById(R.id.register);
 

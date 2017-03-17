@@ -82,7 +82,8 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"></LinearLayout>
+        android:layout_height="0dp"
+        android:layout_weight="1"></LinearLayout>
     <Button
         android:id="@+id/sign_up"
         android:layout_width="190dp"
@@ -90,5 +91,5 @@
         android:background="@drawable/rounded_button"
         android:text="@string/Sign_up"
         android:textColor="@color/white"
-        android:layout_marginTop="@dimen/activity_vertical_margin"/>
+        android:layout_marginBottom="@dimen/activity_vertical_margin"/>
 </LinearLayout>
