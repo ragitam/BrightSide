@@ -7,9 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -18,17 +15,18 @@ import com.philips.lighting.hue.listener.PHLightListener;
 import com.philips.lighting.hue.sdk.PHHueSDK;
 import com.philips.lighting.model.PHBridge;
 import com.philips.lighting.model.PHBridgeResource;
-import com.philips.lighting.model.PHGroup;
 import com.philips.lighting.model.PHHueError;
 import com.philips.lighting.model.PHLight;
-import com.philips.lighting.model.PHLightState;
+import com.triplefighter.brightside.data.AccessPointListAdapter;
 import com.triplefighter.brightside.data.HueSharedPreferences;
-import com.triplefighter.brightside.data.LampuListAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
+/**
+ * A simple {@link Fragment} subclass.
+ */
 public class Home extends Fragment {
 
     ToggleButton power_but;
@@ -36,10 +34,8 @@ public class Home extends Fragment {
     TextView brightness_num;
     private PHHueSDK sdk;
     private PHBridge bridge;
-    private PHBridgeResource phBridgeResource;
-
-    private LampuListAdapter adapter;
-
+    private PHLight lamp;
+    private HueSharedPreferences prefs;
     String TAG = "Brightside";
 
     public Home() {
@@ -58,55 +54,28 @@ public class Home extends Fragment {
         sdk = PHHueSDK.create();
         bridge = sdk.getInstance().getSelectedBridge();
 
-        if(bridge == null){
-            AlertDialogWizard.showErrorDialog(getActivity(), "No Bridge Found", R.string.btn_ok);
-        }else{
-            //final List<PHLight> lampu = bridge.getResourceCache().getAllLights();
-            //List<String> daftar = group.getLightIdentifiers();
+        brightness=(SeekBar) v.findViewById(R.id.brightness);
+        brightness_num = (TextView) v.findViewById(R.id.brightness_num);
+        brightness.setProgress(0);
+        brightness.setMax(100);
+        brightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                //Log.e("BRIGHT", String.valueOf(i));
+                    //brightness_num.setText(String.valueOf(i)+"%");
 
-            ListView list = (ListView)v.findViewById(R.id.listLampu);
+            }
 
-            adapter = new LampuListAdapter(getActivity().getApplicationContext(), bridge.getResourceCache().getAllLights());
-            list.setAdapter(adapter);
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
 
-            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    switch (i){
-                        case 0:
+            }
 
-                            break;
-                        case 1:
-                            break;
-                    }
-                }
-            });
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
 
-            /*
-            brightness=(SeekBar) v.findViewById(R.id.brightness);
-            brightness_num = (TextView) v.findViewById(R.id.brightness_num);
-            brightness.setProgress(0);
-            brightness.setMax(100);
-            brightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                    //Log.e("BRIGHT", String.valueOf(i));
-                        //brightness_num.setText(String.valueOf(i)+"%");
-
-                }
-
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
-
-                }
-
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
-
-                }
-            });
-            */
-        }
+            }
+        });
         return v;
     }
 
@@ -122,21 +91,18 @@ public class Home extends Fragment {
         }
 
         @Override
-        public void onError(int code, final String message) {
-        }
+        public void onError(int arg0, String arg1) {}
 
         @Override
         public void onReceivingLightDetails(PHLight arg0) {}
 
         @Override
-        public void onReceivingLights(List<PHBridgeResource> arg0) {
-            String iden = phBridgeResource.getIdentifier();
-            return;
-        }
+        public void onReceivingLights(List<PHBridgeResource> arg0) {}
 
         @Override
         public void onSearchComplete() {
 
         }
     };
+
 }

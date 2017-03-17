@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                                 if (!task.isSuccessful()) {
                                     // there was an error
                                     progressDialog.cancel();
-                                    Toast.makeText(LoginActivity.this, "Log In gagal, Silahkan coba kembali", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this, "Log In gagal, Silahkan fragment_statistic kembali", Toast.LENGTH_SHORT).show();
                                 } else {
                                     finish();
                                     startActivity(new Intent(getApplicationContext(),MainActivity.class));
