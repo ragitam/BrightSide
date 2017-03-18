@@ -6,7 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
@@ -21,6 +23,7 @@ import com.philips.lighting.model.PHHueError;
 import com.philips.lighting.model.PHLight;
 import com.triplefighter.brightside.data.AccessPointListAdapter;
 import com.triplefighter.brightside.data.HueSharedPreferences;
+import com.triplefighter.brightside.data.LampuListAdapter;
 
 import java.util.List;
 import java.util.Map;
@@ -31,16 +34,13 @@ import java.util.Map;
  */
 public class Home extends Fragment {
 
-    ToggleButton power_but;
-    SeekBar brightness;
-    TextView nama_lampu,alarm_time,brightness_num;
-    ImageView repeat_mode;
-    RadioGroup mode_container;
-    RadioButton eco_mode,night_mode,none_mode;
     private PHHueSDK sdk;
     private PHBridge bridge;
     private PHLight lamp;
     private HueSharedPreferences prefs;
+
+    private LampuListAdapter adapter;
+
     String TAG = "Brightside";
 
     public Home() {
@@ -58,6 +58,18 @@ public class Home extends Fragment {
 
         sdk = PHHueSDK.create();
         bridge = sdk.getInstance().getSelectedBridge();
+
+        if(bridge == null){
+            AlertDialogWizard.showErrorDialog(getActivity(), "No Bridge Found", R.string.btn_ok);
+        }else {
+            adapter = new LampuListAdapter(getActivity().getApplicationContext(),bridge.getResourceCache().getAllLights());
+
+            ListView list = (ListView)v.findViewById(R.id.listLampu);
+            list.setAdapter(adapter);
+
+        }
+
+        /*
         power_but=(ToggleButton) v.findViewById(R.id.power_but);
         brightness=(SeekBar) v.findViewById(R.id.brightness);
         brightness_num = (TextView) v.findViewById(R.id.brightness_num);
@@ -69,30 +81,9 @@ public class Home extends Fragment {
         night_mode= (RadioButton) v.findViewById(R.id.night_mode);
         none_mode= (RadioButton) v.findViewById(R.id.none_mode);
 
-        if (night_mode.isChecked()){
-            night_mode.setAlpha(1);
-        }
 
-        brightness.setProgress(0);
-        brightness_num.setText("0%");
-        brightness.setMax(100);
-        brightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                //Log.e("BRIGHT", String.valueOf(i));
-                    brightness_num.setText(String.valueOf(i)+"%");
-            }
+        */
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
         return v;
     }
 
