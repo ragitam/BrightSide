@@ -30,9 +30,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
-            android:textColorHint="@color/white"
+            android:textColorHint="@color/light_grey"
             android:textColor="@color/white"
-            android:inputType="textEmailAddress"/>
+            android:inputType="textEmailAddress"
+            android:background="@color/transparent"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -53,9 +54,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/username"
-            android:textColorHint="@color/white"
+            android:textColorHint="@color/light_grey"
             android:textColor="@color/white"
-            android:inputType="textPersonName"/>
+            android:inputType="textPersonName"
+            android:background="@color/transparent"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -76,9 +78,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/pass"
-            android:textColorHint="@color/white"
+            android:textColorHint="@color/light_grey"
             android:textColor="@color/white"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword"
+            android:background="@color/transparent"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

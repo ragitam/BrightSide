@@ -26,7 +26,6 @@ public class LampuListAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
     private List<PHLight> lampuList;
-    private PHLight light;
     private PHLightState state;
     private PHHueSDK phHueSDK;
 
@@ -85,12 +84,14 @@ public class LampuListAdapter extends BaseAdapter {
         } else {
             item = (LampuItem) view.getTag();
         }
-        light = lampuList.get(i);
+        final PHLight light = lampuList.get(i);
+        state = new PHLightState();
+        //boolean nyala = state.isOn();
         item.namaLampu.setText(light.getIdentifier());
 
         Log.v("gg",light.getIdentifier());
 
-        if (item.night_mode.isChecked()){
+        if (item.night_mode.isChecked()) {
             item.night_mode.setAlpha(1);
         }
 
@@ -128,11 +129,12 @@ public class LampuListAdapter extends BaseAdapter {
     }
 
     private void lampControl(CompoundButton compoundButton, boolean b, String lampuId) {
-        PHBridge bridge = phHueSDK.getSelectedBridge();
-        state = new PHLightState();
-        boolean nyala = false;
+        /*PHBridge bridge = phHueSDK.getSelectedBridge();*/
+
+
         if(b){
             Log.v("Coba","ON "+lampuId +" ");
+
         }else {
             Log.v("Coba","OFF "+lampuId);
         }

@@ -91,14 +91,16 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }else if(id==R.id.wifi){
             startActivity(new Intent(getApplicationContext(),selectBridge.class));
-
             return true;
         }else if(id == R.id.logOut){
             mAuth.signOut();
             finish();
             startActivity(new Intent(this, LoginActivity.class));
+        }else if(id==R.id.add_alarm){
+            Intent i=new Intent(this,AlarmDetail.class);
+            startActivity(i);
+            return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -187,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
             if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
                 rootView = inflater.inflate(R.layout.fragment_home, container,false);
             } else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
-                rootView=inflater.inflate(R.layout.fragment_alarm_detail,container,false);
+                rootView=inflater.inflate(R.layout.fragment_alarm_list,container,false);
             }else if(getArguments().getInt(ARG_SECTION_NUMBER)==3){
                 rootView=inflater.inflate(R.layout.fragment_statistic,container,false);
             }

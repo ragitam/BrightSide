@@ -1,6 +1,7 @@
 package com.triplefighter.brightside;
 
 import android.app.ProgressDialog;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -34,7 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        Typeface mTypeFace= Typeface.createFromAsset(getAssets(),"Nexa Light.otf");
         mAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -43,7 +44,9 @@ public class RegisterActivity extends AppCompatActivity {
         pass = (EditText)findViewById(R.id.passText);
         register = (Button)findViewById(R.id.sign_up);
         progressDialog = new ProgressDialog(this);
-
+        email.setTypeface(mTypeFace);
+        username.setTypeface(mTypeFace);
+        pass.setTypeface(mTypeFace);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

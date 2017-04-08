@@ -45,7 +45,8 @@ public class LoginActivity extends AppCompatActivity {
         passwd = (EditText) findViewById(R.id.password);
         signIn = (Button) findViewById(R.id.submit);
         btn_register = (Button) findViewById(R.id.register);
-
+        ema.setTypeface(mTypeFace);
+        passwd.setTypeface(mTypeFace);
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

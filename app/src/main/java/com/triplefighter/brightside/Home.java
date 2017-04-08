@@ -68,49 +68,6 @@ public class Home extends Fragment {
             list.setAdapter(adapter);
 
         }
-
-        /*
-        power_but=(ToggleButton) v.findViewById(R.id.power_but);
-        brightness=(SeekBar) v.findViewById(R.id.brightness);
-        brightness_num = (TextView) v.findViewById(R.id.brightness_num);
-        nama_lampu = (TextView) v.findViewById(R.id.nama_lampu);
-        alarm_time = (TextView) v.findViewById(R.id.alarm_time);
-        repeat_mode= (ImageView) v.findViewById(R.id.repeat_mode);
-        mode_container= (RadioGroup) v.findViewById(R.id.mode_container);
-        eco_mode= (RadioButton) v.findViewById(R.id.eco_mode);
-        night_mode= (RadioButton) v.findViewById(R.id.night_mode);
-        none_mode= (RadioButton) v.findViewById(R.id.none_mode);
-
-
-        */
-
         return v;
     }
-
-    PHLightListener listener = new PHLightListener() {
-
-        @Override
-        public void onSuccess() {
-        }
-
-        @Override
-        public void onStateUpdate(Map<String, String> arg0, List<PHHueError> arg1) {
-            Log.w(TAG, "Light has updated");
-        }
-
-        @Override
-        public void onError(int arg0, String arg1) {}
-
-        @Override
-        public void onReceivingLightDetails(PHLight arg0) {}
-
-        @Override
-        public void onReceivingLights(List<PHBridgeResource> arg0) {}
-
-        @Override
-        public void onSearchComplete() {
-
-        }
-    };
-
 }
