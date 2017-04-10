@@ -12,12 +12,14 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.philips.lighting.hue.sdk.PHHueSDK;
 import com.philips.lighting.model.PHBridge;
 import com.philips.lighting.model.PHLight;
 import com.philips.lighting.model.PHLightState;
+import com.triplefighter.brightside.MainActivity;
 import com.triplefighter.brightside.R;
 
 import java.util.List;
@@ -26,8 +28,15 @@ public class LampuListAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
     private List<PHLight> lampuList;
-    private PHLightState state;
-    private PHHueSDK phHueSDK;
+
+    private PHLight light;
+    private PHLightState state = new PHLightState();
+    private PHHueSDK phHueSDK = PHHueSDK.create();
+    private PHBridge bridge = phHueSDK.getSelectedBridge();
+
+    private Boolean kondisiLampu;
+    private Boolean adaLampu;
+    private Boolean status = false;
 
     class LampuItem{
         private TextView namaLampu;
@@ -61,7 +70,7 @@ public class LampuListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int i, View view, ViewGroup viewGroup) {
+    public View getView(final int position, View view, ViewGroup viewGroup) {
 
         LampuItem item = new LampuItem();;
 
@@ -72,7 +81,6 @@ public class LampuListAdapter extends BaseAdapter {
             item.power_but=(ToggleButton) view.findViewById(R.id.power_but);
             item.brightness=(SeekBar) view.findViewById(R.id.brightness);
             item.brightness_num = (TextView) view.findViewById(R.id.brightness_num);
-            item.nama_lampu = (TextView) view.findViewById(R.id.nama_lampu);
             item.alarm_time = (TextView) view.findViewById(R.id.alarm_time);
             item.repeat_mode= (ImageView) view.findViewById(R.id.repeat_mode);
             item.mode_container= (RadioGroup) view.findViewById(R.id.mode_container);
@@ -84,14 +92,17 @@ public class LampuListAdapter extends BaseAdapter {
         } else {
             item = (LampuItem) view.getTag();
         }
-        final PHLight light = lampuList.get(i);
-        state = new PHLightState();
-        //boolean nyala = state.isOn();
-        item.namaLampu.setText(light.getIdentifier());
+        light = lampuList.get(position);
+        final String lampuId = light.getName();
+        item.namaLampu.setText(lampuId);
 
-        Log.v("gg",light.getIdentifier());
+        kondisiLampu = light.getLastKnownLightState().isOn();
+        adaLampu = light.getLastKnownLightState().isReachable();
 
-        if (item.night_mode.isChecked()) {
+        Log.v("status", String.valueOf(status));
+
+
+        if (item.night_mode.isChecked()){
             item.night_mode.setAlpha(1);
         }
 
@@ -102,8 +113,10 @@ public class LampuListAdapter extends BaseAdapter {
         item.brightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                //Log.e("BRIGHT", String.valueOf(i));
+                light = lampuList.get(position);
                 finalItem.brightness_num.setText(String.valueOf(i)+"%");
+                state.setBrightness(i);
+                bridge.updateLightState(light,state);
             }
 
             @Override
@@ -120,23 +133,27 @@ public class LampuListAdapter extends BaseAdapter {
         item.power_but.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                String lampuId = light.getIdentifier();
-                lampControl(compoundButton,b,lampuId);
+                light = lampuList.get(position);
+                if(b){
+                    if(adaLampu == true || kondisiLampu == false){
+                        state.setOn(true);
+                        bridge.updateLightState(light,state);
+                        status = state.isOn();
+                        Log.v("coba","status " +status);
+                    }
+                }else {
+                    state.setOn(false);
+                    bridge.updateLightState(light,state);
+                    status = state.isOn();
+                    Log.v("coba","status " +status);
+                }
+
             }
         });
 
         return view;
     }
 
-    private void lampControl(CompoundButton compoundButton, boolean b, String lampuId) {
-        /*PHBridge bridge = phHueSDK.getSelectedBridge();*/
 
 
-        if(b){
-            Log.v("Coba","ON "+lampuId +" ");
-
-        }else {
-            Log.v("Coba","OFF "+lampuId);
-        }
-    }
 }

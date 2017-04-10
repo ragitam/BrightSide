@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         if(mAuth.getCurrentUser() != null){
             finish();
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            startActivity(new Intent(getApplicationContext(), selectBridge.class));
         }
 
         progressDialog = new ProgressDialog(this);
@@ -82,12 +82,11 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (!task.isSuccessful()) {
-                                    // there was an error
                                     progressDialog.cancel();
                                     Toast.makeText(LoginActivity.this, "Log In gagal, Silahkan fragment_statistic kembali", Toast.LENGTH_SHORT).show();
                                 } else {
                                     finish();
-                                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                                    startActivity(new Intent(getApplicationContext(),selectBridge.class));
                                 }
                             }
                         });

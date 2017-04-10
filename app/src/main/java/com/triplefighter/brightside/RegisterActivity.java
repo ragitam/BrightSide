@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -55,14 +59,14 @@ public class RegisterActivity extends AppCompatActivity {
                 final String passwd = pass.getText().toString().trim();
 
                 if(TextUtils.isEmpty(ema)){
-                    email.setError("Masukkan Alamat Email!");
+                    email.setError(String.valueOf(R.string.enter_email));
                 }if(TextUtils.isEmpty(usernm)){
-                    username.setError("Masukkan Username!");
+                    username.setError(String.valueOf(R.string.enter_username));
                 }if(TextUtils.isEmpty(passwd)){
-                    pass.setError("Masukkan Password!");
+                    pass.setError(String.valueOf(R.string.enter_password));
                 }if(passwd.length() < 6){
                     progressDialog.cancel();
-                    Toast.makeText(getApplicationContext(), "Password minimum 6 kata!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.password_length, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -75,8 +79,21 @@ public class RegisterActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (!task.isSuccessful()) {
                                     progressDialog.cancel();
-                                    Toast.makeText(RegisterActivity.this, "Email anda telah digunakan.",
-                                            Toast.LENGTH_SHORT).show();
+
+                                    try {
+                                        throw task.getException();
+                                    } catch(FirebaseAuthWeakPasswordException e) {
+                                        Toast.makeText(RegisterActivity.this, R.string.password_weak,
+                                                Toast.LENGTH_SHORT).show();
+                                    } catch(FirebaseAuthInvalidCredentialsException e) {
+                                        Toast.makeText(RegisterActivity.this, R.string.invalid_email,
+                                                Toast.LENGTH_SHORT).show();
+                                    } catch(FirebaseAuthUserCollisionException e) {
+                                        Toast.makeText(RegisterActivity.this, R.string.email_used,
+                                                Toast.LENGTH_SHORT).show();
+                                    } catch(Exception e) {
+                                        Log.e("Register", e.getMessage());
+                                    }
                                 }else{
                                     UserInformation userInformation = new UserInformation(ema, usernm);
 
@@ -85,7 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     databaseReference.child("Data User").child(user.getUid()).setValue(userInformation);
                                     mAuth.signOut();
                                     finish();
-                                    Toast.makeText(RegisterActivity.this, "Registrasi akun anda berhasil.",
+                                    Toast.makeText(RegisterActivity.this, R.string.success_regis,
                                             Toast.LENGTH_SHORT).show();
                                 }
                             }

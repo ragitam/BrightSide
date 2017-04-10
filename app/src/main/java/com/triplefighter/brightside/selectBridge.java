@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.philips.lighting.hue.sdk.PHAccessPoint;
 import com.philips.lighting.hue.sdk.PHBridgeSearchManager;
 import com.philips.lighting.hue.sdk.PHHueSDK;
@@ -32,14 +34,22 @@ public class selectBridge extends AppCompatActivity {
 
     private boolean lastSearchWasIPScan = false;
 
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_bridge);
 
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if(user == null){
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+
         phHueSDK = PHHueSDK.create();
 
-        phHueSDK.setAppName("BrightSide");
+        phHueSDK.setAppName(String.valueOf(R.string.app_name));
         phHueSDK.setDeviceName(android.os.Build.MODEL);
 
         phHueSDK.getNotificationManager().registerSDKListener(listener);
