@@ -1,8 +1,10 @@
 package com.triplefighter.brightside.data;
 
 import android.content.Context;
+import android.support.annotation.IdRes;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -37,6 +39,7 @@ public class LampuListAdapter extends BaseAdapter {
     private Boolean kondisiLampu;
     private Boolean adaLampu;
     private Boolean status = false;
+    private int intensitas;
 
     class LampuItem{
         private TextView namaLampu;
@@ -98,6 +101,17 @@ public class LampuListAdapter extends BaseAdapter {
 
         kondisiLampu = light.getLastKnownLightState().isOn();
         adaLampu = light.getLastKnownLightState().isReachable();
+        intensitas = light.getLastKnownLightState().getBrightness();
+
+        if(kondisiLampu == true){
+            item.power_but.setChecked(true);
+            item.brightness.setProgress(intensitas);
+            item.brightness_num.setText(intensitas +"%");
+        }else {
+            item.power_but.setChecked(false);
+            item.brightness.setProgress(0);
+            item.brightness_num.setText("0%");
+        }
 
         Log.v("status", String.valueOf(status));
 
@@ -106,9 +120,7 @@ public class LampuListAdapter extends BaseAdapter {
             item.night_mode.setAlpha(1);
         }
 
-        item.brightness.setProgress(0);
-        item.brightness_num.setText("0%");
-        item.brightness.setMax(100);
+        item.brightness.setMax(255);
         final LampuItem finalItem = item;
         item.brightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -148,6 +160,39 @@ public class LampuListAdapter extends BaseAdapter {
                     Log.v("coba","status " +status);
                 }
 
+            }
+        });
+
+        final LampuItem finalItem1 = item;
+        item.mode_container.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
+                light = lampuList.get(position);
+                if(i == R.id.night_mode){
+                    int bright = 75;
+                    finalItem1.brightness.setProgress(bright);
+                    finalItem1.brightness_num.setText(bright +"%");
+                    finalItem1.brightness.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View view, MotionEvent motionEvent) {
+                            return true;
+                        }
+                    });
+                    finalItem1.power_but.setChecked(true);
+                    state.setOn(true);
+                    state.setBrightness(bright);
+                    bridge.updateLightState(light,state);
+                }else if(i == R.id.none_mode){
+                    finalItem1.brightness.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View view, MotionEvent motionEvent) {
+                            return false;
+                        }
+                    });
+                    finalItem1.power_but.setChecked(true);
+                    state.setOn(true);
+                    bridge.updateLightState(light,state);
+                }
             }
         });
 

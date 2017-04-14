@@ -4,10 +4,14 @@ import android.app.AlarmManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,10 +26,22 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.philips.lighting.hue.sdk.PHHueSDK;
+import com.philips.lighting.model.PHBridge;
+import com.philips.lighting.model.PHLight;
+import com.triplefighter.brightside.data.SpinnerListAdapter;
+
 import static com.triplefighter.brightside.R.id.lamp_name;
+import static com.triplefighter.brightside.R.id.light;
+import static com.triplefighter.brightside.R.id.line1;
+import static com.triplefighter.brightside.R.id.list_item;
 import static com.triplefighter.brightside.R.id.time_pick;
 
-public class AlarmDetail extends AppCompatActivity{
+public class AlarmDetail extends AppCompatActivity {
+
+    private PHHueSDK sdk;
+    private PHBridge bridge;
+    private PHLight light;
 
     TimePicker time_pick;
     AlarmManager alarmManager;
@@ -36,11 +52,18 @@ public class AlarmDetail extends AppCompatActivity{
     Button submit_alarm;
     String choosen;
     int jam,menit;
-    List<String> lamp_name_arr=new ArrayList<String>();
+
+    List<PHLight> lamp_name_arr;
+    ArrayList<String> list_nama;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm_detail);
+
+        sdk = PHHueSDK.create();
+        bridge = sdk.getInstance().getSelectedBridge();
+
         getSupportActionBar().setTitle("Set Alarm");
         time_pick=(TimePicker) findViewById(R.id.time_pick);
         lamp_name_view=(TextView) findViewById(R.id.lamp_name_view);
@@ -48,18 +71,15 @@ public class AlarmDetail extends AppCompatActivity{
         repeat_alarm=(Switch) findViewById(R.id.repeat_alarm);
         submit_alarm=(Button) findViewById(R.id.submit_alarm);
 
-        lamp_name_arr.add("Lampu 1");
-        lamp_name_arr.add("Lampu 2");
-        lamp_name_arr.add("Lampu 2");
-        lamp_name_arr.add("Lampu 2");
-        lamp_name_arr.add("Lampu 2");
-        ArrayAdapter<String> dataAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,lamp_name_arr);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        lamp_name_spinner.setAdapter(dataAdapter);
+        lamp_name_arr = bridge.getResourceCache().getAllLights();
+
+        SpinnerListAdapter adapter = new SpinnerListAdapter(this,lamp_name_arr);
+        lamp_name_spinner.setAdapter(adapter);
         lamp_name_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                choosen=adapterView.getItemAtPosition(i).toString();
+                light = lamp_name_arr.get(i);
+                choosen=light.getIdentifier();
                 lamp_name_view.setText(choosen);
             }
 

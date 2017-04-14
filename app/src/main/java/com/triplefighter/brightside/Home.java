@@ -1,6 +1,7 @@
 package com.triplefighter.brightside;
 
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,12 +44,9 @@ public class Home extends Fragment {
     private LampuListAdapter adapter;
 
     private List<PHLight> lampu;
-    private Boolean statusLampu;
     private ListView list;
 
-    int pos = 0;
-
-    ToggleButton power_but;
+    ArrayList<String> a;
 
     String TAG = "Brightside";
 
@@ -69,12 +67,14 @@ public class Home extends Fragment {
             AlertDialogWizard.showErrorDialog(getActivity(), "No Bridge Found", R.string.btn_ok);
         }else {
             lampu = bridge.getResourceCache().getAllLights();
-            for(pos = 0; pos < lampu.size(); pos++){
+            for (int pos = 0; pos < lampu.size(); pos++){
                 light = lampu.get(pos);
-                Log.d("list", "lampu ke : " +light.getIdentifier());
-            }
+                String b = light.getName();
+                a = new ArrayList<String>();
+                a.add(b);
+                Log.d("aaa","lampu " +a);
 
-            Log.d(TAG, "onCreateView: " +statusLampu);
+            }
 
             adapter = new LampuListAdapter(getActivity().getApplicationContext(),lampu);
 
