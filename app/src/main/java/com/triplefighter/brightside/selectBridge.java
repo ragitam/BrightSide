@@ -201,6 +201,7 @@ public class selectBridge extends AppCompatActivity {
                     @Override
                     public void run() {
                         AlertDialogWizard.showErrorDialog(selectBridge.this, message, R.string.btn_ok);
+                        finish();
                     }
                 });
 

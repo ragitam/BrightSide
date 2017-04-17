@@ -75,7 +75,7 @@ public class LampuListAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View view, ViewGroup viewGroup) {
 
-        LampuItem item = new LampuItem();;
+        LampuItem item = new LampuItem();
 
         if (view == null) {
             view = inflater.inflate(R.layout.list_home, null);
@@ -106,7 +106,8 @@ public class LampuListAdapter extends BaseAdapter {
         if(kondisiLampu == true){
             item.power_but.setChecked(true);
             item.brightness.setProgress(intensitas);
-            item.brightness_num.setText(intensitas +"%");
+            int persen = (intensitas*100/254);
+            item.brightness_num.setText(persen +"%");
         }else {
             item.power_but.setChecked(false);
             item.brightness.setProgress(0);
@@ -120,13 +121,14 @@ public class LampuListAdapter extends BaseAdapter {
             item.night_mode.setAlpha(1);
         }
 
-        item.brightness.setMax(255);
+        item.brightness.setMax(254);
         final LampuItem finalItem = item;
         item.brightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 light = lampuList.get(position);
-                finalItem.brightness_num.setText(String.valueOf(i)+"%");
+                int persen = (i*100/254);
+                finalItem.brightness_num.setText(String.valueOf(persen)+"%");
                 state.setBrightness(i);
                 bridge.updateLightState(light,state);
             }
@@ -171,7 +173,8 @@ public class LampuListAdapter extends BaseAdapter {
                 if(i == R.id.night_mode){
                     int bright = 75;
                     finalItem1.brightness.setProgress(bright);
-                    finalItem1.brightness_num.setText(bright +"%");
+                    int persen = (bright*100/254);
+                    finalItem1.brightness_num.setText(persen +"%");
                     finalItem1.brightness.setOnTouchListener(new View.OnTouchListener() {
                         @Override
                         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -198,7 +201,5 @@ public class LampuListAdapter extends BaseAdapter {
 
         return view;
     }
-
-
 
 }

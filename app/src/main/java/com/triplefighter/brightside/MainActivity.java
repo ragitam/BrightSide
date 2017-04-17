@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             switch(position){
                 case 0:
                     Home home= new Home();
-                            return home;
+                    return home;
                 case 1:
                     AlarmList alarm= new AlarmList();
                     return alarm;

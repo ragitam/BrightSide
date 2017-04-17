@@ -26,6 +26,7 @@ import com.philips.lighting.model.PHLight;
 import com.philips.lighting.model.PHLightState;
 import com.triplefighter.brightside.Model.DataLampu;
 import com.triplefighter.brightside.data.AccessPointListAdapter;
+import com.triplefighter.brightside.data.CobaAdapter;
 import com.triplefighter.brightside.data.HueSharedPreferences;
 import com.triplefighter.brightside.data.LampuListAdapter;
 

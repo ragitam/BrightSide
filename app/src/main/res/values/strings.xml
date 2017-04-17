@@ -26,7 +26,10 @@
 
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="add_lamp">Add Lamp</string>
-    
+    <string name="add_alarm">Add Alarm</string>
+    <string name="no_alarm_text">There is no alarm here. Please Add alarm first</string>
+    <string name="no_lamp_text">There is no lamp here. Please Add lamp first</string>
+
     <string name="password_weak">Sorry your password is too weak</string>
     <string name="invalid_email">Sorry your email is invalid</string>
     <string name="email_used">Sorry your email has been registered</string>
