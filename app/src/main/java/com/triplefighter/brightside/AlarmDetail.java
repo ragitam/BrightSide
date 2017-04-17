@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -48,10 +49,12 @@ public class AlarmDetail extends AppCompatActivity {
     Calendar calendar;
     Spinner lamp_name_spinner; //cuma buat coba sementara
     TextView lamp_name_view;
-    Switch repeat_alarm;
+    Switch repeat_alarm,lamp_condition;
     Button submit_alarm;
     String choosen;
     int jam,menit;
+    EditText alarm_name;
+    CheckBox monday,tuesday,wednesday,thursday,friday,saturday,sunday;
 
     List<PHLight> lamp_name_arr;
     ArrayList<String> list_nama;
@@ -66,11 +69,19 @@ public class AlarmDetail extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Set Alarm");
         time_pick=(TimePicker) findViewById(R.id.time_pick);
+        alarm_name=(EditText) findViewById((R.id.alarm_name));
+        lamp_condition=(Switch) findViewById(R.id.lamp_condition);
         lamp_name_view=(TextView) findViewById(R.id.lamp_name_view);
         lamp_name_spinner=(Spinner) findViewById(R.id.lamp_name);
         repeat_alarm=(Switch) findViewById(R.id.repeat_alarm);
+        monday=(CheckBox) findViewById(R.id.monday);
+        tuesday=(CheckBox) findViewById(R.id.tuesday);
+        wednesday=(CheckBox) findViewById(R.id.wednesday);
+        thursday=(CheckBox) findViewById(R.id.thursday);
+        friday=(CheckBox) findViewById(R.id.friday);
+        saturday=(CheckBox) findViewById(R.id.saturday);
+        sunday=(CheckBox) findViewById(R.id.sunday);
         submit_alarm=(Button) findViewById(R.id.submit_alarm);
-
         lamp_name_arr = bridge.getResourceCache().getAllLights();
 
         SpinnerListAdapter adapter = new SpinnerListAdapter(this,lamp_name_arr);

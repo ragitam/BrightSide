@@ -32,11 +32,13 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         Typeface mTypeFace= Typeface.createFromAsset(getAssets(),"Nexa Light.otf");
+        //percent_1.setText(toString().valueOf(lampu_nyala));
 
         mAuth = FirebaseAuth.getInstance();
         if(mAuth.getCurrentUser() != null){
             finish();
-            startActivity(new Intent(getApplicationContext(), selectBridge.class));
+            //startActivity(new Intent(getApplicationContext(), selectBridge.class)); SEMENTARA
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
 
         progressDialog = new ProgressDialog(this);
