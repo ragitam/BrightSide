@@ -17,14 +17,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.philips.lighting.hue.listener.PHScheduleListener;
 import com.philips.lighting.hue.sdk.PHHueSDK;
 import com.philips.lighting.model.PHBridge;
+import com.philips.lighting.model.PHHueError;
 import com.philips.lighting.model.PHLight;
 import com.philips.lighting.model.PHLightState;
+import com.philips.lighting.model.PHSchedule;
 import com.triplefighter.brightside.MainActivity;
 import com.triplefighter.brightside.R;
 
+import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 public class LampuListAdapter extends BaseAdapter {
 
@@ -170,6 +175,7 @@ public class LampuListAdapter extends BaseAdapter {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
                 light = lampuList.get(position);
+                String id = light.getIdentifier();
                 if(i == R.id.night_mode){
                     int bright = 75;
                     finalItem1.brightness.setProgress(bright);
@@ -192,14 +198,87 @@ public class LampuListAdapter extends BaseAdapter {
                             return false;
                         }
                     });
+                    finalItem1.power_but.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View view, MotionEvent motionEvent) {
+                            return false;
+                        }
+                    });
                     finalItem1.power_but.setChecked(true);
                     state.setOn(true);
                     bridge.updateLightState(light,state);
+                }else if(i == R.id.eco_mode){
+                    PHSchedule schedule = new PHSchedule(String.valueOf(R.string.eco_mode));
+                    Calendar cal = Calendar.getInstance();
+                    if(Calendar.HOUR_OF_DAY == 18 && Calendar.HOUR_OF_DAY < 7){
+                        cal.set(Calendar.SECOND, 0);
+                        cal.set(Calendar.MINUTE, 0);
+                        cal.set(Calendar.HOUR_OF_DAY,18);
+
+                        state.setOn(true);
+                        finalItem1.power_but.setChecked(true);
+                        finalItem1.power_but.setOnTouchListener(new View.OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View view, MotionEvent motionEvent) {
+                                return true;
+                            }
+                        });
+
+                        schedule.setLightState(state);
+                        schedule.setLightIdentifier(id);
+                        schedule.setLocalTime(true);
+                        schedule.setDate(cal.getTime());
+
+                        bridge.createSchedule(schedule,listener);
+                    }
+                    if(Calendar.HOUR_OF_DAY == 6 && Calendar.HOUR_OF_DAY < 19){
+                        cal.set(Calendar.SECOND, 0);
+                        cal.set(Calendar.MINUTE, 0);
+                        cal.set(Calendar.HOUR_OF_DAY,6);
+
+                        state.setOn(false);
+                        finalItem1.power_but.setChecked(false);
+                        finalItem1.power_but.setOnTouchListener(new View.OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View view, MotionEvent motionEvent) {
+                                return true;
+                            }
+                        });
+
+                        schedule.setLightState(state);
+                        schedule.setLightIdentifier(id);
+                        schedule.setLocalTime(true);
+                        schedule.setDate(cal.getTime());
+
+                        bridge.createSchedule(schedule,listener);
+                    }
                 }
             }
         });
 
         return view;
     }
+
+    PHScheduleListener listener = new PHScheduleListener() {
+        @Override
+        public void onCreated(PHSchedule phSchedule) {
+
+        }
+
+        @Override
+        public void onSuccess() {
+
+        }
+
+        @Override
+        public void onError(int i, String s) {
+
+        }
+
+        @Override
+        public void onStateUpdate(Map<String, String> map, List<PHHueError> list) {
+
+        }
+    };
 
 }

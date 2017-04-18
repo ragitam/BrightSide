@@ -15,6 +15,9 @@ import com.philips.lighting.model.PHLightState;
 import com.philips.lighting.model.PHSchedule;
 import com.triplefighter.brightside.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -72,7 +75,8 @@ public class ScheduleListAdapter extends BaseAdapter {
         schedule = jadwal.get(i);
         Log.d("jadwal","jadwal " +schedule.getDate());
 
-        String waktu = String.valueOf(schedule.getDate());
+        DateFormat df = new SimpleDateFormat("HH:mm");
+        String waktu = df.format(schedule.getDate());
 
         item.namaAlarm.setText(schedule.getName());
         item.alarmTime.setText(waktu);

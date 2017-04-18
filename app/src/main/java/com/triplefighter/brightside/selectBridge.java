@@ -5,6 +5,7 @@ import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -201,7 +202,7 @@ public class selectBridge extends AppCompatActivity {
                     @Override
                     public void run() {
                         AlertDialogWizard.showErrorDialog(selectBridge.this, message, R.string.btn_ok);
-                        finish();
+                        //finish();
                     }
                 });
 
@@ -235,6 +236,12 @@ public class selectBridge extends AppCompatActivity {
             }
         }
     };
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.home,menu);
+        return true;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

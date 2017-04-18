@@ -20,6 +20,8 @@ import android.widget.ToggleButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.philips.lighting.hue.sdk.PHHueSDK;
+import com.philips.lighting.model.PHBridge;
 
 public class MainActivity extends AppCompatActivity {
     ToggleButton power_but;
@@ -30,10 +32,16 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference ref, reff;
 
+    private PHHueSDK sdk;
+    private PHBridge bridge;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        sdk = PHHueSDK.create();
+        bridge = sdk.getInstance().getSelectedBridge();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -156,4 +164,5 @@ public class MainActivity extends AppCompatActivity {
             return rootView;
         }
     }
+
 }

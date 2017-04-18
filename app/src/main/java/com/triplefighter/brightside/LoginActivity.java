@@ -37,8 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         if(mAuth.getCurrentUser() != null){
             finish();
-            //startActivity(new Intent(getApplicationContext(), selectBridge.class)); SEMENTARA
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            startActivity(new Intent(getApplicationContext(), selectBridge.class));
         }
 
         progressDialog = new ProgressDialog(this);

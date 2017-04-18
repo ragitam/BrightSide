@@ -26,7 +26,6 @@ import com.philips.lighting.model.PHLight;
 import com.philips.lighting.model.PHLightState;
 import com.triplefighter.brightside.Model.DataLampu;
 import com.triplefighter.brightside.data.AccessPointListAdapter;
-import com.triplefighter.brightside.data.CobaAdapter;
 import com.triplefighter.brightside.data.HueSharedPreferences;
 import com.triplefighter.brightside.data.LampuListAdapter;
 
@@ -63,25 +62,40 @@ public class Home extends Fragment {
         sdk = PHHueSDK.create();
         bridge = sdk.getInstance().getSelectedBridge();
 
+        TextView emptyLampText = (TextView) v.findViewById(R.id.noLamp);
+
         if(bridge == null){
             AlertDialogWizard.showErrorDialog(getActivity(), "No Bridge Found", R.string.btn_ok);
+            emptyLampText.setVisibility(View.VISIBLE);
         }else {
             lampu = bridge.getResourceCache().getAllLights();
-            for (int pos = 0; pos < lampu.size(); pos++){
-                light = lampu.get(pos);
-                String b = light.getName();
-                a = new ArrayList<String>();
-                a.add(b);
-                Log.d("aaa","lampu " +a);
+            if(lampu.isEmpty()){
+                emptyLampText.setVisibility(View.VISIBLE);
+            }else {
+                emptyLampText.setVisibility(View.GONE);
+                for (int pos = 0; pos < lampu.size(); pos++){
+                    light = lampu.get(pos);
+                    String b = light.getName();
+                    a = new ArrayList<String>();
+                    a.add(b);
+                    Log.d("aaa","lampu " +a);
 
+                }
+
+                adapter = new LampuListAdapter(getActivity().getApplicationContext(),lampu);
+
+                list = (ListView)v.findViewById(R.id.listLampu);
+                list.setAdapter(adapter);
             }
-
-            adapter = new LampuListAdapter(getActivity().getApplicationContext(),lampu);
-
-            list = (ListView)v.findViewById(R.id.listLampu);
-            list.setAdapter(adapter);
         }
 
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        sdk = PHHueSDK.create();
+        bridge = sdk.getInstance().getSelectedBridge();
     }
 }

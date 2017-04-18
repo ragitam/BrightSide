@@ -12,5 +12,15 @@
         android:layout_height="wrap_content">
     </ListView>
 
+    <TextView
+        android:id="@+id/noAlarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/no_alarm_text"
+        android:textColor="@color/colorAccent"
+        android:visibility="invisible"/>
+
 
 </RelativeLayout>

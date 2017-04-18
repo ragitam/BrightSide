@@ -14,7 +14,7 @@
     <string name="could_not_find_bridge" translatable="false">Hue cannot find your bridge. Please check that it is connected to the same Wi-Fi router as your app and press</string>
     <string name="btn_more" translatable="false">More</string>
     <string name="btn_reconnect" translatable="false">Reconnect</string>
-    <string name="menu_find_bridge">Find new Bridge</string>
+    <string name="menu_find_bridge" translatable="false">Find new Bridge</string>
     <string name="menu_refresh" translatable="false">Refresh</string>
     <string name="btn_retry">Retry</string>
     <string name="searching_for_bridges" translatable="false">Searching for Bridges</string>
@@ -24,11 +24,16 @@
     <string name="txt_select_smartbridge">Please select a bridge to use for this app</string>
     <string name="title_error" translatable="false">Error</string>
 
+    <string name="eco_mode">Eco Mode</string>
+
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="add_lamp">Add Lamp</string>
     <string name="add_alarm">Add Alarm</string>
     <string name="no_alarm_text">There is no alarm here. Please Add alarm first</string>
     <string name="no_lamp_text">There is no lamp here. Please Add lamp first</string>
+
+    <string name="delete_alarm_confirm">Are you sure want to delete this alarm?</string>
+    <string name="delete_alarm_success">has been deleted.</string>
 
     <string name="password_weak">Sorry your password is too weak</string>
     <string name="invalid_email">Sorry your email is invalid</string>
