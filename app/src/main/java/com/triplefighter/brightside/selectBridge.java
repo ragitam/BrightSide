@@ -51,7 +51,7 @@ public class selectBridge extends AppCompatActivity {
         phHueSDK = PHHueSDK.create();
 
         phHueSDK.setAppName(String.valueOf(R.string.app_name));
-        phHueSDK.setDeviceName(android.os.Build.MODEL);
+        phHueSDK.setDeviceName(Build.MODEL);
 
         phHueSDK.getNotificationManager().registerSDKListener(listener);
 
