@@ -3,6 +3,7 @@ package com.triplefighter.brightside;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -95,23 +96,44 @@ public class AlarmList extends Fragment {
                         return true;
                     }
                 });
+
+                listJadwal.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        phSchedule = jadwal.get(i);
+                        namaAlarm = phSchedule.getIdentifier();
+                        Intent in = new Intent(getActivity(),AlarmDetail.class);
+                        in.putExtra("idAlarm",namaAlarm);
+                        startActivity(in);
+                    }
+                });
             }
         }
 
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        //adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
 
     PHScheduleListener listener = new PHScheduleListener() {
         @Override
         public void onCreated(PHSchedule phSchedule) {
-            Toast.makeText(getActivity(),namaAlarm+" " +R.string.delete_alarm_success,Toast.LENGTH_SHORT).show();
+
         }
 
         @Override
         public void onSuccess() {
-            Toast.makeText(getActivity(),namaAlarm+" " +R.string.delete_alarm_success,Toast.LENGTH_SHORT).show();
-            bridge = sdk.getInstance().getSelectedBridge();
+
         }
 
         @Override
@@ -124,12 +146,4 @@ public class AlarmList extends Fragment {
 
         }
     };
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        sdk = PHHueSDK.create();
-        bridge = sdk.getInstance().getSelectedBridge();
-    }
-
 }

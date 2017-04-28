@@ -20,6 +20,7 @@ public class AccessPointListAdapter extends BaseAdapter {
     class BridgeListItem {
         private TextView bridgeIp;
         private TextView bridgeMac;
+        private TextView bridgeName;
     }
 
     public AccessPointListAdapter(Context context, List<PHAccessPoint> accessPoints) {
@@ -38,12 +39,15 @@ public class AccessPointListAdapter extends BaseAdapter {
             item = new BridgeListItem();
             item.bridgeMac = (TextView) convertView.findViewById(R.id.bridge_mac);
             item.bridgeIp = (TextView) convertView.findViewById(R.id.bridge_ip);
+            item.bridgeName = (TextView) convertView.findViewById(R.id.bridge_name);
 
             convertView.setTag(item);
         } else {
             item = (BridgeListItem) convertView.getTag();
         }
         PHAccessPoint accessPoint = accessPoints.get(position);
+        item.bridgeName.setTextColor(Color.BLACK);
+        item.bridgeName.setText(accessPoint.getBridgeId());
         item.bridgeIp.setTextColor(Color.BLACK);
         item.bridgeIp.setText(accessPoint.getIpAddress());
         item.bridgeMac.setTextColor(Color.DKGRAY);

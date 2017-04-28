@@ -6,10 +6,6 @@ import android.content.Intent;
 import android.os.Vibrator;
 import android.widget.Toast;
 
-/**
- * Created by mavri on 30-Mar-17.
- */
-
 public class AlarmReceiver extends BroadcastReceiver {
 
     @Override

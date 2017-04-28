@@ -35,6 +35,7 @@ import com.philips.lighting.model.PHHueError;
 import com.philips.lighting.model.PHLight;
 import com.philips.lighting.model.PHLightState;
 import com.philips.lighting.model.PHSchedule;
+import com.triplefighter.brightside.data.ScheduleListAdapter;
 import com.triplefighter.brightside.data.SpinnerListAdapter;
 
 public class AlarmDetail extends AppCompatActivity {
@@ -59,6 +60,8 @@ public class AlarmDetail extends AppCompatActivity {
     String choosen;
     int jam,menit;
 
+    String idAlarm;
+
     List<PHLight> lamp_name_arr;
 
     @Override
@@ -69,9 +72,16 @@ public class AlarmDetail extends AppCompatActivity {
         sdk = PHHueSDK.create();
         bridge = sdk.getInstance().getSelectedBridge();
 
-        getSupportActionBar().setTitle("Set Alarm");
+        Intent in = getIntent();
+        idAlarm = in.getStringExtra("idAlarm");
 
-        calendar=Calendar.getInstance();
+        if(idAlarm == null){
+            getSupportActionBar().setTitle("Set Alarm");
+        }else {
+            getSupportActionBar().setTitle("Edit Alarm");
+        }
+
+        calendar = Calendar.getInstance();
 
         time_pick=(TimePicker) findViewById(R.id.time_pick);
         lamp_name_view=(TextView) findViewById(R.id.lamp_name_view);
@@ -208,7 +218,7 @@ public class AlarmDetail extends AppCompatActivity {
     PHScheduleListener listener = new PHScheduleListener() {
         @Override
         public void onCreated(PHSchedule phSchedule) {
-            Toast.makeText(AlarmDetail.this,choosen+" akan menyala pada jam "+jam+":0"+menit,Toast.LENGTH_SHORT).show();
+
         }
 
         @Override

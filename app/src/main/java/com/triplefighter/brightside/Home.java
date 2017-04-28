@@ -95,7 +95,12 @@ public class Home extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        sdk = PHHueSDK.create();
-        bridge = sdk.getInstance().getSelectedBridge();
+        adapter.updateDate(lampu);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.updateDate(lampu);
     }
 }
