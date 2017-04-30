@@ -83,7 +83,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Repeat"
+                android:text="Repeat All Day"
                 android:textSize="20dp"/>
             <Switch
                 android:id="@+id/repeat_alarm"
@@ -97,7 +97,7 @@
                 android:textColor="@color/colorPrimary"
                 android:textColorHint="@color/colorPrimary"
                 android:backgroundTint="@color/colorPrimary"
-                android:checked="true"/>
+                android:checked="false"/>
         </RelativeLayout>
         <TextView
             android:layout_width="wrap_content"
@@ -107,48 +107,67 @@
             android:paddingBottom="@dimen/activity_vertical_margin"
             android:text="Day"
             android:textSize="20dp" />
-        <CheckBox
-            android:id="@+id/monday"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:text="Monday"/>
-        <CheckBox
-            android:id="@+id/tuesday"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:text="Tuesday"/>
-        <CheckBox
-            android:id="@+id/wednesday"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:text="Wednesday"/>
-        <CheckBox
-            android:id="@+id/thursday"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:text="Thursday"/>
-        <CheckBox
-            android:id="@+id/friday"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:text="Friday"/>
-        <CheckBox
-            android:id="@+id/saturday"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:text="Saturday"/>
-        <CheckBox
-            android:id="@+id/sunday"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:text="Sunday"/>
+            android:orientation="horizontal"
+            android:layout_marginBottom="15dp"
+            android:gravity="center">
+            <CheckBox
+                android:id="@+id/monday"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginRight="3dp"
+                android:background="@drawable/m_day"
+                android:button="@android:color/transparent"/>
+            <CheckBox
+                android:id="@+id/tuesday"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:background="@drawable/t_day"
+                android:button="@android:color/transparent"/>
+            <CheckBox
+                android:id="@+id/wednesday"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:background="@drawable/w_day"
+                android:button="@android:color/transparent"/>
+            <CheckBox
+                android:id="@+id/thursday"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:background="@drawable/t_day"
+                android:button="@android:color/transparent"/>
+            <CheckBox
+                android:id="@+id/friday"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:background="@drawable/f_day"
+                android:button="@android:color/transparent"/>
+            <CheckBox
+                android:id="@+id/saturday"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:background="@drawable/s_day"
+                android:button="@android:color/transparent"/>
+            <CheckBox
+                android:id="@+id/sunday"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:background="@drawable/s_day"
+                android:button="@android:color/transparent"/>
+        </LinearLayout>
         <Button
             android:id="@+id/submit_alarm"
             android:layout_width="match_parent"

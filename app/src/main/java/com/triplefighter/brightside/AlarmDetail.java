@@ -99,10 +99,24 @@ public class AlarmDetail extends AppCompatActivity {
         submit_alarm=(Button) findViewById(R.id.submit_alarm);
         alarm_name = (EditText) findViewById(R.id.alarm_name);
 
-        lamp_name_arr = bridge.getResourceCache().getAllLights();
+        repeat_alarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (repeat_alarm.isChecked()){
+                    monday.setChecked(true);
+                    tuesday.setChecked(true);
+                    wednesday.setChecked(true);
+                    thursday.setChecked(true);
+                    friday.setChecked(true);
+                    saturday.setChecked(true);
+                    sunday.setChecked(true);
+                }
+            }
+        });
+        //lamp_name_arr = bridge.getResourceCache().getAllLights();
 
-        SpinnerListAdapter adapter = new SpinnerListAdapter(this,lamp_name_arr);
-        lamp_name_spinner.setAdapter(adapter);
+        //SpinnerListAdapter adapter = new SpinnerListAdapter(this,lamp_name_arr);
+        /*lamp_name_spinner.setAdapter(adapter);
         lamp_name_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -115,7 +129,7 @@ public class AlarmDetail extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
-        });
+        });*/
 
         submit_alarm.setOnClickListener(new View.OnClickListener() {
             @Override
