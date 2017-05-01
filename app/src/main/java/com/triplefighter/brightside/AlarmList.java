@@ -35,7 +35,7 @@ public class AlarmList extends Fragment {
 
     private ScheduleListAdapter adapter;
     private ListView listJadwal;
-    private TextView noAlarmTextView;
+    private View emptyView;
 
     String namaAlarm;
 
@@ -53,49 +53,21 @@ public class AlarmList extends Fragment {
         sdk = PHHueSDK.create();
         bridge = sdk.getInstance().getSelectedBridge();
 
-        noAlarmTextView = (TextView) view.findViewById(R.id.noAlarm);
+        emptyView = view.findViewById(R.id.emptyviewAlarm);
+        listJadwal = (ListView) view.findViewById(R.id.list_lamp);
+        listJadwal.setEmptyView(emptyView);
 
         if(bridge == null){
             AlertDialogWizard.showErrorDialog(getActivity(), "No Bridge Found", R.string.btn_ok);
-            noAlarmTextView.setVisibility(View.VISIBLE);
+            listJadwal.setEmptyView(emptyView);
         }else {
             jadwal = bridge.getResourceCache().getAllSchedules(true);
             Log.d("nama","nama" +jadwal);
             if(jadwal.isEmpty()){
-                noAlarmTextView.setVisibility(View.VISIBLE);
+                listJadwal.setEmptyView(emptyView);
             }else {
-                noAlarmTextView.setVisibility(View.GONE);
-                listJadwal = (ListView) view.findViewById(R.id.list_lamp);
                 adapter = new ScheduleListAdapter(getActivity().getApplicationContext(),jadwal);
                 listJadwal.setAdapter(adapter);
-
-                listJadwal.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                    @Override
-                    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        phSchedule = jadwal.get(i);
-                        namaAlarm = phSchedule.getIdentifier();
-                        Log.d("nama","nama "+namaAlarm);
-                        AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
-                        builder1.setMessage(R.string.delete_alarm_confirm);
-                        builder1.setCancelable(true);
-
-                        builder1.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        bridge.removeSchedule(namaAlarm,listener);
-                                    }
-                                });
-
-                        builder1.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-
-                        AlertDialog alert11 = builder1.create();
-                        alert11.show();
-                        return true;
-                    }
-                });
 
                 listJadwal.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -116,13 +88,25 @@ public class AlarmList extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //adapter.notifyDataSetChanged();
+        jadwal = bridge.getResourceCache().getAllSchedules(true);
+        adapter = new ScheduleListAdapter(getActivity(),jadwal);
+        if(jadwal.isEmpty()){
+            listJadwal.setEmptyView(emptyView);
+        }else {
+            listJadwal.setAdapter(adapter);
+        }
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
+        jadwal = bridge.getResourceCache().getAllSchedules(true);
+        adapter = new ScheduleListAdapter(getActivity(),jadwal);
+        if(jadwal.isEmpty()){
+            listJadwal.setEmptyView(emptyView);
+        }else {
+            listJadwal.setAdapter(adapter);
+        }
     }
 
     PHScheduleListener listener = new PHScheduleListener() {

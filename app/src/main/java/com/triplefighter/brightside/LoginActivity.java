@@ -32,7 +32,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         Typeface mTypeFace= Typeface.createFromAsset(getAssets(),"Nexa Light.otf");
-        //percent_1.setText(toString().valueOf(lampu_nyala));
 
         mAuth = FirebaseAuth.getInstance();
         if(mAuth.getCurrentUser() != null){
@@ -84,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (!task.isSuccessful()) {
                                     progressDialog.cancel();
-                                    Toast.makeText(LoginActivity.this, "Log In gagal, Silahkan fragment_statistic kembali", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this, "Log In gagal, Silahkan coba kembali", Toast.LENGTH_SHORT).show();
                                 } else {
                                     finish();
                                     startActivity(new Intent(getApplicationContext(),selectBridge.class));

@@ -44,6 +44,7 @@ public class Home extends Fragment {
 
     private List<PHLight> lampu;
     private ListView list;
+    TextView emptyLampText;
 
     ArrayList<String> a;
 
@@ -62,7 +63,7 @@ public class Home extends Fragment {
         sdk = PHHueSDK.create();
         bridge = sdk.getInstance().getSelectedBridge();
 
-        TextView emptyLampText = (TextView) v.findViewById(R.id.noLamp);
+        emptyLampText = (TextView) v.findViewById(R.id.noLamp);
 
         if(bridge == null){
             AlertDialogWizard.showErrorDialog(getActivity(), "No Bridge Found", R.string.btn_ok);
@@ -95,12 +96,22 @@ public class Home extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        adapter.updateDate(lampu);
+        if(lampu.isEmpty()) {
+            emptyLampText.setVisibility(View.VISIBLE);
+        }else {
+            emptyLampText.setVisibility(View.GONE);
+            adapter.updateDate(lampu);
+        }
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        adapter.updateDate(lampu);
+        if(lampu.isEmpty()) {
+            emptyLampText.setVisibility(View.VISIBLE);
+        }else {
+            emptyLampText.setVisibility(View.GONE);
+            adapter.updateDate(lampu);
+        }
     }
 }

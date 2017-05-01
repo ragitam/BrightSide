@@ -23,17 +23,16 @@
         <activity
             android:name=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".selectBridge" />
-        <activity android:name=".PushBridgeActivity" />
-        <activity android:name=".AlarmDetail">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".selectBridge" />
+        <activity android:name=".PushBridgeActivity" />
+        <activity android:name=".AlarmDetail">
         </activity>
         <receiver android:name=".AlarmReceiver"></receiver>
 

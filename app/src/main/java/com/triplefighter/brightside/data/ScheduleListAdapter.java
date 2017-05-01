@@ -78,6 +78,9 @@ public class ScheduleListAdapter extends BaseAdapter {
         DateFormat df = new SimpleDateFormat("HH:mm");
         String waktu = df.format(schedule.getDate());
 
+        String a = String.valueOf(schedule.getRecurringDays());
+        Log.d("alarm","alarm recure" +a);
+
         item.namaAlarm.setText(schedule.getName());
         item.alarmTime.setText(waktu);
 

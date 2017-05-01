@@ -43,4 +43,5 @@
     <string name="enter_username">Enter your username!</string>
     <string name="enter_password">Enter your password!</string>
     <string name="password_length">Your password must be more than 6 characters</string>
+    <string name="delete_alarm_menu">Delete Alarm</string>
 </resources>
