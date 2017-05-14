@@ -61,8 +61,7 @@ public class LampuListAdapter extends BaseAdapter {
         private TextView namaLampu;
         private ToggleButton power_but;
         private SeekBar brightness;
-        private TextView nama_lampu,alarm_time,brightness_num;
-        private ImageView repeat_mode;
+        private TextView nama_lampu,brightness_num;
         private RadioGroup mode_container;
         private RadioButton eco_mode,night_mode,none_mode;
 
@@ -100,8 +99,6 @@ public class LampuListAdapter extends BaseAdapter {
             item.power_but=(ToggleButton) view.findViewById(R.id.power_but);
             item.brightness=(SeekBar) view.findViewById(R.id.brightness);
             item.brightness_num = (TextView) view.findViewById(R.id.brightness_num);
-            item.alarm_time = (TextView) view.findViewById(R.id.alarm_time);
-            item.repeat_mode= (ImageView) view.findViewById(R.id.repeat_mode);
             item.mode_container= (RadioGroup) view.findViewById(R.id.mode_container);
             item.eco_mode= (RadioButton) view.findViewById(R.id.eco_mode);
             item.night_mode= (RadioButton) view.findViewById(R.id.night_mode);

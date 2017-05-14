@@ -93,25 +93,4 @@ public class Home extends Fragment {
         return v;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if(lampu.isEmpty()) {
-            emptyLampText.setVisibility(View.VISIBLE);
-        }else {
-            emptyLampText.setVisibility(View.GONE);
-            adapter.updateDate(lampu);
-        }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if(lampu.isEmpty()) {
-            emptyLampText.setVisibility(View.VISIBLE);
-        }else {
-            emptyLampText.setVisibility(View.GONE);
-            adapter.updateDate(lampu);
-        }
-    }
 }

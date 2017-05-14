@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
    <item android:id="@+id/find_new_bridge"          
        android:title="@string/menu_find_bridge"
+       android:icon="@drawable/ic_search_white_24dp"
        app:showAsAction="always"
     />
 

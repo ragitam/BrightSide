@@ -8,25 +8,14 @@
         android:id="@+id/lamp_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
-        android:text="Kamar 1"
+        android:textColor="@color/light_blue"
         android:textSize="20dp"/>
     <TextView
         android:id="@+id/alarm_waktu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
-        android:text="05.30"
+        android:textColor="@color/light_blue"
         android:layout_below="@+id/lamp_name"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
-    <ImageView
-        android:id="@+id/repeat_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        android:src="@drawable/two_circling_arrows_yellow_32p"
-        android:layout_alignBottom="@+id/alarm_time"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
 </RelativeLayout>

@@ -10,23 +10,17 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
-import android.app.AlertDialog;
 import android.app.PendingIntent;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -105,6 +99,16 @@ public class AlarmDetail extends AppCompatActivity {
         submit_alarm=(Button) findViewById(R.id.submit_alarm);
         alarm_name = (EditText) findViewById(R.id.alarm_name);
 
+        condition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(condition.isChecked()){
+                    condition.setText("On");
+                }else if(!condition.isChecked()){
+                    condition.setText("Off");
+                }
+            }
+        });
         repeat_alarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,32 +120,36 @@ public class AlarmDetail extends AppCompatActivity {
                     friday.setChecked(true);
                     saturday.setChecked(true);
                     sunday.setChecked(true);
+                    repeat_alarm.setText("On");
+                }else if(!repeat_alarm.isChecked()){
+                    monday.setChecked(false);
+                    tuesday.setChecked(false);
+                    wednesday.setChecked(false);
+                    thursday.setChecked(false);
+                    friday.setChecked(false);
+                    saturday.setChecked(false);
+                    sunday.setChecked(false);
+                    repeat_alarm.setText("Off");
                 }
             }
         });
-
         lamp_name_arr = bridge.getResourceCache().getAllLights();
 
-        if(lamp_name_arr.isEmpty()){
-            SpinnerListAdapter adapter = new SpinnerListAdapter(this,null);
-            lamp_name_spinner.setAdapter(adapter);
-        }else {
-            SpinnerListAdapter adapter = new SpinnerListAdapter(this,lamp_name_arr);
-            lamp_name_spinner.setAdapter(adapter);
-            lamp_name_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    light = lamp_name_arr.get(i);
-                    choosen=light.getIdentifier();
-                    lamp_name_view.setText(choosen);
-                }
+        SpinnerListAdapter adapter = new SpinnerListAdapter(this,lamp_name_arr);
+        lamp_name_spinner.setAdapter(adapter);
+        lamp_name_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                light = lamp_name_arr.get(i);
+                choosen=light.getIdentifier();
+                lamp_name_view.setText(choosen);
+            }
 
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
-                }
-            });
-        }
+            }
+        });
 
         submit_alarm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,67 +217,8 @@ public class AlarmDetail extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_alarm_detail, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-        if(idAlarm == null){
-            MenuItem menuItem = menu.findItem(R.id.delete_alarm);
-            menuItem.setVisible(false);
-        }
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if(id == R.id.delete_alarm){
-            showDeleteConfirmationDialog();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void deleteAlarm(){
-        if(idAlarm != null){
-            bridge.removeSchedule(idAlarm,listener);
-        }
-        finish();
-    }
-
-    private void showDeleteConfirmationDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(R.string.delete_alarm_confirm);
-        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                deleteAlarm();
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                if (dialog != null) {
-                    dialog.dismiss();
-                }
-            }
-        });
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
-
     public void addSchedule(){
-        String namaAlarm = alarm_name.getText().toString().trim();
-
-        if(namaAlarm.isEmpty()){
-            phSchedule = new PHSchedule("Brightside Alarm");
-        }else {
-            phSchedule = new PHSchedule(namaAlarm);
-        }
+        phSchedule = new PHSchedule("Turn Off","Turn Off");
 
         state = new PHLightState();
 
@@ -277,41 +226,24 @@ public class AlarmDetail extends AppCompatActivity {
         phSchedule.setLocalTime(true);
         phSchedule.setDate(calendar.getTime());
 
+        AlarmManager alarmManager=(AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent intent_alarm=new Intent(getBaseContext(),AlarmReceiver.class);
+        PendingIntent pendingIntent=PendingIntent.getBroadcast(getBaseContext(),1,intent_alarm,0);
         if(repeat_alarm.isChecked()){
             phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_ALL_DAY.getValue());
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),86400000,pendingIntent);
         }else{
-            if(monday.isChecked()){
-                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_MONDAY.getValue());
-            }
-            if(tuesday.isChecked()){
-                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_TUESDAY.getValue());
-            }
-            if(wednesday.isChecked()){
-                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_WEDNESDAY.getValue());
-            }
-            if(thursday.isChecked()){
-                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_THURSDAY.getValue());
-            }
-            if(friday.isChecked()){
-                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_FRIDAY.getValue());
-            }
-            if(saturday.isChecked()){
-                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_SATURDAY.getValue());
-            }
-            if(sunday.isChecked()){
-                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_SUNDAY.getValue());
-            }
+            phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_MONDAY.RECURRING_TUESDAY.getValue());
+            alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
         }
 
-        if(condition.isChecked() == true){
+        if(condition.isChecked()){
             state.setOn(true);
             phSchedule.setLightState(state);
         }else {
             state.setOn(false);
             phSchedule.setLightState(state);
         }
-
-
 
         bridge.createSchedule(phSchedule,listener);
         finish();
