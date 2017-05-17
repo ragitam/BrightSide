@@ -100,8 +100,6 @@ public class AlarmDetail extends AppCompatActivity {
 
         calendar = Calendar.getInstance();
 
-        a =+ a;
-
         time_pick=(TimePicker) findViewById(R.id.time_pick);
         lamp_name_view=(TextView) findViewById(R.id.lamp_name_view);
         lamp_name_spinner=(Spinner) findViewById(R.id.lamp_name);
