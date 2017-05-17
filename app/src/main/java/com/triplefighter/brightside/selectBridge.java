@@ -35,6 +35,9 @@ public class selectBridge extends AppCompatActivity {
 
     private boolean lastSearchWasIPScan = false;
 
+    String lastIpAddress;
+    String lastUsername;
+
     private FirebaseAuth mAuth;
 
     @Override
@@ -80,8 +83,8 @@ public class selectBridge extends AppCompatActivity {
 
         // Try to automatically connect to the last known bridge.  For first time use this will be empty so a bridge search is automatically started.
         prefs = HueSharedPreferences.getInstance(getApplicationContext());
-        String lastIpAddress   = prefs.getLastConnectedIPAddress();
-        String lastUsername    = prefs.getUsername();
+        lastIpAddress   = prefs.getLastConnectedIPAddress();
+        lastUsername    = prefs.getUsername();
 
         if (lastIpAddress !=null && !lastIpAddress.equals("")) {
             PHAccessPoint lastAccessPoint = new PHAccessPoint();
@@ -261,4 +264,5 @@ public class selectBridge extends AppCompatActivity {
         }
         phHueSDK.disableAllHeartbeat();
     }
+
 }

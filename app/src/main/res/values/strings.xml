@@ -24,7 +24,8 @@
     <string name="txt_select_smartbridge">Please select a bridge to use for this app</string>
     <string name="title_error" translatable="false">Error</string>
 
-    <string name="eco_mode">Eco Mode</string>
+    <string name="eco_mode_on">Eco Mode On</string>
+    <string name="eco_mode_off">Eco Mode Off</string>
 
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="add_lamp">Add Lamp</string>
@@ -44,4 +45,11 @@
     <string name="enter_password">Enter your password!</string>
     <string name="password_length">Your password must be more than 6 characters</string>
     <string name="delete_alarm_menu">Delete Alarm</string>
+    <string name="light_serial">Insert Light Serial Here</string>
+
+    <string name="search_new_light">Search New Light</string>
+    <string name="search_serial_button">Search Light</string>
+    <string name="cancel_button">Cancel</string>
+
+    <string name="alarm_created_notif"> will be activated at </string>
 </resources>

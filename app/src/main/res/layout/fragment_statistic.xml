@@ -12,7 +12,7 @@
         android:layout_weight="1">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
@@ -20,7 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Usage"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/light_blue" />
             <TextView
@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="15"
-                android:textSize="50dp"
+                android:textSize="50sp"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/colorAccent"
                 android:layout_marginTop="10dp" />
@@ -42,7 +42,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="1">
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="Cost"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textColor="@color/light_blue" />
             <TextView
                 android:id="@+id/usage_cost"
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="16.260"
-                android:textSize="35dp"
+                android:textSize="35sp"
                 android:textColor="@color/colorAccent"
                 android:layout_marginTop="20dp" />
             <TextView
@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="Rupiah"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:textColor="@color/colorAccent" />
 
         </LinearLayout>
@@ -88,7 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Lamps On"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/light_blue" />
             <LinearLayout
@@ -102,7 +102,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="5"
-                    android:textSize="50dp"
+                    android:textSize="50sp"
                     android:layout_gravity="bottom"
                     android:textColor="@color/colorAccent"
                     android:layout_marginTop="10dp" />
@@ -110,7 +110,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="/"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:layout_gravity="bottom"
                     android:textColor="@color/light_blue"
                     android:layout_marginTop="10dp" />
@@ -119,7 +119,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="10"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:layout_gravity="bottom"
                     android:textColor="@color/light_blue"
                     android:layout_marginTop="10dp" />
@@ -136,7 +136,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="Status"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textColor="@color/light_blue" />
             <TextView
                 android:id="@+id/usage_status"
@@ -144,7 +144,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="Economic"
-                android:textSize="29dp"
+                android:textSize="29sp"
                 android:textColor="@color/colorAccent"
                 android:layout_marginTop="20dp" />
 

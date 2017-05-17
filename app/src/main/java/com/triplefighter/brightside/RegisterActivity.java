@@ -59,11 +59,14 @@ public class RegisterActivity extends AppCompatActivity {
                 final String passwd = pass.getText().toString().trim();
 
                 if(TextUtils.isEmpty(ema)){
-                    email.setError(String.valueOf(R.string.enter_email));
+                    email.setError(getText(R.string.enter_email));
+                    return;
                 }if(TextUtils.isEmpty(usernm)){
-                    username.setError(String.valueOf(R.string.enter_username));
+                    username.setError(getText(R.string.enter_username));
+                    return;
                 }if(TextUtils.isEmpty(passwd)){
-                    pass.setError(String.valueOf(R.string.enter_password));
+                    pass.setError(getText(R.string.enter_password));
+                    return;
                 }if(passwd.length() < 6){
                     progressDialog.cancel();
                     Toast.makeText(getApplicationContext(), R.string.password_length, Toast.LENGTH_SHORT).show();
@@ -72,6 +75,10 @@ public class RegisterActivity extends AppCompatActivity {
 
                 progressDialog.setMessage("Registering User");
                 progressDialog.show();
+
+                if(ema.isEmpty()){
+
+                }
 
                 mAuth.createUserWithEmailAndPassword(ema, passwd)
                         .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {

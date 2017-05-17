@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,6 +37,7 @@ import android.widget.Toast;
 
 import com.philips.lighting.hue.listener.PHScheduleListener;
 import com.philips.lighting.hue.sdk.PHHueSDK;
+import com.philips.lighting.hue.sdk.utilities.PHDateTimePattern;
 import com.philips.lighting.model.PHBridge;
 import com.philips.lighting.model.PHHueError;
 import com.philips.lighting.model.PHLight;
@@ -66,20 +68,29 @@ public class AlarmDetail extends AppCompatActivity {
     String choosen;
     int jam,menit;
 
-    String idAlarm;
+    String idAlarm, namaAlarm, jamIn, menitIn;
+    String nama;
 
     List<PHLight> lamp_name_arr;
+
+    int a = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm_detail);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         sdk = PHHueSDK.create();
         bridge = sdk.getInstance().getSelectedBridge();
 
         Intent in = getIntent();
         idAlarm = in.getStringExtra("idAlarm");
+        namaAlarm = in.getStringExtra("namaAlarm");
+        jamIn = in.getStringExtra("jam");
+        menitIn = in.getStringExtra("menit");
+
 
         if(idAlarm == null){
             getSupportActionBar().setTitle("Set Alarm");
@@ -88,6 +99,8 @@ public class AlarmDetail extends AppCompatActivity {
         }
 
         calendar = Calendar.getInstance();
+
+        a =+ a;
 
         time_pick=(TimePicker) findViewById(R.id.time_pick);
         lamp_name_view=(TextView) findViewById(R.id.lamp_name_view);
@@ -105,10 +118,25 @@ public class AlarmDetail extends AppCompatActivity {
         submit_alarm=(Button) findViewById(R.id.submit_alarm);
         alarm_name = (EditText) findViewById(R.id.alarm_name);
 
-        repeat_alarm.setOnClickListener(new View.OnClickListener() {
+        if(idAlarm != null){
+            alarm_name.setText(namaAlarm);
+        }
+
+        condition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (repeat_alarm.isChecked()){
+                if(condition.isChecked()){
+                    condition.setText("On");
+                }else if(!condition.isChecked()){
+                    condition.setText("Off");
+                }
+            }
+        });
+
+        repeat_alarm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
                     monday.setChecked(true);
                     tuesday.setChecked(true);
                     wednesday.setChecked(true);
@@ -116,9 +144,30 @@ public class AlarmDetail extends AppCompatActivity {
                     friday.setChecked(true);
                     saturday.setChecked(true);
                     sunday.setChecked(true);
+                    repeat_alarm.setText("On");
+                }else {
+                    monday.setChecked(false);
+                    tuesday.setChecked(false);
+                    wednesday.setChecked(false);
+                    thursday.setChecked(false);
+                    friday.setChecked(false);
+                    saturday.setChecked(false);
+                    sunday.setChecked(false);
+                    repeat_alarm.setText("Off");
                 }
             }
         });
+
+//        repeat_alarm.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (repeat_alarm.isChecked()){
+//
+//                }else if(!repeat_alarm.isChecked()){
+//
+//                }
+//            }
+//        });
 
         lamp_name_arr = bridge.getResourceCache().getAllLights();
 
@@ -133,6 +182,7 @@ public class AlarmDetail extends AppCompatActivity {
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     light = lamp_name_arr.get(i);
                     choosen=light.getIdentifier();
+                    nama = light.getName();
                     lamp_name_view.setText(choosen);
                 }
 
@@ -146,12 +196,15 @@ public class AlarmDetail extends AppCompatActivity {
         submit_alarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setAlarm();
+                namaAlarm = alarm_name.getText().toString().trim();
+                if(TextUtils.isEmpty(namaAlarm)){
+                    alarm_name.setError("Masukkan nama alarm");
+                }else {
+                    setAlarm();
+                }
             }
         });
     }
-
-
 
     public void setAlarm(){
         int currentApiVersion = android.os.Build.VERSION.SDK_INT;
@@ -167,19 +220,19 @@ public class AlarmDetail extends AppCompatActivity {
                 Log.d("def","besok2");
                 if(time_pick.getMinute()<10){
                     addSchedule();
-                    Toast.makeText(AlarmDetail.this,choosen+" akan menyala besok pada jam "+jam+":0"+menit,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AlarmDetail.this,nama +R.string.alarm_created_notif +" " +jam+":0"+menit,Toast.LENGTH_SHORT).show();
                 }else{
                     addSchedule();
-                    Toast.makeText(AlarmDetail.this,choosen+" akan menyala besok pada jam "+jam+":"+menit,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AlarmDetail.this,nama +R.string.alarm_created_notif +" " +jam+":"+menit,Toast.LENGTH_SHORT).show();
                 }
             }else{
                 Log.d("asd","besok");
                 if(time_pick.getMinute()<10){
                     addSchedule();
-                    Toast.makeText(AlarmDetail.this,choosen+" akan menyala pada jam "+jam+":0"+menit,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AlarmDetail.this,nama +R.string.alarm_created_notif +" " +jam+":0"+menit,Toast.LENGTH_SHORT).show();
                 }else{
                     addSchedule();
-                    Toast.makeText(AlarmDetail.this,choosen+" akan menyala pada jam "+jam+":"+menit,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AlarmDetail.this,nama +R.string.alarm_created_notif +" " +jam+":"+menit,Toast.LENGTH_SHORT).show();
                 }
             }
         }else {
@@ -191,22 +244,71 @@ public class AlarmDetail extends AppCompatActivity {
                 calendar.set(Calendar.DATE,1);
                 if(time_pick.getCurrentMinute()<10){
                     addSchedule();
-                    Toast.makeText(AlarmDetail.this,choosen+" akan menyala besok pada jam "+jam+":0"+menit,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AlarmDetail.this,nama +getText(R.string.alarm_created_notif) +" " +jam+":0"+menit,Toast.LENGTH_SHORT).show();
                 }else{
                     addSchedule();
-                    Toast.makeText(AlarmDetail.this,choosen+" akan menyala besok pada jam "+jam+":"+menit,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AlarmDetail.this,nama +getText(R.string.alarm_created_notif) +" " +jam+":"+menit,Toast.LENGTH_SHORT).show();
                 }
             }else{
                 if(time_pick.getCurrentMinute()<10){
                     addSchedule();
-                    Toast.makeText(AlarmDetail.this,choosen+" akan menyala pada jam "+jam+":0"+menit,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AlarmDetail.this,nama +getText(R.string.alarm_created_notif) +" " +jam+":0"+menit,Toast.LENGTH_SHORT).show();
                 }else{
                     addSchedule();
-                    Toast.makeText(AlarmDetail.this,choosen+" akan menyala pada jam "+jam+":"+menit,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AlarmDetail.this,nama +getText(R.string.alarm_created_notif) +" " +jam+":"+menit,Toast.LENGTH_SHORT).show();
                 }
             }
         }
+    }
 
+    public void addSchedule(){
+        phSchedule = new PHSchedule(namaAlarm,namaAlarm);
+        state = new PHLightState();
+
+        phSchedule.setLightIdentifier(choosen);
+        phSchedule.setStatus(PHSchedule.PHScheduleStatus.ENABLED);
+        phSchedule.setLocalTime(true);
+        phSchedule.setDate(calendar.getTime());
+
+
+        if(repeat_alarm.isChecked()){
+            phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_ALL_DAY.getValue());
+        }else{
+            if(monday.isChecked()){
+                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_MONDAY.getValue());
+            }else if(tuesday.isChecked()){
+                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_TUESDAY.getValue());
+            }
+            else if(wednesday.isChecked()){
+                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_WEDNESDAY.getValue());
+            }
+            else if(thursday.isChecked()){
+                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_THURSDAY.getValue());
+            }
+            else if(friday.isChecked()){
+                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_FRIDAY.getValue());
+            }
+            else if(saturday.isChecked()){
+                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_SATURDAY.getValue());
+            }
+            else if(sunday.isChecked()){
+                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_SUNDAY.getValue());
+            }
+        }
+
+        if(condition.isChecked() == true){
+            condition.setText("On");
+            state.setOn(true);
+            phSchedule.setLightState(state);
+        }else {
+            condition.setText("Off");
+            state.setOn(false);
+            phSchedule.setLightState(state);
+        }
+
+        bridge.createSchedule(phSchedule,listener);
+
+        finish();
     }
 
     @Override
@@ -262,70 +364,15 @@ public class AlarmDetail extends AppCompatActivity {
         alertDialog.show();
     }
 
-    public void addSchedule(){
-        String namaAlarm = alarm_name.getText().toString().trim();
-
-        if(namaAlarm.isEmpty()){
-            phSchedule = new PHSchedule("Brightside Alarm");
-        }else {
-            phSchedule = new PHSchedule(namaAlarm);
-        }
-
-        state = new PHLightState();
-
-        phSchedule.setLightIdentifier(choosen);
-        phSchedule.setLocalTime(true);
-        phSchedule.setDate(calendar.getTime());
-
-        if(repeat_alarm.isChecked()){
-            phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_ALL_DAY.getValue());
-        }else{
-            if(monday.isChecked()){
-                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_MONDAY.getValue());
-            }
-            if(tuesday.isChecked()){
-                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_TUESDAY.getValue());
-            }
-            if(wednesday.isChecked()){
-                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_WEDNESDAY.getValue());
-            }
-            if(thursday.isChecked()){
-                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_THURSDAY.getValue());
-            }
-            if(friday.isChecked()){
-                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_FRIDAY.getValue());
-            }
-            if(saturday.isChecked()){
-                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_SATURDAY.getValue());
-            }
-            if(sunday.isChecked()){
-                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_SUNDAY.getValue());
-            }
-        }
-
-        if(condition.isChecked() == true){
-            state.setOn(true);
-            phSchedule.setLightState(state);
-        }else {
-            state.setOn(false);
-            phSchedule.setLightState(state);
-        }
-
-
-
-        bridge.createSchedule(phSchedule,listener);
-        finish();
-    }
-
     PHScheduleListener listener = new PHScheduleListener() {
         @Override
         public void onCreated(PHSchedule phSchedule) {
-
+            Log.d("onCreated","alarm has been created");
         }
 
         @Override
         public void onSuccess() {
-
+            Log.d("onSuccess","alarm has been created");
         }
 
         @Override

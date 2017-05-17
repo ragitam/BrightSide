@@ -22,6 +22,8 @@ import com.philips.lighting.model.PHHueError;
 import com.philips.lighting.model.PHSchedule;
 import com.triplefighter.brightside.data.ScheduleListAdapter;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +39,8 @@ public class AlarmList extends Fragment {
     private ListView listJadwal;
     private View emptyView;
 
-    String namaAlarm;
+    String namaAlarm, idAlarm;
+
 
     public AlarmList() {
         // Required empty public constructor
@@ -73,9 +76,20 @@ public class AlarmList extends Fragment {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         phSchedule = jadwal.get(i);
-                        namaAlarm = phSchedule.getIdentifier();
+                        idAlarm = phSchedule.getIdentifier();
+                        namaAlarm = phSchedule.getName();
+
+                        DateFormat df = new SimpleDateFormat("HH");
+                        String jam = df.format(phSchedule.getDate());
+
+                        DateFormat dfo = new SimpleDateFormat("dd");
+                        String menit = dfo.format(phSchedule.getDate());
+
                         Intent in = new Intent(getActivity(),AlarmDetail.class);
-                        in.putExtra("idAlarm",namaAlarm);
+                        in.putExtra("idAlarm",idAlarm);
+                        in.putExtra("namaAlarm",namaAlarm);
+                        in.putExtra("jam",jam);
+                        in.putExtra("menit",menit);
                         startActivity(in);
                     }
                 });
@@ -109,25 +123,4 @@ public class AlarmList extends Fragment {
         }
     }
 
-    PHScheduleListener listener = new PHScheduleListener() {
-        @Override
-        public void onCreated(PHSchedule phSchedule) {
-
-        }
-
-        @Override
-        public void onSuccess() {
-
-        }
-
-        @Override
-        public void onError(int i, String s) {
-
-        }
-
-        @Override
-        public void onStateUpdate(Map<String, String> map, List<PHHueError> list) {
-
-        }
-    };
 }

@@ -44,7 +44,7 @@ public class Home extends Fragment {
 
     private List<PHLight> lampu;
     private ListView list;
-    TextView emptyLampText;
+    View emptyLamp;
 
     ArrayList<String> a;
 
@@ -63,17 +63,18 @@ public class Home extends Fragment {
         sdk = PHHueSDK.create();
         bridge = sdk.getInstance().getSelectedBridge();
 
-        emptyLampText = (TextView) v.findViewById(R.id.noLamp);
+        emptyLamp = v.findViewById(R.id.noLamp);
+        list = (ListView)v.findViewById(R.id.listLampu);
+        list.setEmptyView(emptyLamp);
 
         if(bridge == null){
             AlertDialogWizard.showErrorDialog(getActivity(), "No Bridge Found", R.string.btn_ok);
-            emptyLampText.setVisibility(View.VISIBLE);
         }else {
             lampu = bridge.getResourceCache().getAllLights();
+
             if(lampu.isEmpty()){
-                emptyLampText.setVisibility(View.VISIBLE);
+                list.setEmptyView(emptyLamp);
             }else {
-                emptyLampText.setVisibility(View.GONE);
                 for (int pos = 0; pos < lampu.size(); pos++){
                     light = lampu.get(pos);
                     String b = light.getName();
@@ -85,7 +86,6 @@ public class Home extends Fragment {
 
                 adapter = new LampuListAdapter(getActivity().getApplicationContext(),lampu);
 
-                list = (ListView)v.findViewById(R.id.listLampu);
                 list.setAdapter(adapter);
             }
         }
@@ -96,22 +96,24 @@ public class Home extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        lampu = bridge.getResourceCache().getAllLights();
+        adapter = new LampuListAdapter(getActivity().getApplicationContext(),lampu);
         if(lampu.isEmpty()) {
-            emptyLampText.setVisibility(View.VISIBLE);
+            list.setEmptyView(emptyLamp);
         }else {
-            emptyLampText.setVisibility(View.GONE);
-            adapter.updateDate(lampu);
+            list.setAdapter(adapter);
         }
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        lampu = bridge.getResourceCache().getAllLights();
+        adapter = new LampuListAdapter(getActivity().getApplicationContext(),lampu);
         if(lampu.isEmpty()) {
-            emptyLampText.setVisibility(View.VISIBLE);
+            list.setEmptyView(emptyLamp);
         }else {
-            emptyLampText.setVisibility(View.GONE);
-            adapter.updateDate(lampu);
+            list.setAdapter(adapter);
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.triplefighter.brightside;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -15,17 +16,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ToggleButton;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.philips.lighting.hue.listener.PHLightListener;
 import com.philips.lighting.hue.sdk.PHHueSDK;
 import com.philips.lighting.model.PHBridge;
+import com.philips.lighting.model.PHBridgeConfiguration;
+import com.philips.lighting.model.PHBridgeResource;
+import com.philips.lighting.model.PHHueError;
+import com.philips.lighting.model.PHLight;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    ToggleButton power_but;
-
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     private ViewPager mViewPager;
@@ -34,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
     private PHHueSDK sdk;
     private PHBridge bridge;
+    private PHBridgeConfiguration config;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,10 +84,31 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.add_lamp) {
             LayoutInflater layoutInflater= LayoutInflater.from(MainActivity.this);
             View view=layoutInflater.inflate(R.layout.add_lamp_dialog,null);
-            AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+            final AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle(R.string.search_new_light);
             builder.setView(view);
-            AlertDialog alertDialog=builder.create();
-            alertDialog.show();
+
+            final EditText editText = (EditText) view.findViewById(R.id.input_serial);
+
+            builder.setPositiveButton(R.string.search_serial_button, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    String serial = editText.getText().toString();
+                    List<String> serialLamp = new ArrayList<String>();
+                    serialLamp.add(serial);
+
+                    bridge.findNewLightsWithSerials(serialLamp,listener);
+                }
+            });
+
+            builder.setNegativeButton(R.string.cancel_button, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.cancel();
+                }
+            });
+
+            builder.show();
             return true;
         }else if(id==R.id.wifi){
             startActivity(new Intent(getApplicationContext(),selectBridge.class));
@@ -127,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                 case 0:
                     return "Home";
                 case 1:
-                    return "Alarm";
+                    return "Timer";
                 case 2:
                     return "Statistic";
             }
@@ -164,5 +195,37 @@ public class MainActivity extends AppCompatActivity {
             return rootView;
         }
     }
+
+    PHLightListener listener = new PHLightListener() {
+        @Override
+        public void onReceivingLightDetails(PHLight phLight) {
+
+        }
+
+        @Override
+        public void onReceivingLights(List<PHBridgeResource> list) {
+
+        }
+
+        @Override
+        public void onSearchComplete() {
+
+        }
+
+        @Override
+        public void onSuccess() {
+
+        }
+
+        @Override
+        public void onError(int i, String s) {
+
+        }
+
+        @Override
+        public void onStateUpdate(Map<String, String> map, List<PHHueError> list) {
+
+        }
+    };
 
 }

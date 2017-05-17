@@ -10,4 +10,5 @@
     <color name="red">#f73c3c</color>
     <color name="light_blue">#4eafb8</color>
     <color name="transparent">#00000000</color>
+    <color name="unused">#5d5d5e00</color>
 </resources>
