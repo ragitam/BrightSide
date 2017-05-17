@@ -99,6 +99,28 @@ public class AlarmList extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        jadwal = bridge.getResourceCache().getAllSchedules(true);
+        adapter = new ScheduleListAdapter(getActivity(),jadwal);
+        if(jadwal.isEmpty()){
+            listJadwal.setEmptyView(emptyView);
+        }else {
+            listJadwal.setAdapter(adapter);
+        }
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        jadwal = bridge.getResourceCache().getAllSchedules(true);
+        adapter = new ScheduleListAdapter(getActivity(),jadwal);
+        if(jadwal.isEmpty()){
+            listJadwal.setEmptyView(emptyView);
+        }else {
+            listJadwal.setAdapter(adapter);
+        }
+    }
 
 }
