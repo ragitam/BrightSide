@@ -17,6 +17,8 @@ public class AccessPointListAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private List<PHAccessPoint> accessPoints;
 
+    public static String namaBridge;
+
     class BridgeListItem {
         private TextView bridgeIp;
         private TextView bridgeMac;
@@ -46,6 +48,7 @@ public class AccessPointListAdapter extends BaseAdapter {
             item = (BridgeListItem) convertView.getTag();
         }
         PHAccessPoint accessPoint = accessPoints.get(position);
+        namaBridge = accessPoint.getBridgeId();
         item.bridgeName.setTextColor(Color.BLACK);
         item.bridgeName.setText(accessPoint.getBridgeId());
         item.bridgeIp.setTextColor(Color.BLACK);
