@@ -17,14 +17,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ToggleButton;
+import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.philips.lighting.hue.listener.PHBridgeConfigurationListener;
 import com.philips.lighting.hue.listener.PHLightListener;
 import com.philips.lighting.hue.sdk.PHHueSDK;
 import com.philips.lighting.model.PHBridge;
+import com.philips.lighting.model.PHBridgeConfiguration;
 import com.philips.lighting.model.PHBridgeResource;
 import com.philips.lighting.model.PHHueError;
 import com.philips.lighting.model.PHLight;
@@ -34,8 +36,6 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    ToggleButton power_but;
-
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     private ViewPager mViewPager;
@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     private PHHueSDK sdk;
     private PHBridge bridge;
+    private PHBridgeConfiguration config;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +122,11 @@ public class MainActivity extends AppCompatActivity {
             Intent i=new Intent(this,AlarmDetail.class);
             startActivity(i);
             return true;
+        }else if(id == R.id.clean_up){
+            config = new PHBridgeConfiguration();
+            config.setReboot(true);
+            bridge.updateBridgeConfigurations(config,configListener);
+            startActivity(new Intent(this,selectBridge.class));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -158,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
                 case 0:
                     return "Home";
                 case 1:
-                    return "Timer";
+                    return "Alarm";
                 case 2:
                     return "Statistic";
             }
@@ -209,6 +215,28 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onSearchComplete() {
+
+        }
+
+        @Override
+        public void onSuccess() {
+
+        }
+
+        @Override
+        public void onError(int i, String s) {
+
+        }
+
+        @Override
+        public void onStateUpdate(Map<String, String> map, List<PHHueError> list) {
+
+        }
+    };
+
+    PHBridgeConfigurationListener configListener = new PHBridgeConfigurationListener() {
+        @Override
+        public void onReceivingConfiguration(PHBridgeConfiguration phBridgeConfiguration) {
 
         }
 

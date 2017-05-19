@@ -61,17 +61,17 @@ public class LoginActivity extends AppCompatActivity {
                 final String password = passwd.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
-                    ema.setError(getText(R.string.enter_email));
+                    ema.setError("Masukkan Alamat Email!");
                     return;
-                }if (TextUtils.isEmpty(password)) {
-                    passwd.setError(getText(R.string.enter_password));
+                }
+                if (TextUtils.isEmpty(password)) {
+                    passwd.setError("Masukkan Password!");
                     return;
                 }
                 if (password.length() < 6) {
                     progressDialog.cancel();
                     Toast.makeText(LoginActivity.this, "Password minimum 6 kata!", Toast.LENGTH_SHORT).show();
                 }
-
 
                 progressDialog.setMessage("Please Wait");
                 progressDialog.show();
