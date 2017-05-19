@@ -265,4 +265,39 @@ public class selectBridge extends AppCompatActivity {
         phHueSDK.disableAllHeartbeat();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (lastIpAddress !=null && !lastIpAddress.equals("")) {
+            PHAccessPoint lastAccessPoint = new PHAccessPoint();
+            lastAccessPoint.setIpAddress(lastIpAddress);
+            lastAccessPoint.setUsername(lastUsername);
+
+            if (!phHueSDK.isAccessPointConnected(lastAccessPoint)) {
+                AlertDialogWizard.getInstance().showProgressDialog(R.string.connecting, selectBridge.this);
+                phHueSDK.connect(lastAccessPoint);
+            }
+        }
+        else {
+            doBridgeSearch();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (lastIpAddress !=null && !lastIpAddress.equals("")) {
+            PHAccessPoint lastAccessPoint = new PHAccessPoint();
+            lastAccessPoint.setIpAddress(lastIpAddress);
+            lastAccessPoint.setUsername(lastUsername);
+
+            if (!phHueSDK.isAccessPointConnected(lastAccessPoint)) {
+                AlertDialogWizard.getInstance().showProgressDialog(R.string.connecting, selectBridge.this);
+                phHueSDK.connect(lastAccessPoint);
+            }
+        }
+        else {
+            doBridgeSearch();
+        }
+    }
 }

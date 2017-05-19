@@ -66,10 +66,9 @@ public class AlarmDetail extends AppCompatActivity {
     CheckBox monday,tuesday,wednesday,thursday,friday,saturday,sunday;
 
     String choosen;
-    int jam,menit;
+
 
     String idAlarm, namaAlarm, jamIn, menitIn;
-    String nama;
 
     List<PHLight> lamp_name_arr;
 
@@ -79,8 +78,6 @@ public class AlarmDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm_detail);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         sdk = PHHueSDK.create();
         bridge = sdk.getInstance().getSelectedBridge();
@@ -99,6 +96,8 @@ public class AlarmDetail extends AppCompatActivity {
         }
 
         calendar = Calendar.getInstance();
+
+        a =+ a;
 
         time_pick=(TimePicker) findViewById(R.id.time_pick);
         lamp_name_view=(TextView) findViewById(R.id.lamp_name_view);
@@ -130,11 +129,10 @@ public class AlarmDetail extends AppCompatActivity {
                 }
             }
         });
-
-        repeat_alarm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        repeat_alarm.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
+            public void onClick(View view) {
+                if (repeat_alarm.isChecked()){
                     monday.setChecked(true);
                     tuesday.setChecked(true);
                     wednesday.setChecked(true);
@@ -143,7 +141,7 @@ public class AlarmDetail extends AppCompatActivity {
                     saturday.setChecked(true);
                     sunday.setChecked(true);
                     repeat_alarm.setText("On");
-                }else {
+                }else if(!repeat_alarm.isChecked()){
                     monday.setChecked(false);
                     tuesday.setChecked(false);
                     wednesday.setChecked(false);
@@ -155,17 +153,6 @@ public class AlarmDetail extends AppCompatActivity {
                 }
             }
         });
-
-//        repeat_alarm.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (repeat_alarm.isChecked()){
-//
-//                }else if(!repeat_alarm.isChecked()){
-//
-//                }
-//            }
-//        });
 
         lamp_name_arr = bridge.getResourceCache().getAllLights();
 
@@ -180,7 +167,6 @@ public class AlarmDetail extends AppCompatActivity {
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     light = lamp_name_arr.get(i);
                     choosen=light.getIdentifier();
-                    nama = light.getName();
                     lamp_name_view.setText(choosen);
                 }
 
@@ -206,8 +192,11 @@ public class AlarmDetail extends AppCompatActivity {
 
     public void setAlarm(){
         int currentApiVersion = android.os.Build.VERSION.SDK_INT;
-        int cur_hour=calendar.get(Calendar.HOUR);
-        int cur_minute=calendar.get(Calendar.MINUTE);
+        int jam,menit;
+        int cur_minute, cur_hour;
+        cur_hour = calendar.get(Calendar.HOUR);
+        cur_minute = calendar.get(Calendar.MINUTE);
+
         if(currentApiVersion>android.os.Build.VERSION_CODES.LOLLIPOP_MR1){
             calendar.set(Calendar.HOUR_OF_DAY,time_pick.getHour());
             calendar.set(Calendar.MINUTE,time_pick.getMinute());
@@ -218,19 +207,19 @@ public class AlarmDetail extends AppCompatActivity {
                 Log.d("def","besok2");
                 if(time_pick.getMinute()<10){
                     addSchedule();
-                    Toast.makeText(AlarmDetail.this,nama +R.string.alarm_created_notif +" " +jam+":0"+menit,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AlarmDetail.this,choosen+" akan menyala besok pada jam "+jam+":0"+menit,Toast.LENGTH_SHORT).show();
                 }else{
                     addSchedule();
-                    Toast.makeText(AlarmDetail.this,nama +R.string.alarm_created_notif +" " +jam+":"+menit,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AlarmDetail.this,choosen+" akan menyala besok pada jam "+jam+":"+menit,Toast.LENGTH_SHORT).show();
                 }
             }else{
                 Log.d("asd","besok");
                 if(time_pick.getMinute()<10){
                     addSchedule();
-                    Toast.makeText(AlarmDetail.this,nama +R.string.alarm_created_notif +" " +jam+":0"+menit,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AlarmDetail.this,choosen+" akan menyala pada jam "+jam+":0"+menit,Toast.LENGTH_SHORT).show();
                 }else{
                     addSchedule();
-                    Toast.makeText(AlarmDetail.this,nama +R.string.alarm_created_notif +" " +jam+":"+menit,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AlarmDetail.this,choosen+" akan menyala pada jam "+jam+":"+menit,Toast.LENGTH_SHORT).show();
                 }
             }
         }else {
@@ -242,71 +231,22 @@ public class AlarmDetail extends AppCompatActivity {
                 calendar.set(Calendar.DATE,1);
                 if(time_pick.getCurrentMinute()<10){
                     addSchedule();
-                    Toast.makeText(AlarmDetail.this,nama +getText(R.string.alarm_created_notif) +" " +jam+":0"+menit,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AlarmDetail.this,choosen+" akan menyala besok pada jam "+jam+":0"+menit,Toast.LENGTH_SHORT).show();
                 }else{
                     addSchedule();
-                    Toast.makeText(AlarmDetail.this,nama +getText(R.string.alarm_created_notif) +" " +jam+":"+menit,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AlarmDetail.this,choosen+" akan menyala besok pada jam "+jam+":"+menit,Toast.LENGTH_SHORT).show();
                 }
             }else{
                 if(time_pick.getCurrentMinute()<10){
                     addSchedule();
-                    Toast.makeText(AlarmDetail.this,nama +getText(R.string.alarm_created_notif) +" " +jam+":0"+menit,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AlarmDetail.this,choosen+" akan menyala pada jam "+jam+":0"+menit,Toast.LENGTH_SHORT).show();
                 }else{
                     addSchedule();
-                    Toast.makeText(AlarmDetail.this,nama +getText(R.string.alarm_created_notif) +" " +jam+":"+menit,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AlarmDetail.this,choosen+" akan menyala pada jam "+jam+":"+menit,Toast.LENGTH_SHORT).show();
                 }
             }
         }
-    }
 
-    public void addSchedule(){
-        phSchedule = new PHSchedule(namaAlarm,namaAlarm);
-        state = new PHLightState();
-
-        phSchedule.setLightIdentifier(choosen);
-        phSchedule.setStatus(PHSchedule.PHScheduleStatus.ENABLED);
-        phSchedule.setLocalTime(true);
-        phSchedule.setDate(calendar.getTime());
-
-
-        if(repeat_alarm.isChecked()){
-            phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_ALL_DAY.getValue());
-        }else{
-            if(monday.isChecked()){
-                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_MONDAY.getValue());
-            }else if(tuesday.isChecked()){
-                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_TUESDAY.getValue());
-            }
-            else if(wednesday.isChecked()){
-                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_WEDNESDAY.getValue());
-            }
-            else if(thursday.isChecked()){
-                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_THURSDAY.getValue());
-            }
-            else if(friday.isChecked()){
-                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_FRIDAY.getValue());
-            }
-            else if(saturday.isChecked()){
-                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_SATURDAY.getValue());
-            }
-            else if(sunday.isChecked()){
-                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_SUNDAY.getValue());
-            }
-        }
-
-        if(condition.isChecked() == true){
-            condition.setText("On");
-            state.setOn(true);
-            phSchedule.setLightState(state);
-        }else {
-            condition.setText("Off");
-            state.setOn(false);
-            phSchedule.setLightState(state);
-        }
-
-        bridge.createSchedule(phSchedule,listener);
-
-        finish();
     }
 
     @Override
@@ -360,6 +300,57 @@ public class AlarmDetail extends AppCompatActivity {
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    public void addSchedule(){
+        phSchedule = new PHSchedule(namaAlarm,namaAlarm);
+
+        state = new PHLightState();
+
+        phSchedule.setLightIdentifier(choosen);
+        phSchedule.setLocalTime(true);
+        phSchedule.setDate(calendar.getTime());
+
+
+        if(repeat_alarm.isChecked()){
+            phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_ALL_DAY.getValue());
+        }else{
+            if(monday.isChecked()){
+                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_MONDAY.getValue());
+            }else if(tuesday.isChecked()){
+                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_TUESDAY.getValue());
+            }
+            else if(wednesday.isChecked()){
+                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_WEDNESDAY.getValue());
+            }
+            else if(thursday.isChecked()){
+                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_THURSDAY.getValue());
+            }
+            else if(friday.isChecked()){
+                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_FRIDAY.getValue());
+            }
+            else if(saturday.isChecked()){
+                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_SATURDAY.getValue());
+            }
+            else if(sunday.isChecked()){
+                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_SUNDAY.getValue());
+            }
+        }
+
+        if(condition.isChecked() == true){
+            condition.setText("On");
+            state.setOn(true);
+            phSchedule.setLightState(state);
+        }else {
+            condition.setText("Off");
+            state.setOn(false);
+            phSchedule.setLightState(state);
+        }
+
+            phSchedule.setStatus(PHSchedule.PHScheduleStatus.ENABLED);
+            bridge.createSchedule(phSchedule,listener);
+
+        finish();
     }
 
     PHScheduleListener listener = new PHScheduleListener() {
