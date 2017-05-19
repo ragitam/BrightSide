@@ -20,7 +20,10 @@
         </menu>
     </item>
 
+    <item android:id="@+id/clean_up"
+        android:title="@string/clean_up"/>
 
     <item android:id="@+id/logOut"
-        android:title="Sign Out"/>
+        android:title="@string/sign_out"/>
+
 </menu>
