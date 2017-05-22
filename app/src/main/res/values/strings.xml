@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">Brightside</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings" translatable="false">Settings</string>
     <string name="action_wifi" translatable="false">WiFi</string>
     <string name="username" translatable="false">Username</string>
     <string name="pass" translatable="false">Password</string>
@@ -8,52 +8,53 @@
     <string name="sign_in" translatable="false">Sign In</string>
     <string name="email" translatable="false">Email</string>
     <string name="Sign_up" translatable="false">Sign Up</string>
-    <string name="connecting">Connecting ...</string>
+    <string name="connecting" translatable="false">Connecting ...</string>
     <string name="search_progress" translatable="false">Searching ...</string>
     <string name="btn_ok" translatable="false">Ok</string>
-    <string name="could_not_find_bridge">Hue cannot find your bridge. Please check that it is connected to the same Wi-Fi router as your app and press</string>
+    <string name="could_not_find_bridge" translatable="false">Hue cannot find your bridge. Please check that it is connected to the same Wi-Fi router as your app and press</string>
     <string name="btn_more" translatable="false">More</string>
     <string name="btn_reconnect" translatable="false">Reconnect</string>
-    <string name="menu_find_bridge">Find new Bridge</string>
+    <string name="menu_find_bridge" translatable="false">Find new Bridge</string>
     <string name="menu_refresh" translatable="false">Refresh</string>
-    <string name="btn_retry">Retry</string>
-    <string name="searching_for_bridges">Searching for Bridges</string>
-    <string name="txt_selectbridges">Available Access Points</string>
+    <string name="btn_retry" translatable="false">Retry</string>
+    <string name="searching_for_bridges" translatable="false">Searching for Bridges</string>
+    <string name="txt_selectbridges" translatable="false">Available Access Points</string>
     <string name="txt_pushlink" translatable="false">Pushlink</string>
-    <string name="press_pushlink_button">Press the link button on the bridge</string>
-    <string name="txt_select_smartbridge">Please select a bridge to use for this app</string>
+    <string name="press_pushlink_button" translatable="false">Press the link button on the bridge</string>
+    <string name="txt_select_smartbridge" translatable="false">Please select a bridge to use for this app</string>
     <string name="title_error" translatable="false">Error</string>
 
-    <string name="eco_mode_on">Eco Mode On</string>
-    <string name="eco_mode_off">Eco Mode Off</string>
+    <string name="eco_mode_on" translatable="false">Eco Mode On</string>
+    <string name="eco_mode_off" translatable="false">Eco Mode Off</string>
 
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
-    <string name="add_lamp">Add Lamp</string>
-    <string name="add_alarm">Add Timer</string>
-    <string name="no_alarm_text">There is no timer here. Please Add timer first</string>
-    <string name="no_lamp_text">There is no lamp here. Please Add lamp first</string>
+    <string name="add_lamp" translatable="false">Add Lamp</string>
+    <string name="add_alarm" translatable="false">Add Timer</string>
+    <string name="no_alarm_text" translatable="false">There is no timer here. Please Add timer first</string>
+    <string name="no_lamp_text" translatable="false">There is no lamp here. Please Add lamp first</string>
 
-    <string name="delete_alarm_confirm">Are you sure want to delete this timer?</string>
+    <string name="delete_alarm_confirm" translatable="false">Are you sure want to delete this timer?</string>
     <string name="delete_alarm_success" translatable="false">has been deleted.</string>
 
-    <string name="user_not_found">Error: could not fetch user.</string>
+    <string name="user_not_found" translatable="false">Error: could not fetch user.</string>
 
-    <string name="password_weak">Sorry your password is too weak</string>
-    <string name="invalid_email">Sorry your email is invalid</string>
-    <string name="email_used">Sorry your email has been registered</string>
-    <string name="success_regis">Your account successfully registered</string>
-    <string name="enter_email">Enter your email!</string>
-    <string name="enter_username">Enter your username!</string>
-    <string name="enter_password">Enter your password!</string>
-    <string name="password_length">Your password must be more than 6 characters</string>
-    <string name="delete_alarm_menu">Delete Timer</string>
-    <string name="light_serial">Insert Light Serial Here</string>
+    <string name="password_weak" translatable="false">Sorry your password is too weak</string>
+    <string name="invalid_email" translatable="false">Sorry your email is invalid</string>
+    <string name="email_used" translatable="false">Sorry your email has been registered</string>
+    <string name="success_regis" translatable="false">Your account successfully registered</string>
+    <string name="enter_email" translatable="false">Enter your email!</string>
+    <string name="enter_username" translatable="false">Enter your username!</string>
+    <string name="enter_password" translatable="false">Enter your password!</string>
+    <string name="password_length" translatable="false">Your password must be more than 6 characters</string>
+    <string name="delete_alarm_menu" translatable="false">Delete Timer</string>
+    <string name="light_serial" translatable="false">Insert Light Serial Here</string>
 
-    <string name="search_new_light">Search New Light</string>
-    <string name="search_serial_button">Search Light</string>
+    <string name="search_new_light" translatable="false">Search New Light</string>
+    <string name="search_serial_button" translatable="false">Search Light</string>
     <string name="cancel_button" translatable="false">Cancel</string>
 
-    <string name="alarm_created_notif"> will be activated at </string>
+    <string name="alarm_created_notif" translatable="false"> will be activated at </string>
     <string name="sign_out" translatable="false">Sign Out</string>
     <string name="clean_up" translatable="false">Clean Up Bridge</string>
+    <string name="about" translatable="false">About</string>
 </resources>

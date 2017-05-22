@@ -23,7 +23,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.philips.lighting.hue.sdk.PHHueSDK;
 import com.philips.lighting.model.PHBridge;
 import com.philips.lighting.model.PHLight;
-import com.triplefighter.brightside.Model.DataStatistic;
 import com.triplefighter.brightside.Model.UserInformation;
 import com.triplefighter.brightside.data.AccessPointListAdapter;
 import com.triplefighter.brightside.data.LampuListAdapter;
@@ -171,7 +170,7 @@ public class Statistic extends Fragment {
         }
     };
 
-    public void storeData(float usage_total, int biaya){
+    /*public void storeData(float usage_total, int biaya){
         String namaBridge = AccessPointListAdapter.namaBridge;
         String key = mDatabase.child("stats").child(namaBridge).push().getKey();
         DataStatistic post = new DataStatistic(usage_total,biaya);
@@ -181,5 +180,5 @@ public class Statistic extends Fragment {
         childUpdates.put("/stats/" + key, postValues);
 
         mDatabase.updateChildren(childUpdates);
-    }
+    }*/
 }

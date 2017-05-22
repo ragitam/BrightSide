@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.triplefighter.brightside.About"
+    android:background="@drawable/bg">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:src="@drawable/about_apps"
+            android:layout_marginBottom="-10dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:padding="@dimen/activity_horizontal_margin"
+            android:text="In this application, you can apply eficiency of light using. Using this apps you can turn on and turn off the light, adjust brightness for the light, adjust timer for the light, and also you can see usage statistic of the light. You can choose 3 Modes that provided, Eco Mode, Sleep Mode and None Mode."/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:src="@drawable/developer"
+            android:layout_marginBottom="-30dp"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/info_avriza"
+            android:layout_marginBottom="-30dp"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/info_agita"
+            android:layout_marginBottom="-30dp" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/info_difa" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="-30dp"
+            android:src="@drawable/supervisor"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/info_pakbroto"
+            android:layout_marginBottom="-30dp" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/info_pakrahmadi" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="126dp"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:src="@drawable/tass"
+                android:layout_weight="0.31" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="57dp"
+                android:layout_height="65dp"
+                android:src="@drawable/prodi" />
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="11sp"
+            android:gravity="center"
+            android:text="Copyright © 2016 Prodi D3 Teknik Informatika
+Fakultas Ilmu Terapan – Universitas Telkom"/>
+    </LinearLayout>
+
+
+</ScrollView>

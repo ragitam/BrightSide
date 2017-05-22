@@ -127,6 +127,8 @@ public class MainActivity extends AppCompatActivity {
             config.setReboot(true);
             bridge.updateBridgeConfigurations(config,configListener);
             startActivity(new Intent(this,selectBridge.class));
+        }else if(id == R.id.about){
+            startActivity(new Intent(this, About.class));
         }
         return super.onOptionsItemSelected(item);
     }

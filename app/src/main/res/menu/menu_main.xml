@@ -22,7 +22,8 @@
 
     <item android:id="@+id/clean_up"
         android:title="@string/clean_up"/>
-
+    <item android:id="@+id/about"
+        android:title="@string/about"/>
     <item android:id="@+id/logOut"
         android:title="@string/sign_out"/>
 
