@@ -11,36 +11,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.philips.lighting.hue.sdk.PHHueSDK;
 import com.philips.lighting.model.PHBridge;
 import com.philips.lighting.model.PHLight;
-import com.triplefighter.brightside.Model.DataStatistic;
-import com.triplefighter.brightside.Model.UserInformation;
-import com.triplefighter.brightside.data.AccessPointListAdapter;
 import com.triplefighter.brightside.data.LampuListAdapter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.triplefighter.brightside.data.LampuListAdapter.arr_hour;
 import static com.triplefighter.brightside.data.LampuListAdapter.arr_intentsity;
 
 public class Statistic extends Fragment {
     private TextView usageText, costText, statusText;
-
-    private DatabaseReference mDatabase;
-    private FirebaseAuth mAuth;
 
     int position = 0;
     public static int lampuNyala = 0, hour_total=0, j;
@@ -70,9 +54,6 @@ public class Statistic extends Fragment {
         lampuNyala = LampuListAdapter.lampu_nyala;
 
         preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        mAuth = FirebaseAuth.getInstance();
 
         TextView total = (TextView) v.findViewById(R.id.lamps_total);
         total.setText(String.valueOf(totalLampu));
@@ -124,38 +105,17 @@ public class Statistic extends Fragment {
         }
     }
 
-    private Runnable updateTimerThread = new Runnable()
-    {
+    private Runnable updateTimerThread = new Runnable() {
         public void run() {
             usageAndCost();
             status();
 
-            final int biaya = (int) usage_cost;
+            int biaya = (int) usage_cost;
             editor = preferences.edit();
-//            editor.putString("usage", String.valueOf(usage_total));
-//            editor.putString("cost", String.valueOf(biaya));
-//            editor.putString("status",status);
-//            editor.apply();
-
-//            FirebaseUser user = mAuth.getCurrentUser();
-//            final String userId = user.getUid();
-//            mDatabase.child("Data User").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(DataSnapshot dataSnapshot) {
-//                    UserInformation user = dataSnapshot.getValue(UserInformation.class);
-//
-//                    if (user == null) {
-//                        Toast.makeText(getContext(), getText(R.string.user_not_found), Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        storeData(usage_total,biaya);
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(DatabaseError databaseError) {
-//
-//                }
-//            });
+            editor.putString("usage", String.valueOf(usage_total));
+            editor.putString("cost", String.valueOf(biaya));
+            editor.putString("status",status);
+            editor.apply();
 
             customHandler.postDelayed(this, 1000);
         }
@@ -170,16 +130,4 @@ public class Statistic extends Fragment {
             showStats.postDelayed(this, 1000);
         }
     };
-
-    public void storeData(float usage_total, int biaya){
-        String namaBridge = AccessPointListAdapter.namaBridge;
-        String key = mDatabase.child("stats").child(namaBridge).push().getKey();
-        DataStatistic post = new DataStatistic(usage_total,biaya);
-        Map<String, Object> postValues = post.toMap();
-
-        Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/stats/" + key, postValues);
-
-        mDatabase.updateChildren(childUpdates);
-    }
 }

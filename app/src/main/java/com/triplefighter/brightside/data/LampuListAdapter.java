@@ -140,7 +140,7 @@ public class LampuListAdapter extends BaseAdapter {
                 x= (float) persen/100;
                 arr_intentsity[position]= (float) (7.9836*Math.pow(x,3)-3.3322*Math.pow(x,2)+3.0089*x+1.3604)/1000;
             }
-        }else {
+        }else if(kondisiLampu == false){
             item.power_but.setChecked(false);
             if(lampu_nyala > 0){
                 lampu_nyala--;
@@ -210,7 +210,6 @@ public class LampuListAdapter extends BaseAdapter {
                     if(adaLampu == true || kondisiLampu == false){
                         lampu_nyala++;
                         state.setOn(true);
-                        state.setBrightness(light.getLastKnownLightState().getBrightness());
                         bridge.updateLightState(light,state);
                         status = state.isOn();
                         Log.v("coba","status " +status);
@@ -286,25 +285,25 @@ public class LampuListAdapter extends BaseAdapter {
                     finalItem1.power_but.setChecked(true);
                     state.setOn(true);
                     bridge.updateLightState(light,state,phLightListener);
-                }else if(i == R.id.eco_mode) {
+                }else if(i == R.id.eco_mode){
                     PHSchedule schedule;
                     Calendar cal = Calendar.getInstance();
 
                     int a = cal.get(Calendar.HOUR_OF_DAY);
 
-                    Log.d("coba", "jam " + a);
-                    if (a > 17 || a < 6) {
+                    Log.d("coba","jam " +a);
+                    if(a > 17 || a < 6){
                         schedule = new PHSchedule(String.valueOf(R.string.eco_mode_on));
                         cal.set(Calendar.SECOND, 0);
                         cal.set(Calendar.MINUTE, 0);
-                        cal.set(Calendar.HOUR_OF_DAY, 18);
+                        cal.set(Calendar.HOUR_OF_DAY,18);
 
                         int bright = 191;
                         finalItem1.brightness.setProgress(bright);
-                        int persen = (bright * 100 / 254);
-                        x = (float) persen / 100;
-                        arr_intentsity[position] = (float) (7.9836 * Math.pow(x, 3) - 3.3322 * Math.pow(x, 2) + 3.0089 * x + 1.3604) / 1000;
-                        finalItem1.brightness_num.setText(persen + "%");
+                        int persen = (bright*100/254);
+                        x= (float) persen/100;
+                        arr_intentsity[position]= (float) (7.9836*Math.pow(x,3)-3.3322*Math.pow(x,2)+3.0089*x+1.3604)/1000;
+                        finalItem1.brightness_num.setText(persen +"%");
                         finalItem1.brightness.setOnTouchListener(new View.OnTouchListener() {
                             @Override
                             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -321,19 +320,19 @@ public class LampuListAdapter extends BaseAdapter {
                         schedule.setStatus(PHSchedule.PHScheduleStatus.ENABLED);
                         schedule.setDate(cal.getTime());
 
-                        bridge.createSchedule(schedule, listener);
-                    } else if (a > 5 || a < 18) {
+                        bridge.createSchedule(schedule,listener);
+                    }else if(a > 5 || a < 18){
                         schedule = new PHSchedule(String.valueOf(R.string.eco_mode_off));
                         cal.set(Calendar.SECOND, 0);
                         cal.set(Calendar.MINUTE, 0);
-                        cal.set(Calendar.HOUR_OF_DAY, 6);
+                        cal.set(Calendar.HOUR_OF_DAY,6);
 
                         int bright = 191;
                         finalItem1.brightness.setProgress(bright);
-                        int persen = (bright * 100 / 254);
-                        x = (float) persen / 100;
-                        arr_intentsity[position] = (float) (7.9836 * Math.pow(x, 3) - 3.3322 * Math.pow(x, 2) + 3.0089 * x + 1.3604) / 1000;
-                        finalItem1.brightness_num.setText(persen + "%");
+                        int persen = (bright*100/254);
+                        x= (float) persen/100;
+                        arr_intentsity[position]= (float) (7.9836*Math.pow(x,3)-3.3322*Math.pow(x,2)+3.0089*x+1.3604)/1000;
+                        finalItem1.brightness_num.setText(persen +"%");
                         finalItem1.brightness.setOnTouchListener(new View.OnTouchListener() {
                             @Override
                             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -351,9 +350,10 @@ public class LampuListAdapter extends BaseAdapter {
                         schedule.setStatus(PHSchedule.PHScheduleStatus.ENABLED);
                         schedule.setDate(cal.getTime());
 
-                        bridge.createSchedule(schedule, listener);
+                        bridge.createSchedule(schedule,listener);
                     }
                 }
+
             }
         });
 
@@ -361,6 +361,28 @@ public class LampuListAdapter extends BaseAdapter {
     }
 
     PHScheduleListener listener = new PHScheduleListener() {
+        @Override
+        public void onCreated(PHSchedule phSchedule) {
+            Log.d("onCreated","eco mode has been created");
+        }
+
+        @Override
+        public void onSuccess() {
+            Log.d("onSuccess","eco mode has been created");
+        }
+
+        @Override
+        public void onError(int i, String s) {
+
+        }
+
+        @Override
+        public void onStateUpdate(Map<String, String> map, List<PHHueError> list) {
+
+        }
+    };
+
+    PHScheduleListener listener2 = new PHScheduleListener() {
         @Override
         public void onCreated(PHSchedule phSchedule) {
             Log.d("onCreated","eco mode has been created");
@@ -413,4 +435,6 @@ public class LampuListAdapter extends BaseAdapter {
 
         }
     };
+
+
 }

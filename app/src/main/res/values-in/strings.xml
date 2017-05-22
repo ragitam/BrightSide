@@ -14,18 +14,4 @@
     <string name="success_regis">Akun anda telah terdaftar</string>
     <string name="txt_select_smartbridge">Pilih bridge yang akan digunakan</string>
     <string name="txt_selectbridges">Akses point yang tersedia</string>
-    <string name="action_settings">Pengaturan</string>
-    <string name="add_alarm">Tambah Timer</string>
-    <string name="alarm_created_notif">" akan aktif pada "</string>
-    <string name="connecting">Menghubungkan</string>
-    <string name="could_not_find_bridge">Hue tidak dapat mencari bridge. Pastikan anda terhubung pada Wi-Fi yang sama.</string>
-    <string name="delete_alarm_confirm">Anda yakin ingin menghapus timer?</string>
-    <string name="delete_alarm_menu">Hapus Timer</string>
-    <string name="light_serial">Masukkan Serial Lampu</string>
-    <string name="menu_find_bridge" translatable="false">Cari Bridge Baru</string>
-    <string name="no_alarm_text">Tidak ada timer yang tersedia. Silahkan tambah terlebih dahulu</string>
-    <string name="no_lamp_text">Tidak ada lampu yang tersedia. Silahkan tambah terlebih dahulu</string>
-    <string name="search_new_light">Cari Lampu Baru</string>
-    <string name="search_serial_button">Cari Lampu</string>
-    <string name="searching_for_bridges">Mencari Bridge</string>
 </resources>
