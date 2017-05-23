@@ -2,7 +2,7 @@ package com.triplefighter.brightside.Model;
 
 public class UserInformation {
 
-    private String username, email;
+    public String username, email;
 
     public UserInformation() {
     }

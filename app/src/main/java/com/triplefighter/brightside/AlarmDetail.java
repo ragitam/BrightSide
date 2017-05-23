@@ -93,9 +93,10 @@ public class AlarmDetail extends AppCompatActivity {
 
 
         if(idAlarm == null){
-            getSupportActionBar().setTitle("Set Alarm");
+            getSupportActionBar().setTitle(getText(R.string.set_timer_title));
+            invalidateOptionsMenu();
         }else {
-            getSupportActionBar().setTitle("Edit Alarm");
+            getSupportActionBar().setTitle(getText(R.string.edit_timer_title));
         }
 
         calendar = Calendar.getInstance();
@@ -155,17 +156,6 @@ public class AlarmDetail extends AppCompatActivity {
                 }
             }
         });
-
-//        repeat_alarm.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (repeat_alarm.isChecked()){
-//
-//                }else if(!repeat_alarm.isChecked()){
-//
-//                }
-//            }
-//        });
 
         lamp_name_arr = bridge.getResourceCache().getAllLights();
 
@@ -304,7 +294,15 @@ public class AlarmDetail extends AppCompatActivity {
             phSchedule.setLightState(state);
         }
 
-        bridge.createSchedule(phSchedule,listener);
+        if(idAlarm == null){
+            phSchedule.setStatus(PHSchedule.PHScheduleStatus.ENABLED);
+            bridge.createSchedule(phSchedule,listener);
+        }else {
+            phSchedule.setStatus(PHSchedule.PHScheduleStatus.ENABLED);
+            bridge.updateSchedule(phSchedule,listener);
+        }
+
+
 
         finish();
     }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Brightside</string>
+    <string name="app_name">Brightside</string>
     <string name="action_settings" translatable="false">Settings</string>
     <string name="action_wifi" translatable="false">WiFi</string>
     <string name="username" translatable="false">Username</string>
@@ -52,4 +52,10 @@
     <string name="cancel_button">Cancel</string>
 
     <string name="alarm_created_notif"> will be activated at </string>
+    <string name="clean_up" translatable="false">Clean Up Bridge</string>
+    <string name="about" translatable="false">About</string>
+    <string name="sign_out" translatable="false">Sign Out</string>
+
+    <string name="set_timer_title">Set Timer</string>
+    <string name="edit_timer_title">Edit Timer</string>
 </resources>

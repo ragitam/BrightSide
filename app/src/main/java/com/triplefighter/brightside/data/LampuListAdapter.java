@@ -138,7 +138,7 @@ public class LampuListAdapter extends BaseAdapter {
                 item.brightness_num.setText(persen +"%");
 
                 x= (float) persen/100;
-                arr_intentsity[position]= (float) (7.9836*Math.pow(x,3)-3.3322*Math.pow(x,2)+3.0089*x+1.3604)/1000;
+                arr_intentsity[position]= (float) (7.9836*Math.pow(x,3)-3.3322*Math.pow(x,2)+3.0089*x+1.3604)/360000;
             }
         }else if(kondisiLampu == false){
             item.power_but.setChecked(false);
@@ -187,7 +187,7 @@ public class LampuListAdapter extends BaseAdapter {
                 int persen = (seekBar.getProgress()*100/254);
                 if(persen>0){
                     x= (float) persen/100;
-                    arr_intentsity[position]= (float) (7.9836*Math.pow(x,3)-3.3322*Math.pow(x,2)+3.0089*x+1.3604)/1000;
+                    arr_intentsity[position]= (float) (7.9836*Math.pow(x,3)-3.3322*Math.pow(x,2)+3.0089*x+1.3604)/360000;
                     if(finalItem3.power_but.isChecked() == false){
                         arr_intentsity[position] = 0;
                     }
@@ -225,7 +225,7 @@ public class LampuListAdapter extends BaseAdapter {
                             finalItem2.brightness_num.setText(persen +"%");
 
                             x= (float) persen/100;
-                            arr_intentsity[position]= (float) (7.9836*Math.pow(x,3)-3.3322*Math.pow(x,2)+3.0089*x+1.3604)/1000;
+                            arr_intentsity[position]= (float) (7.9836*Math.pow(x,3)-3.3322*Math.pow(x,2)+3.0089*x+1.3604)/360000;
                         }
 
                         arr_hour[position]=arr_hour[position]+1;
@@ -257,7 +257,7 @@ public class LampuListAdapter extends BaseAdapter {
                     finalItem1.brightness.setProgress(bright);
                     int persen = (bright*100/254);
                     x= (float) persen/100;
-                    arr_intentsity[position]= (float) (7.9836*Math.pow(x,3)-3.3322*Math.pow(x,2)+3.0089*x+1.3604)/1000;
+                    arr_intentsity[position]= (float) (7.9836*Math.pow(x,3)-3.3322*Math.pow(x,2)+3.0089*x+1.3604)/360000;
                     finalItem1.brightness_num.setText(persen +"%");
                     finalItem1.brightness.setOnTouchListener(new View.OnTouchListener() {
                         @Override
@@ -302,7 +302,7 @@ public class LampuListAdapter extends BaseAdapter {
                         finalItem1.brightness.setProgress(bright);
                         int persen = (bright*100/254);
                         x= (float) persen/100;
-                        arr_intentsity[position]= (float) (7.9836*Math.pow(x,3)-3.3322*Math.pow(x,2)+3.0089*x+1.3604)/1000;
+                        arr_intentsity[position]= (float) (7.9836*Math.pow(x,3)-3.3322*Math.pow(x,2)+3.0089*x+1.3604)/360000;
                         finalItem1.brightness_num.setText(persen +"%");
                         finalItem1.brightness.setOnTouchListener(new View.OnTouchListener() {
                             @Override
@@ -331,7 +331,7 @@ public class LampuListAdapter extends BaseAdapter {
                         finalItem1.brightness.setProgress(bright);
                         int persen = (bright*100/254);
                         x= (float) persen/100;
-                        arr_intentsity[position]= (float) (7.9836*Math.pow(x,3)-3.3322*Math.pow(x,2)+3.0089*x+1.3604)/1000;
+                        arr_intentsity[position]= (float) (7.9836*Math.pow(x,3)-3.3322*Math.pow(x,2)+3.0089*x+1.3604)/360000;
                         finalItem1.brightness_num.setText(persen +"%");
                         finalItem1.brightness.setOnTouchListener(new View.OnTouchListener() {
                             @Override
@@ -361,28 +361,6 @@ public class LampuListAdapter extends BaseAdapter {
     }
 
     PHScheduleListener listener = new PHScheduleListener() {
-        @Override
-        public void onCreated(PHSchedule phSchedule) {
-            Log.d("onCreated","eco mode has been created");
-        }
-
-        @Override
-        public void onSuccess() {
-            Log.d("onSuccess","eco mode has been created");
-        }
-
-        @Override
-        public void onError(int i, String s) {
-
-        }
-
-        @Override
-        public void onStateUpdate(Map<String, String> map, List<PHHueError> list) {
-
-        }
-    };
-
-    PHScheduleListener listener2 = new PHScheduleListener() {
         @Override
         public void onCreated(PHSchedule phSchedule) {
             Log.d("onCreated","eco mode has been created");

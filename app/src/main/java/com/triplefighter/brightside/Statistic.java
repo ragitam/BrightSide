@@ -11,14 +11,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.philips.lighting.hue.sdk.PHHueSDK;
 import com.philips.lighting.model.PHBridge;
 import com.philips.lighting.model.PHLight;
+import com.triplefighter.brightside.Model.DataStatistic;
+import com.triplefighter.brightside.Model.UserInformation;
+import com.triplefighter.brightside.data.AccessPointListAdapter;
 import com.triplefighter.brightside.data.LampuListAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.triplefighter.brightside.data.LampuListAdapter.arr_hour;
 import static com.triplefighter.brightside.data.LampuListAdapter.arr_intentsity;
@@ -26,10 +39,19 @@ import static com.triplefighter.brightside.data.LampuListAdapter.arr_intentsity;
 public class Statistic extends Fragment {
     private TextView usageText, costText, statusText;
 
+    private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
+    private DatabaseReference statsReference;
+    private ValueEventListener statsListener;
+
+    static String key;
+    String namaBridge;
+    int biaya = 0;
+
     int position = 0;
     public static int lampuNyala = 0, hour_total=0, j;
     public float usage_total=0,usage_cost=0;
-    double stats_usage=0;
+    double stats_usage=0,temp_stats=0;
     String status;
 
     SharedPreferences preferences;
@@ -55,6 +77,14 @@ public class Statistic extends Fragment {
 
         preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
+        //namaBridge = AccessPointListAdapter.namaBridge;
+        namaBridge = "coba123";
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+
+        key = "myBridgeStats";
+
         TextView total = (TextView) v.findViewById(R.id.lamps_total);
         total.setText(String.valueOf(totalLampu));
 
@@ -71,9 +101,10 @@ public class Statistic extends Fragment {
         total.setTypeface(mTypeFace);
         statusText.setTypeface(mTypeFace);
 
-        usageText.setText(preferences.getString("usage",""));
-        costText.setText("Rp " +preferences.getString("cost",""));
-        statusText.setText(preferences.getString("status",""));
+        biaya = (int) usage_cost;
+
+        usageText.setText(String.valueOf(usage_total));
+        costText.setText(String.valueOf(biaya));
 
         customHandler.postDelayed(updateTimerThread, 0);
         showStats.postDelayed(show,0);
@@ -82,40 +113,75 @@ public class Statistic extends Fragment {
     }
 
     public void usageAndCost() {
-        for (int i = 0; i< arr_intentsity.length; i++){
-            usage_total=usage_total+arr_intentsity[i];
-            usage_cost= (float) (usage_cost+(arr_intentsity[i]*1467.28));
-        }
+        if(lampuNyala>0){
+            for (int i=0;i<arr_intentsity.length;i++){
+                usage_total=usage_total+arr_intentsity[i];
+                usage_cost= (float) (usage_cost+(arr_intentsity[i]*1467.28));
+                stats_usage=stats_usage+arr_intentsity[i];
+            }
+            temp_stats=stats_usage/lampuNyala;
 
-        Log.d("statistik","harga : " +usage_cost);
+            // tambahin kodingan buat ngirim data ke firebase
+        }
     }
 
     public void status(){
-        hour_total=0;
-        for(j=0;j<arr_hour.length;j++){
-            hour_total=hour_total+arr_hour[j];
-        }
-        stats_usage=(double) usage_total*hour_total*30/2;
-        if(stats_usage<2.5){
-            status = "Hemat";
-        }else if(stats_usage>=2.5 && stats_usage<=5){
-            status = "Normal";
-        }else if(stats_usage>5){
-            status = "Boros";
+        //stats_usage=(double) usage_total*hour_total*30/2;
+        if(temp_stats<0.04){
+            statusText.setText("Hemat");
+        }else if(temp_stats>=0.04 && temp_stats<=0.084){
+            statusText.setText("Normal");
+        }else if(temp_stats>0.084){
+            statusText.setText("Boros");
         }
     }
 
-    private Runnable updateTimerThread = new Runnable() {
+    private Runnable updateTimerThread = new Runnable()
+    {
         public void run() {
-            usageAndCost();
-            status();
+            FirebaseUser user = mAuth.getCurrentUser();
+            final String userId = user.getUid();
+            mDatabase.child("Data User").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    UserInformation user = dataSnapshot.getValue(UserInformation.class);
 
-            int biaya = (int) usage_cost;
-            editor = preferences.edit();
-            editor.putString("usage", String.valueOf(usage_total));
-            editor.putString("cost", String.valueOf(biaya));
-            editor.putString("status",status);
-            editor.apply();
+                    if (user == null) {
+                        Toast.makeText(getContext(), "username not found", Toast.LENGTH_SHORT).show();
+                    } else {
+                        FirebaseDatabase.getInstance().getReference().child("stats").child(namaBridge).child(key)
+                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        DataStatistic a = dataSnapshot.getValue(DataStatistic.class);
+
+                                        Log.d("dataSnapshot","isi " +dataSnapshot);
+
+                                        if(a == null){
+                                            storeData(usage_total,usage_cost);
+                                        }else {
+                                            //showData();
+                                            usageAndCost();
+                                            status();
+                                            storeData(usage_total,usage_cost);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+
 
             customHandler.postDelayed(this, 1000);
         }
@@ -130,4 +196,66 @@ public class Statistic extends Fragment {
             showStats.postDelayed(this, 1000);
         }
     };
+
+    public void storeData(float usage_total, float biaya){
+        DataStatistic post = new DataStatistic(usage_total,biaya);
+        Map<String, Object> postValues = post.toMap();
+
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put("/stats/" +namaBridge +"/" + key, postValues);
+
+        mDatabase.updateChildren(childUpdates);
+        Log.d("dataSnapshot","upload");
+    }
+
+    public void showData(){
+        statsReference = FirebaseDatabase.getInstance().getReference().child("stats").child(namaBridge).child(key);
+
+        statsReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                DataStatistic post = dataSnapshot.getValue(DataStatistic.class);
+                // [START_EXCLUDE]
+
+                if(post == null){
+                    usageText.setText("0");
+                    costText.setText("0");
+                }else{
+
+                    usage_total = post.getUsage();
+                    usage_cost = post.getCost();
+
+                    Log.d("stats","onDataChange " +usage_total);
+                    Log.d("stats","onDataChange " +usage_cost);
+
+                    String a = String.valueOf(post.usage);
+                    biaya = (int) post.cost;
+                    String b = String.valueOf(biaya);
+                    usageText.setText(a);
+                    costText.setText(b);
+
+                    Log.d("dataSnapshot","retrieve");
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getContext(), "Failed to load post.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        showData();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        showData();
+    }
 }

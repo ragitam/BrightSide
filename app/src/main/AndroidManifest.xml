@@ -34,6 +34,7 @@
         <activity android:name=".PushBridgeActivity" />
         <activity android:name=".AlarmDetail" android:parentActivityName=".MainActivity">
         </activity>
+        <activity android:name=".About"/>
         <receiver android:name=".AlarmReceiver"></receiver>
 
     </application>
