@@ -51,6 +51,8 @@ public class RegisterActivity extends AppCompatActivity {
         email.setTypeface(mTypeFace);
         username.setTypeface(mTypeFace);
         pass.setTypeface(mTypeFace);
+
+        //Melakukan proses Registrasi user
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,13 +60,17 @@ public class RegisterActivity extends AppCompatActivity {
                 final String usernm = username.getText().toString().trim();
                 final String passwd = pass.getText().toString().trim();
 
+                //Pengecekan data inputan apakah kosong atau tidak
                 if(TextUtils.isEmpty(ema)){
                     email.setError(String.valueOf(R.string.enter_email));
                 }if(TextUtils.isEmpty(usernm)){
                     username.setError(String.valueOf(R.string.enter_username));
                 }if(TextUtils.isEmpty(passwd)){
                     pass.setError(String.valueOf(R.string.enter_password));
-                }if(passwd.length() < 6){
+                }
+
+                //Pengecekan apakah password terdiri dari 6 karakter atau tidak
+                if(passwd.length() < 6){
                     progressDialog.cancel();
                     Toast.makeText(getApplicationContext(), R.string.password_length, Toast.LENGTH_SHORT).show();
                     return;
@@ -73,28 +79,35 @@ public class RegisterActivity extends AppCompatActivity {
                 progressDialog.setMessage("Registering User");
                 progressDialog.show();
 
+                //Melakukan proses registrasi dan menyimpan data user ke database
                 mAuth.createUserWithEmailAndPassword(ema, passwd)
                         .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
+
+                                //Jika data inputan tidak valid
                                 if (!task.isSuccessful()) {
                                     progressDialog.cancel();
-
                                     try {
                                         throw task.getException();
                                     } catch(FirebaseAuthWeakPasswordException e) {
+                                        //Password yg digunakan terlalu lemah
                                         Toast.makeText(RegisterActivity.this, R.string.password_weak,
                                                 Toast.LENGTH_SHORT).show();
                                     } catch(FirebaseAuthInvalidCredentialsException e) {
+                                        //Email yg digunakan adalah email yg tidak valid
                                         Toast.makeText(RegisterActivity.this, R.string.invalid_email,
                                                 Toast.LENGTH_SHORT).show();
                                     } catch(FirebaseAuthUserCollisionException e) {
+                                        //Email telah terdaftar
                                         Toast.makeText(RegisterActivity.this, R.string.email_used,
                                                 Toast.LENGTH_SHORT).show();
                                     } catch(Exception e) {
                                         Log.e("Register", e.getMessage());
                                     }
-                                }else{
+                                }
+                                //Jika data valid maka data akan tersimpan ke database dan kembali ke menu Log In
+                                else{
                                     UserInformation userInformation = new UserInformation(ema, usernm);
 
                                     FirebaseUser user = mAuth.getCurrentUser();

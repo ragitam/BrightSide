@@ -72,6 +72,16 @@ public class AlarmList extends Fragment {
                 adapter = new ScheduleListAdapter(getActivity().getApplicationContext(),jadwal);
                 listJadwal.setAdapter(adapter);
 
+                for(int i = 0; i < jadwal.size(); i++){
+                    phSchedule = jadwal.get(i);
+                    Log.d("timer","hari " +phSchedule.getRecurringDays());
+                    Log.d("timer","nama " +phSchedule.getName());
+                    Log.d("timer","status lampu " +phSchedule.getLightState().isOn());
+                    Log.d("timer","status " +phSchedule.getStatus());
+                    Log.d("timer","lampu id " +phSchedule.getLightIdentifier());
+                    Log.d("timer","local " +phSchedule.getLocalTime());
+                }
+
                 listJadwal.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

@@ -11,6 +11,6 @@
         android:id="@+id/input_serial"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Light Serial"/>
+        android:hint="@string/add_lamp_hint"/>
 
 </LinearLayout>

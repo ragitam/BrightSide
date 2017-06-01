@@ -46,6 +46,8 @@ public class selectBridge extends AppCompatActivity {
         setContentView(R.layout.activity_select_bridge);
 
         mAuth = FirebaseAuth.getInstance();
+
+        //Pengecekan apakah user telah Log In atau belum
         FirebaseUser user = mAuth.getCurrentUser();
         if(user == null){
             startActivity(new Intent(this, LoginActivity.class));
@@ -61,6 +63,8 @@ public class selectBridge extends AppCompatActivity {
         adapter = new AccessPointListAdapter(getApplicationContext(), phHueSDK.getAccessPointsFound());
 
         ListView accessPointList = (ListView) findViewById(R.id.listBridge);
+
+        //Memilih salah satu bridge yg akan digunakan
         accessPointList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -101,6 +105,7 @@ public class selectBridge extends AppCompatActivity {
         }
     }
 
+    //Melakukan pencarian bridge
     public void doBridgeSearch() {
         AlertDialogWizard.getInstance().showProgressDialog(R.string.search_progress, selectBridge.this);
         PHBridgeSearchManager sm = (PHBridgeSearchManager) phHueSDK.getSDKService(PHHueSDK.SEARCH_BRIDGE);
@@ -108,6 +113,7 @@ public class selectBridge extends AppCompatActivity {
         sm.search(true, true);
     }
 
+    //Apabila telah terhubung dengan bridge yg dipilih sebelumnya maka akan langsung masuk ke menu selanjutnya
     public void startMainActivity() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -227,8 +233,6 @@ public class selectBridge extends AppCompatActivity {
                         }
                     });
                 }
-
-
             }
         }
 
@@ -265,39 +269,5 @@ public class selectBridge extends AppCompatActivity {
         phHueSDK.disableAllHeartbeat();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (lastIpAddress !=null && !lastIpAddress.equals("")) {
-            PHAccessPoint lastAccessPoint = new PHAccessPoint();
-            lastAccessPoint.setIpAddress(lastIpAddress);
-            lastAccessPoint.setUsername(lastUsername);
 
-            if (!phHueSDK.isAccessPointConnected(lastAccessPoint)) {
-                AlertDialogWizard.getInstance().showProgressDialog(R.string.connecting, selectBridge.this);
-                phHueSDK.connect(lastAccessPoint);
-            }
-        }
-        else {
-            doBridgeSearch();
-        }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (lastIpAddress !=null && !lastIpAddress.equals("")) {
-            PHAccessPoint lastAccessPoint = new PHAccessPoint();
-            lastAccessPoint.setIpAddress(lastIpAddress);
-            lastAccessPoint.setUsername(lastUsername);
-
-            if (!phHueSDK.isAccessPointConnected(lastAccessPoint)) {
-                AlertDialogWizard.getInstance().showProgressDialog(R.string.connecting, selectBridge.this);
-                phHueSDK.connect(lastAccessPoint);
-            }
-        }
-        else {
-            doBridgeSearch();
-        }
-    }
 }

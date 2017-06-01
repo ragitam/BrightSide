@@ -26,6 +26,7 @@ import com.philips.lighting.model.PHLight;
 import com.triplefighter.brightside.Model.DataStatistic;
 import com.triplefighter.brightside.Model.UserInformation;
 import com.triplefighter.brightside.data.AccessPointListAdapter;
+import com.triplefighter.brightside.data.HueSharedPreferences;
 import com.triplefighter.brightside.data.LampuListAdapter;
 
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public class Statistic extends Fragment {
     private FirebaseAuth mAuth;
     private DatabaseReference statsReference;
     private ValueEventListener statsListener;
+    private HueSharedPreferences prefs;
 
     static String key;
     String namaBridge;
@@ -76,9 +78,11 @@ public class Statistic extends Fragment {
         lampuNyala = LampuListAdapter.lampu_nyala;
 
         preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        prefs = HueSharedPreferences.getInstance(getContext());
 
         //namaBridge = AccessPointListAdapter.namaBridge;
-        namaBridge = "coba123";
+
+        namaBridge = Home.namaBridge;
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
@@ -189,10 +193,7 @@ public class Statistic extends Fragment {
 
     private Runnable show = new Runnable() {
         public void run() {
-            int biaya = (int) usage_cost;
-            usageText.setText(preferences.getString("usage",""));
-            costText.setText("Rp " +preferences.getString("cost",""));
-            statusText.setText(preferences.getString("status",""));
+            showData();
             showStats.postDelayed(this, 1000);
         }
     };

@@ -1,5 +1,6 @@
 package com.triplefighter.brightside;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.util.Log;
+import android.widget.ProgressBar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,6 +32,7 @@ import com.philips.lighting.model.PHBridgeConfiguration;
 import com.philips.lighting.model.PHBridgeResource;
 import com.philips.lighting.model.PHHueError;
 import com.philips.lighting.model.PHLight;
+import com.triplefighter.brightside.data.HueSharedPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,10 +40,11 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    private HueSharedPreferences prefs;
 
     private ViewPager mViewPager;
     private FirebaseAuth mAuth;
-    private DatabaseReference ref, reff;
+    ProgressDialog dialog;
 
     private PHHueSDK sdk;
     private PHBridge bridge;
@@ -53,9 +57,14 @@ public class MainActivity extends AppCompatActivity {
 
         sdk = PHHueSDK.create();
         bridge = sdk.getInstance().getSelectedBridge();
+        config = new PHBridgeConfiguration();
+
+        Log.d("nama Main","bridge " +config.getBridgeID());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        dialog = new ProgressDialog(this);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
@@ -83,34 +92,9 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.add_lamp) {
-            LayoutInflater layoutInflater= LayoutInflater.from(MainActivity.this);
-            View view=layoutInflater.inflate(R.layout.add_lamp_dialog,null);
-            final AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
-            builder.setTitle(R.string.search_new_light);
-            builder.setView(view);
-
-            final EditText editText = (EditText) view.findViewById(R.id.input_serial);
-
-            builder.setPositiveButton(R.string.search_serial_button, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    String serial = editText.getText().toString();
-                    List<String> serialLamp = new ArrayList<String>();
-                    serialLamp.add(serial);
-
-                    bridge.findNewLightsWithSerials(serialLamp,listener);
-                }
-            });
-
-            builder.setNegativeButton(R.string.cancel_button, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.cancel();
-                }
-            });
-
-            builder.show();
-            return true;
+            bridge.findNewLights(listener);
+            dialog.setMessage("Please Wait");
+            dialog.show();
         }else if(id==R.id.wifi){
             startActivity(new Intent(getApplicationContext(),selectBridge.class));
             return true;
@@ -123,10 +107,15 @@ public class MainActivity extends AppCompatActivity {
             startActivity(i);
             return true;
         }else if(id == R.id.clean_up){
-            config = new PHBridgeConfiguration();
+            dialog.setMessage("Please Wait");
+            dialog.show();
             config.setReboot(true);
             bridge.updateBridgeConfigurations(config,configListener);
-        }else if(id == R.id.about){
+            dialog.cancel();
+        }else if(id == R.id.delete_light){
+            startActivity(new Intent(this,DeleteLightActivity.class));
+        }
+        else if(id == R.id.about){
             startActivity(new Intent(this, About.class));
         }
         return super.onOptionsItemSelected(item);
@@ -165,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
                 case 0:
                     return "Home";
                 case 1:
-                    return "Alarm";
+                    return "Timer";
                 case 2:
                     return "Statistic";
             }
@@ -206,22 +195,28 @@ public class MainActivity extends AppCompatActivity {
     PHLightListener listener = new PHLightListener() {
         @Override
         public void onReceivingLightDetails(PHLight phLight) {
-
+            String nama = phLight.getName();
+            Log.d("coba","nama " +nama);
+            Log.d("success","success");
+            dialog.cancel();
         }
 
         @Override
         public void onReceivingLights(List<PHBridgeResource> list) {
-
+            Log.d("success","success");
+            dialog.cancel();
         }
 
         @Override
         public void onSearchComplete() {
-
+            Log.d("success","success");
+            dialog.cancel();
         }
 
         @Override
         public void onSuccess() {
-
+            Log.d("success","success");
+            dialog.cancel();
         }
 
         @Override
@@ -238,22 +233,25 @@ public class MainActivity extends AppCompatActivity {
     PHBridgeConfigurationListener configListener = new PHBridgeConfigurationListener() {
         @Override
         public void onReceivingConfiguration(PHBridgeConfiguration phBridgeConfiguration) {
-
+            Log.d("config", "updated");
+            Log.d("config", "updated" +bridge.getResourceCache().getBridgeConfiguration().isReboot());
         }
 
         @Override
         public void onSuccess() {
-
+            Log.d("config", "updated");
+            Log.d("config", "updated" +bridge.getResourceCache().getBridgeConfiguration().isReboot());
         }
 
         @Override
         public void onError(int i, String s) {
-
+            Log.d("config", "failed");
         }
 
         @Override
         public void onStateUpdate(Map<String, String> map, List<PHHueError> list) {
-
+            Log.d("config", "updated");
+            Log.d("config", "updated" +bridge.getResourceCache().getBridgeConfiguration().isReboot());
         }
     };
 

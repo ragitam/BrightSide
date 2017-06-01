@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.util.Log;
 
 import com.philips.lighting.hue.sdk.PHAccessPoint;
 import com.triplefighter.brightside.R;
@@ -49,6 +50,7 @@ public class AccessPointListAdapter extends BaseAdapter {
         }
         PHAccessPoint accessPoint = accessPoints.get(position);
         namaBridge = accessPoint.getBridgeId();
+        Log.d("nama","bridge " +accessPoint.getBridgeId());
         item.bridgeName.setTextColor(Color.BLACK);
         item.bridgeName.setText(accessPoint.getBridgeId());
         item.bridgeIp.setTextColor(Color.BLACK);

@@ -28,13 +28,15 @@
     <string name="eco_mode_off">Eco Mode Off</string>
 
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
-    <string name="add_lamp">Add Lamp</string>
-    <string name="add_alarm">Add Alarm</string>
+    <string name="add_lamp">Add Light</string>
+    <string name="add_alarm">Add Timer</string>
     <string name="no_alarm_text">There is no alarm here. Please Add alarm first</string>
     <string name="no_lamp_text">There is no lamp here. Please Add lamp first</string>
 
     <string name="delete_alarm_confirm">Are you sure want to delete this alarm?</string>
+    <string name="delete_light_confirm">Are you sure want to delete this light?</string>
     <string name="delete_alarm_success">has been deleted.</string>
+    <string name="delete_light_success">has been deleted.</string>
 
     <string name="password_weak">Sorry your password is too weak</string>
     <string name="invalid_email">Sorry your email is invalid</string>
@@ -44,12 +46,16 @@
     <string name="enter_username">Enter your username!</string>
     <string name="enter_password">Enter your password!</string>
     <string name="password_length">Your password must be more than 6 characters</string>
+    <string name="login_failed_notif">Log In Failed, Please Try Again</string>
     <string name="delete_alarm_menu">Delete Alarm</string>
     <string name="light_serial">Insert Light Serial Here</string>
 
     <string name="search_new_light">Search New Light</string>
     <string name="search_serial_button">Search Light</string>
     <string name="cancel_button">Cancel</string>
+    <string name="delete_button">Delete</string>
+
+    <string name="timer_name">Please add timer name</string>
 
     <string name="alarm_created_notif"> will be activated at </string>
     <string name="clean_up" translatable="false">Clean Up Bridge</string>
@@ -58,4 +64,6 @@
 
     <string name="set_timer_title">Set Timer</string>
     <string name="edit_timer_title">Edit Timer</string>
+    <string name="delete_lamp_title">Delete Light</string>
+    <string name="add_lamp_hint">Light Serial</string>
 </resources>

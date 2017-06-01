@@ -56,7 +56,7 @@ public class AlarmDetail extends AppCompatActivity {
 
     TimePicker time_pick;
     AlarmManager alarmManager;
-    Calendar calendar;
+    private Calendar calendar;
     Spinner lamp_name_spinner;
     TextView lamp_name_view;
     Switch repeat_alarm;
@@ -68,7 +68,7 @@ public class AlarmDetail extends AppCompatActivity {
     String choosen;
     int jam,menit;
 
-    String idAlarm, namaAlarm, jamIn, menitIn;
+    String idAlarm, namaAlarm;
     String nama;
 
     List<PHLight> lamp_name_arr;
@@ -88,9 +88,6 @@ public class AlarmDetail extends AppCompatActivity {
         Intent in = getIntent();
         idAlarm = in.getStringExtra("idAlarm");
         namaAlarm = in.getStringExtra("namaAlarm");
-        jamIn = in.getStringExtra("jam");
-        menitIn = in.getStringExtra("menit");
-
 
         if(idAlarm == null){
             getSupportActionBar().setTitle(getText(R.string.set_timer_title));
@@ -186,7 +183,7 @@ public class AlarmDetail extends AppCompatActivity {
             public void onClick(View view) {
                 namaAlarm = alarm_name.getText().toString().trim();
                 if(TextUtils.isEmpty(namaAlarm)){
-                    alarm_name.setError("Masukkan nama alarm");
+                    alarm_name.setError(getText(R.string.timer_name));
                 }else {
                     setAlarm();
                 }
@@ -208,19 +205,19 @@ public class AlarmDetail extends AppCompatActivity {
                 Log.d("def","besok2");
                 if(time_pick.getMinute()<10){
                     addSchedule();
-                    Toast.makeText(AlarmDetail.this,nama +R.string.alarm_created_notif +" " +jam+":0"+menit,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AlarmDetail.this,nama +" " +R.string.alarm_created_notif +" " +jam+":0"+menit,Toast.LENGTH_SHORT).show();
                 }else{
                     addSchedule();
-                    Toast.makeText(AlarmDetail.this,nama +R.string.alarm_created_notif +" " +jam+":"+menit,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AlarmDetail.this,nama +" " +R.string.alarm_created_notif +" " +jam+":"+menit,Toast.LENGTH_SHORT).show();
                 }
             }else{
                 Log.d("asd","besok");
                 if(time_pick.getMinute()<10){
                     addSchedule();
-                    Toast.makeText(AlarmDetail.this,nama +R.string.alarm_created_notif +" " +jam+":0"+menit,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AlarmDetail.this,nama +" " +R.string.alarm_created_notif +" " +jam+":0"+menit,Toast.LENGTH_SHORT).show();
                 }else{
                     addSchedule();
-                    Toast.makeText(AlarmDetail.this,nama +R.string.alarm_created_notif +" " +jam+":"+menit,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AlarmDetail.this,nama +" " +R.string.alarm_created_notif +" " +jam+":"+menit,Toast.LENGTH_SHORT).show();
                 }
             }
         }else {
@@ -232,77 +229,86 @@ public class AlarmDetail extends AppCompatActivity {
                 calendar.set(Calendar.DATE,1);
                 if(time_pick.getCurrentMinute()<10){
                     addSchedule();
-                    Toast.makeText(AlarmDetail.this,nama +getText(R.string.alarm_created_notif) +" " +jam+":0"+menit,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AlarmDetail.this,nama +" " +getText(R.string.alarm_created_notif) +" " +jam+":0"+menit,Toast.LENGTH_SHORT).show();
                 }else{
                     addSchedule();
-                    Toast.makeText(AlarmDetail.this,nama +getText(R.string.alarm_created_notif) +" " +jam+":"+menit,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AlarmDetail.this,nama +" " +getText(R.string.alarm_created_notif) +" " +jam+":"+menit,Toast.LENGTH_SHORT).show();
                 }
             }else{
                 if(time_pick.getCurrentMinute()<10){
                     addSchedule();
-                    Toast.makeText(AlarmDetail.this,nama +getText(R.string.alarm_created_notif) +" " +jam+":0"+menit,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AlarmDetail.this,nama +" " +getText(R.string.alarm_created_notif) +" " +jam+":0"+menit,Toast.LENGTH_SHORT).show();
                 }else{
                     addSchedule();
-                    Toast.makeText(AlarmDetail.this,nama +getText(R.string.alarm_created_notif) +" " +jam+":"+menit,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AlarmDetail.this,nama +" " +getText(R.string.alarm_created_notif) +" " +jam+":"+menit,Toast.LENGTH_SHORT).show();
                 }
             }
         }
     }
 
     public void addSchedule(){
-        phSchedule = new PHSchedule(namaAlarm,namaAlarm);
+        phSchedule = new PHSchedule(namaAlarm);
         state = new PHLightState();
 
-        phSchedule.setLightIdentifier(choosen);
-        phSchedule.setStatus(PHSchedule.PHScheduleStatus.ENABLED);
-        phSchedule.setLocalTime(true);
-        phSchedule.setDate(calendar.getTime());
-
-
         if(repeat_alarm.isChecked()){
-            phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_ALL_DAY.getValue());
+            //phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_ALL_DAY.getValue());
+            a = 127;
+            Log.d("selected","day : All " +a);
         }else{
             if(monday.isChecked()){
-                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_MONDAY.getValue());
+                a = 64;
+                Log.d("selected","day : Monday " +a);
             }else if(tuesday.isChecked()){
-                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_TUESDAY.getValue());
+                a = 32;
+                Log.d("selected","day : Tuesday " +a);
             }
             else if(wednesday.isChecked()){
-                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_WEDNESDAY.getValue());
+                a = 16;
+                Log.d("selected","day : Wednesday " +a);
             }
             else if(thursday.isChecked()){
-                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_THURSDAY.getValue());
+                a = 8;
+                Log.d("selected","day : Thursday " +a);
             }
             else if(friday.isChecked()){
-                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_FRIDAY.getValue());
+                a = 4;
+                Log.d("selected","day : Friday " +a);
             }
             else if(saturday.isChecked()){
-                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_SATURDAY.getValue());
+                a = 2;
+                Log.d("selected","day : Saturday " +a);
             }
             else if(sunday.isChecked()){
-                phSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_SUNDAY.getValue());
+                a = 1;
+                Log.d("selected","day : Sunday " +a);
             }
         }
 
-        if(condition.isChecked() == true){
+        if(condition.isChecked()){
             condition.setText("On");
             state.setOn(true);
-            phSchedule.setLightState(state);
+            Log.d("selected","On");
         }else {
             condition.setText("Off");
             state.setOn(false);
-            phSchedule.setLightState(state);
+            Log.d("selected","Off");
         }
 
+        phSchedule.setStatus(PHSchedule.PHScheduleStatus.ENABLED);
+        phSchedule.setLightState(state);
+        phSchedule.setLightIdentifier(choosen);
+        phSchedule.setRecurringDays(a);
+        phSchedule.setLocalTime(true);
+        phSchedule.setDate(calendar.getTime());
+
         if(idAlarm == null){
-            phSchedule.setStatus(PHSchedule.PHScheduleStatus.ENABLED);
             bridge.createSchedule(phSchedule,listener);
         }else {
-            phSchedule.setStatus(PHSchedule.PHScheduleStatus.ENABLED);
             bridge.updateSchedule(phSchedule,listener);
         }
 
-
+        Log.d("selected","jam " +calendar.getTime());
+        Log.d("selected","idLampu " +choosen);
 
         finish();
     }
@@ -343,12 +349,12 @@ public class AlarmDetail extends AppCompatActivity {
     private void showDeleteConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.delete_alarm_confirm);
-        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getText(R.string.delete_button), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 deleteAlarm();
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getText(R.string.cancel_button), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 if (dialog != null) {
                     dialog.dismiss();

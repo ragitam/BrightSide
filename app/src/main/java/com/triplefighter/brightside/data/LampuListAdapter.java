@@ -42,8 +42,8 @@ public class LampuListAdapter extends BaseAdapter {
     private PHLight light;
     private PHLightState state = new PHLightState();
     private PHLightState state2 = new PHLightState();
-    private PHHueSDK phHueSDK = PHHueSDK.create();
-    private PHBridge bridge = phHueSDK.getSelectedBridge();
+    private PHHueSDK phHueSDK;
+    private PHBridge bridge;
 
     private Boolean kondisiLampu;
     private Boolean adaLampu;
@@ -110,6 +110,9 @@ public class LampuListAdapter extends BaseAdapter {
             item = (LampuItem) view.getTag();
         }
 
+        phHueSDK = PHHueSDK.create();
+        bridge = phHueSDK.getSelectedBridge();
+
         total_lampu = lampuList.size();
 
         light = lampuList.get(position);
@@ -164,6 +167,7 @@ public class LampuListAdapter extends BaseAdapter {
         final LampuItem finalItem3 = item;
         item.brightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
+            //Mengatur perubahan nilai intensitas dari 1% sampai 100%
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 light = lampuList.get(position);
                 int persen = (i*100/254);
@@ -183,6 +187,7 @@ public class LampuListAdapter extends BaseAdapter {
             }
 
             @Override
+            //Membaca nilai terakhir dari perubahan intensitas
             public void onStopTrackingTouch(SeekBar seekBar) {
                 int persen = (seekBar.getProgress()*100/254);
                 if(persen>0){
@@ -202,6 +207,7 @@ public class LampuListAdapter extends BaseAdapter {
         });
 
         final LampuItem finalItem2 = item;
+        //Melakukan controlling on dan off lampu
         item.power_but.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -225,7 +231,7 @@ public class LampuListAdapter extends BaseAdapter {
                             finalItem2.brightness_num.setText(persen +"%");
 
                             x= (float) persen/100;
-                            arr_intentsity[position]= (float) (7.9836*Math.pow(x,3)-3.3322*Math.pow(x,2)+3.0089*x+1.3604)/360000;
+                            arr_intentsity[position]= (float) (7.9836*Math.pow(x,3)-3.3322*Math.pow(x,2)+3.0089*x+1.3604)/3600000;
                         }
 
                         arr_hour[position]=arr_hour[position]+1;
@@ -246,12 +252,15 @@ public class LampuListAdapter extends BaseAdapter {
         Log.v("coba","nyala " +lampu_nyala);
 
         final LampuItem finalItem1 = item;
+
+        //Melakukan pemilihan mode yg akan digunakan pada saat controlling lampu
         item.mode_container.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
                 light = lampuList.get(position);
                 String id = light.getIdentifier();
 
+                //Sleep Mode = Menyalakan lampu dengan intensitas 5%
                 if(i == R.id.night_mode){
                     int bright = 13;
                     finalItem1.brightness.setProgress(bright);
@@ -269,7 +278,9 @@ public class LampuListAdapter extends BaseAdapter {
                     state.setOn(true);
                     state.setBrightness(bright);
                     bridge.updateLightState(light,state,phLightListener);
-                }else if(i == R.id.none_mode){
+                }
+                //None Mode = Melakukan controlling lampu secara manual
+                else if(i == R.id.none_mode){
                     finalItem1.brightness.setOnTouchListener(new View.OnTouchListener() {
                         @Override
                         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -285,7 +296,9 @@ public class LampuListAdapter extends BaseAdapter {
                     finalItem1.power_but.setChecked(true);
                     state.setOn(true);
                     bridge.updateLightState(light,state,phLightListener);
-                }else if(i == R.id.eco_mode){
+                }
+                //Eco Mode = Mengatur intensitas lampu menjadi 5% dan lampu secara otomatis menyala pada jam 6 sore dan mati pada jam 6 malam
+                else if(i == R.id.eco_mode){
                     PHSchedule schedule;
                     Calendar cal = Calendar.getInstance();
 

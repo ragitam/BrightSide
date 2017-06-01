@@ -47,6 +47,8 @@ public class LoginActivity extends AppCompatActivity {
         btn_register = (Button) findViewById(R.id.register);
         ema.setTypeface(mTypeFace);
         passwd.setTypeface(mTypeFace);
+
+        //Berpindah ke menu Register
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,12 +56,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //Melakukan proses Sign In
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = ema.getText().toString().trim();
                 final String password = passwd.getText().toString().trim();
 
+                //Cek apakah inputan kosong atau tidak
                 if (TextUtils.isEmpty(email)) {
                     ema.setError(getText(R.string.enter_email));
                     return;
@@ -67,24 +71,29 @@ public class LoginActivity extends AppCompatActivity {
                     passwd.setError(getText(R.string.enter_password));
                     return;
                 }
+
+                //cek apakah password lebih dari 6 kata atau kurang
                 if (password.length() < 6) {
                     progressDialog.cancel();
-                    Toast.makeText(LoginActivity.this, "Password minimum 6 kata!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, getText(R.string.password_length), Toast.LENGTH_SHORT).show();
                 }
 
 
                 progressDialog.setMessage("Please Wait");
                 progressDialog.show();
 
-                //authenticate user
+                //Melakukan proses pengecekan data inputan dengan data di database
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
+                                //Jika data sesuai dengan yg tersimpan di database
                                 if (!task.isSuccessful()) {
                                     progressDialog.cancel();
-                                    Toast.makeText(LoginActivity.this, "Log In gagal, Silahkan coba kembali", Toast.LENGTH_SHORT).show();
-                                } else {
+                                    Toast.makeText(LoginActivity.this, getText(R.string.login_failed_notif), Toast.LENGTH_SHORT).show();
+                                }
+                                // Jika data tidak sesuai
+                                else {
                                     finish();
                                     startActivity(new Intent(getApplicationContext(),selectBridge.class));
                                 }
