@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
     private PHBridge bridge;
     private PHBridgeConfiguration config;
 
+    int halaman = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +61,8 @@ public class MainActivity extends AppCompatActivity {
         bridge = sdk.getInstance().getSelectedBridge();
         config = new PHBridgeConfiguration();
 
-        Log.d("nama Main","bridge " +config.getBridgeID());
+        halaman = getIntent().getIntExtra("halaman",0);
+        Log.d("halaman","coba " +halaman);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -80,6 +83,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -160,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
             }
             return null;
         }
+
     }
 
     public static class PlaceholderFragment extends Fragment {
@@ -254,5 +262,4 @@ public class MainActivity extends AppCompatActivity {
             Log.d("config", "updated" +bridge.getResourceCache().getBridgeConfiguration().isReboot());
         }
     };
-
 }

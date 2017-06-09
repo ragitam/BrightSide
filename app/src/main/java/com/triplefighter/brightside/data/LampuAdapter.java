@@ -19,10 +19,6 @@ import com.triplefighter.brightside.R;
 
 import java.util.List;
 
-/**
- * Created by Rachmad Agita M on 01/06/2017.
- */
-
 public class LampuAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;

@@ -41,7 +41,6 @@ public class LampuListAdapter extends BaseAdapter {
 
     private PHLight light;
     private PHLightState state = new PHLightState();
-    private PHLightState state2 = new PHLightState();
     private PHHueSDK phHueSDK;
     private PHBridge bridge;
 
@@ -145,10 +144,11 @@ public class LampuListAdapter extends BaseAdapter {
             }
         }else if(kondisiLampu == false){
             item.power_but.setChecked(false);
-            if(lampu_nyala > 0){
-                lampu_nyala--;
-            }else if(lampu_nyala < 0){
+            lampu_nyala = 1;
+            if(lampu_nyala < 0){
                 lampu_nyala = 0;
+            }else {
+                lampu_nyala--;
             }
             inte = 0;
             item.brightness.setProgress(1);
@@ -192,7 +192,7 @@ public class LampuListAdapter extends BaseAdapter {
                 int persen = (seekBar.getProgress()*100/254);
                 if(persen>0){
                     x= (float) persen/100;
-                    arr_intentsity[position]= (float) (7.9836*Math.pow(x,3)-3.3322*Math.pow(x,2)+3.0089*x+1.3604)/360000;
+                    arr_intentsity[position]= (float) (7.9836*Math.pow(x,3)-3.3322*Math.pow(x,2)+3.0089*x+1.3604)/3600000;
                     if(finalItem3.power_but.isChecked() == false){
                         arr_intentsity[position] = 0;
                     }
@@ -315,7 +315,7 @@ public class LampuListAdapter extends BaseAdapter {
                         finalItem1.brightness.setProgress(bright);
                         int persen = (bright*100/254);
                         x= (float) persen/100;
-                        arr_intentsity[position]= (float) (7.9836*Math.pow(x,3)-3.3322*Math.pow(x,2)+3.0089*x+1.3604)/360000;
+                        arr_intentsity[position]= (float) (7.9836*Math.pow(x,3)-3.3322*Math.pow(x,2)+3.0089*x+1.3604)/3600000;
                         finalItem1.brightness_num.setText(persen +"%");
                         finalItem1.brightness.setOnTouchListener(new View.OnTouchListener() {
                             @Override
@@ -344,7 +344,7 @@ public class LampuListAdapter extends BaseAdapter {
                         finalItem1.brightness.setProgress(bright);
                         int persen = (bright*100/254);
                         x= (float) persen/100;
-                        arr_intentsity[position]= (float) (7.9836*Math.pow(x,3)-3.3322*Math.pow(x,2)+3.0089*x+1.3604)/360000;
+                        arr_intentsity[position]= (float) (7.9836*Math.pow(x,3)-3.3322*Math.pow(x,2)+3.0089*x+1.3604)/3600000;
                         finalItem1.brightness_num.setText(persen +"%");
                         finalItem1.brightness.setOnTouchListener(new View.OnTouchListener() {
                             @Override

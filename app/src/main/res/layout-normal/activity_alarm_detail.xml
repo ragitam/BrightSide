@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:hint="Alarm Name"
+            android:hint="@string/timer_name_label"
             android:padding="@dimen/activity_horizontal_margin"
             android:textSize="20dp" />
 
@@ -180,7 +180,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_gravity="bottom"
-            android:text="Add Alarm"
+            android:text="@string/add_alarm"
             android:background="@color/green"
             android:textColor="@color/white"/>
     </LinearLayout>

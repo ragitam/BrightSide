@@ -1,7 +1,7 @@
 package com.triplefighter.brightside;
 
-
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,7 +27,6 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
-
 public class AlarmList extends Fragment {
 
     private PHHueSDK sdk;
@@ -40,6 +39,7 @@ public class AlarmList extends Fragment {
     private View emptyView;
 
     String namaAlarm, idAlarm;
+    ProgressDialog pDialog;
 
 
     public AlarmList() {
@@ -56,6 +56,8 @@ public class AlarmList extends Fragment {
         sdk = PHHueSDK.create();
         bridge = sdk.getInstance().getSelectedBridge();
 
+        pDialog = new ProgressDialog(getContext());
+
         emptyView = view.findViewById(R.id.emptyviewAlarm);
         listJadwal = (ListView) view.findViewById(R.id.list_lamp);
         listJadwal.setEmptyView(emptyView);
@@ -70,6 +72,7 @@ public class AlarmList extends Fragment {
                 listJadwal.setEmptyView(emptyView);
             }else {
                 adapter = new ScheduleListAdapter(getActivity().getApplicationContext(),jadwal);
+                adapter.notifyDataSetChanged();
                 listJadwal.setAdapter(adapter);
 
                 for(int i = 0; i < jadwal.size(); i++){
@@ -80,6 +83,9 @@ public class AlarmList extends Fragment {
                     Log.d("timer","status " +phSchedule.getStatus());
                     Log.d("timer","lampu id " +phSchedule.getLightIdentifier());
                     Log.d("timer","local " +phSchedule.getLocalTime());
+                    Log.d("timer","start " +phSchedule.getStartTime());
+                    Log.d("timer","date " +phSchedule.getDate());
+                    Log.d("timer","api " +bridge.getResourceCache().getBridgeConfiguration().getAPIVersion());
                 }
 
                 listJadwal.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -109,15 +115,18 @@ public class AlarmList extends Fragment {
         return view;
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
         jadwal = bridge.getResourceCache().getAllSchedules(true);
         adapter = new ScheduleListAdapter(getActivity(),jadwal);
-        if(jadwal.isEmpty()){
+        adapter.notifyDataSetChanged();
+        if(jadwal == null){
             listJadwal.setEmptyView(emptyView);
         }else {
-            listJadwal.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+            //listJadwal.setAdapter(adapter);
         }
     }
 
@@ -126,7 +135,7 @@ public class AlarmList extends Fragment {
         super.onStart();
         jadwal = bridge.getResourceCache().getAllSchedules(true);
         adapter = new ScheduleListAdapter(getActivity(),jadwal);
-        if(jadwal.isEmpty()){
+        if(jadwal == null){
             listJadwal.setEmptyView(emptyView);
         }else {
             listJadwal.setAdapter(adapter);

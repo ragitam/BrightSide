@@ -3,32 +3,19 @@ package com.triplefighter.brightside;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.SeekBar;
-import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.philips.lighting.hue.listener.PHLightListener;
 import com.philips.lighting.hue.sdk.PHHueSDK;
 import com.philips.lighting.model.PHBridge;
-import com.philips.lighting.model.PHBridgeConfiguration;
 import com.philips.lighting.model.PHBridgeResource;
 import com.philips.lighting.model.PHHueError;
 import com.philips.lighting.model.PHLight;
-import com.philips.lighting.model.PHLightState;
-import com.triplefighter.brightside.Model.DataLampu;
-import com.triplefighter.brightside.data.AccessPointListAdapter;
 import com.triplefighter.brightside.data.HueSharedPreferences;
 import com.triplefighter.brightside.data.LampuListAdapter;
 
@@ -82,7 +69,7 @@ public class Home extends Fragment {
 
             Log.d("nama","bridge ");
 
-            if(lampu.isEmpty()){
+            if(lampu.isEmpty()){    
                 list.setEmptyView(emptyLamp);
             }else {
                 for (int pos = 0; pos < lampu.size(); pos++){
@@ -94,7 +81,7 @@ public class Home extends Fragment {
 
                 }
                 adapter = new LampuListAdapter(getActivity().getApplicationContext(),lampu);
-
+                adapter.notifyDataSetChanged();
                 list.setAdapter(adapter);
 
             }
@@ -111,6 +98,7 @@ public class Home extends Fragment {
         if(lampu.isEmpty()) {
             list.setEmptyView(emptyLamp);
         }else {
+            adapter.notifyDataSetChanged();
             list.setAdapter(adapter);
         }
     }

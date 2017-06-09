@@ -116,6 +116,7 @@ public class Statistic extends Fragment {
         return v;
     }
 
+    //Menghitung usage dalam bentuk kwh dari intensitas yg udah diatur dan di convert jadi rupiah
     public void usageAndCost() {
         if(lampuNyala>0){
             for (int i=0;i<arr_intentsity.length;i++){
@@ -129,14 +130,15 @@ public class Statistic extends Fragment {
         }
     }
 
+    //Menentukan status pemakaian
     public void status(){
         //stats_usage=(double) usage_total*hour_total*30/2;
         if(temp_stats<0.04){
-            statusText.setText("Hemat");
+            statusText.setText(getText(R.string.eco_status));
         }else if(temp_stats>=0.04 && temp_stats<=0.084){
-            statusText.setText("Normal");
+            statusText.setText(getText(R.string.normal_status));
         }else if(temp_stats>0.084){
-            statusText.setText("Boros");
+            statusText.setText(getText(R.string.boros_status));
         }
     }
 
@@ -147,12 +149,15 @@ public class Statistic extends Fragment {
             final String userId = user.getUid();
             mDatabase.child("Data User").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
+                //Input data ke database
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     UserInformation user = dataSnapshot.getValue(UserInformation.class);
 
+                    //cek apakah user sudah terdaftar atau belum
                     if (user == null) {
                         Toast.makeText(getContext(), "username not found", Toast.LENGTH_SHORT).show();
                     } else {
+                        //Memasukkan data statistik ke dalam database
                         FirebaseDatabase.getInstance().getReference().child("stats").child(namaBridge).child(key)
                                 .addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
@@ -198,6 +203,7 @@ public class Statistic extends Fragment {
         }
     };
 
+    //Menyimpan data ke dalam database
     public void storeData(float usage_total, float biaya){
         DataStatistic post = new DataStatistic(usage_total,biaya);
         Map<String, Object> postValues = post.toMap();
@@ -209,6 +215,7 @@ public class Statistic extends Fragment {
         Log.d("dataSnapshot","upload");
     }
 
+    //Menampilkan data statistik yg telah tersimpan di database
     public void showData(){
         statsReference = FirebaseDatabase.getInstance().getReference().child("stats").child(namaBridge).child(key);
 

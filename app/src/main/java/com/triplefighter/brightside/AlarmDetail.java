@@ -46,6 +46,8 @@ import com.philips.lighting.model.PHSchedule;
 import com.triplefighter.brightside.data.ScheduleListAdapter;
 import com.triplefighter.brightside.data.SpinnerListAdapter;
 
+import static junit.runner.Version.id;
+
 public class AlarmDetail extends AppCompatActivity {
 
     private PHHueSDK sdk;
@@ -85,110 +87,115 @@ public class AlarmDetail extends AppCompatActivity {
         sdk = PHHueSDK.create();
         bridge = sdk.getInstance().getSelectedBridge();
 
-        Intent in = getIntent();
-        idAlarm = in.getStringExtra("idAlarm");
-        namaAlarm = in.getStringExtra("namaAlarm");
-
-        if(idAlarm == null){
-            getSupportActionBar().setTitle(getText(R.string.set_timer_title));
-            invalidateOptionsMenu();
+        if(bridge == null){
+            AlertDialogWizard.showErrorDialog(this, "No Bridge Found", R.string.btn_ok);
         }else {
-            getSupportActionBar().setTitle(getText(R.string.edit_timer_title));
-        }
+            Intent in = getIntent();
+            idAlarm = in.getStringExtra("idAlarm");
+            namaAlarm = in.getStringExtra("namaAlarm");
 
-        calendar = Calendar.getInstance();
-
-        time_pick=(TimePicker) findViewById(R.id.time_pick);
-        lamp_name_view=(TextView) findViewById(R.id.lamp_name_view);
-        lamp_name_spinner=(Spinner) findViewById(R.id.lamp_name);
-        repeat_alarm=(Switch) findViewById(R.id.repeat_alarm);
-        condition=(Switch) findViewById(R.id.lamp_condition);
-        submit_alarm=(Button) findViewById(R.id.submit_alarm);
-        monday=(CheckBox) findViewById(R.id.monday);
-        tuesday=(CheckBox) findViewById(R.id.tuesday);
-        wednesday=(CheckBox) findViewById(R.id.wednesday);
-        thursday=(CheckBox) findViewById(R.id.thursday);
-        friday=(CheckBox) findViewById(R.id.friday);
-        saturday=(CheckBox) findViewById(R.id.saturday);
-        sunday=(CheckBox) findViewById(R.id.sunday);
-        submit_alarm=(Button) findViewById(R.id.submit_alarm);
-        alarm_name = (EditText) findViewById(R.id.alarm_name);
-
-        if(idAlarm != null){
-            alarm_name.setText(namaAlarm);
-        }
-
-        condition.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(condition.isChecked()){
-                    condition.setText("On");
-                }else if(!condition.isChecked()){
-                    condition.setText("Off");
-                }
+            if(idAlarm == null){
+                getSupportActionBar().setTitle(getText(R.string.set_timer_title));
+                invalidateOptionsMenu();
+            }else {
+                getSupportActionBar().setTitle(getText(R.string.delete_alarm_menu));
             }
-        });
 
-        repeat_alarm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
-                    monday.setChecked(true);
-                    tuesday.setChecked(true);
-                    wednesday.setChecked(true);
-                    thursday.setChecked(true);
-                    friday.setChecked(true);
-                    saturday.setChecked(true);
-                    sunday.setChecked(true);
-                    repeat_alarm.setText("On");
-                }else {
-                    monday.setChecked(false);
-                    tuesday.setChecked(false);
-                    wednesday.setChecked(false);
-                    thursday.setChecked(false);
-                    friday.setChecked(false);
-                    saturday.setChecked(false);
-                    sunday.setChecked(false);
-                    repeat_alarm.setText("Off");
-                }
+            calendar = Calendar.getInstance();
+
+            time_pick=(TimePicker) findViewById(R.id.time_pick);
+            lamp_name_view=(TextView) findViewById(R.id.lamp_name_view);
+            lamp_name_spinner=(Spinner) findViewById(R.id.lamp_name);
+            repeat_alarm=(Switch) findViewById(R.id.repeat_alarm);
+            condition=(Switch) findViewById(R.id.lamp_condition);
+            submit_alarm=(Button) findViewById(R.id.submit_alarm);
+            monday=(CheckBox) findViewById(R.id.monday);
+            tuesday=(CheckBox) findViewById(R.id.tuesday);
+            wednesday=(CheckBox) findViewById(R.id.wednesday);
+            thursday=(CheckBox) findViewById(R.id.thursday);
+            friday=(CheckBox) findViewById(R.id.friday);
+            saturday=(CheckBox) findViewById(R.id.saturday);
+            sunday=(CheckBox) findViewById(R.id.sunday);
+            submit_alarm=(Button) findViewById(R.id.submit_alarm);
+            alarm_name = (EditText) findViewById(R.id.alarm_name);
+
+            if(idAlarm != null){
+                alarm_name.setText(namaAlarm);
+                submit_alarm.setVisibility(View.INVISIBLE);
             }
-        });
 
-        lamp_name_arr = bridge.getResourceCache().getAllLights();
-
-        if(lamp_name_arr.isEmpty()){
-            SpinnerListAdapter adapter = new SpinnerListAdapter(this,null);
-            lamp_name_spinner.setAdapter(adapter);
-        }else {
-            SpinnerListAdapter adapter = new SpinnerListAdapter(this,lamp_name_arr);
-            lamp_name_spinner.setAdapter(adapter);
-            lamp_name_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            condition.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    light = lamp_name_arr.get(i);
-                    choosen=light.getIdentifier();
-                    nama = light.getName();
-                    lamp_name_view.setText(choosen);
+                public void onClick(View view) {
+                    if(condition.isChecked()){
+                        condition.setText("On");
+                    }else if(!condition.isChecked()){
+                        condition.setText("Off");
+                    }
                 }
+            });
 
+            repeat_alarm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if(b){
+                        monday.setChecked(true);
+                        tuesday.setChecked(true);
+                        wednesday.setChecked(true);
+                        thursday.setChecked(true);
+                        friday.setChecked(true);
+                        saturday.setChecked(true);
+                        sunday.setChecked(true);
+                        repeat_alarm.setText("On");
+                    }else {
+                        monday.setChecked(false);
+                        tuesday.setChecked(false);
+                        wednesday.setChecked(false);
+                        thursday.setChecked(false);
+                        friday.setChecked(false);
+                        saturday.setChecked(false);
+                        sunday.setChecked(false);
+                        repeat_alarm.setText("Off");
+                    }
+                }
+            });
 
+            lamp_name_arr = bridge.getResourceCache().getAllLights();
+
+            if(lamp_name_arr.isEmpty()){
+                SpinnerListAdapter adapter = new SpinnerListAdapter(this,null);
+                lamp_name_spinner.setAdapter(adapter);
+            }else {
+                SpinnerListAdapter adapter = new SpinnerListAdapter(this,lamp_name_arr);
+                lamp_name_spinner.setAdapter(adapter);
+                lamp_name_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        light = lamp_name_arr.get(i);
+                        choosen=light.getIdentifier();
+                        nama = light.getName();
+                        lamp_name_view.setText(choosen);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+            }
+
+            submit_alarm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    namaAlarm = alarm_name.getText().toString().trim();
+                    if(TextUtils.isEmpty(namaAlarm)){
+                        alarm_name.setError(getText(R.string.timer_name));
+                    }else {
+                        setAlarm();
+                    }
                 }
             });
         }
-
-        submit_alarm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                namaAlarm = alarm_name.getText().toString().trim();
-                if(TextUtils.isEmpty(namaAlarm)){
-                    alarm_name.setError(getText(R.string.timer_name));
-                }else {
-                    setAlarm();
-                }
-            }
-        });
     }
 
     public void setAlarm(){
@@ -303,14 +310,18 @@ public class AlarmDetail extends AppCompatActivity {
 
         if(idAlarm == null){
             bridge.createSchedule(phSchedule,listener);
-        }else {
+        }else if(idAlarm != null) {
             bridge.updateSchedule(phSchedule,listener);
         }
 
         Log.d("selected","jam " +calendar.getTime());
         Log.d("selected","idLampu " +choosen);
 
-        finish();
+        //finish();
+        Intent in = new Intent(this,MainActivity.class);
+        in.putExtra("halaman",1);
+        startActivity(in);
+
     }
 
     @Override
@@ -343,7 +354,10 @@ public class AlarmDetail extends AppCompatActivity {
         if(idAlarm != null){
             bridge.removeSchedule(idAlarm,listener);
         }
-        finish();
+
+        Intent in = new Intent(this,MainActivity.class);
+        in.putExtra("halaman",1);
+        startActivity(in);
     }
 
     private void showDeleteConfirmationDialog() {

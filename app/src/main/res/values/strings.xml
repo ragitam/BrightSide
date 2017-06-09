@@ -66,4 +66,9 @@
     <string name="edit_timer_title">Edit Timer</string>
     <string name="delete_lamp_title">Delete Light</string>
     <string name="add_lamp_hint">Light Serial</string>
+    <string name="timer_name_label">Timer Name</string>
+
+    <string name="eco_status">Economic</string>
+    <string name="normal_status">Normal</string>
+    <string name="boros_status">Inefficient</string>
 </resources>
