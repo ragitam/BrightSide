@@ -1,17 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Brightside</string>
+    <string name="Sign_up"></string>
+    <string name="about" translatable="false">Tentang</string>
+    <string name="action_settings">Pengaturan</string>
+    <string name="add_alarm">Tambah Timer</string>
     <string name="add_lamp">Tambah Lampu</string>
-    <string name="btn_retry">Coba Lagi</string>
-    <string name="email_used">Email anda telah digunakan</string>
-    <string name="enter_email">Masukkan email anda!</string>
-    <string name="enter_password">Masukkan password anda!</string>
-    <string name="enter_username">Masukkan username anda!</string>
-    <string name="invalid_email">Maaf email anda tidak valid</string>
-    <string name="password_length">Password harus lebih dari 6 karakter</string>
-    <string name="password_weak">Maaf password anda lemah</string>
-    <string name="press_pushlink_button">Tekan tombol link pada bridge</string>
-    <string name="success_regis">Akun anda telah terdaftar</string>
-    <string name="txt_select_smartbridge">Pilih bridge yang akan digunakan</string>
-    <string name="txt_selectbridges">Akses point yang tersedia</string>
+    <string name="alarm_created_notif">akan akrif pada</string>
+    <string name="btn_more" translatable="false"></string>
+    <string name="cancel_button">Batal</string>
+    <string name="clean_up" translatable="false">Bersihkan Bridge</string>
+    <string name="connecting">Sedang menyambungkan</string>
+    <string name="could_not_find_bridge" translatable="false">Hue tidak dapat menemukan bridge</string>
+    <string name="delete_alarm_confirm" translatable="false">Apakah Anda yakin akan menghapus Timer?</string>
+    <string name="delete_alarm_menu" translatable="false">Hapus Timer</string>
+    <string name="delete_alarm_success" translatable="false">telah dihapus</string>
+    <string name="email_used">Maaf email yang Anda masukkan telah terdaftar</string>
+    <string name="enter_email">Masukkan email Anda!</string>
+    <string name="enter_password" translatable="false">Masukkan password Anda!</string>
+    <string name="enter_username" translatable="false">Masukkan username Anda!</string>
+    <string name="invalid_email" translatable="false">Maaf email Anda tidak valid</string>
+    <string name="light_serial" translatable="false">Masukkan Serial Lampu disini</string>
+    <string name="menu_find_bridge" translatable="false"></string>
+    <string name="no_alarm_text" translatable="false">Tidak ada Timer. Tambahkan Timer dahulu</string>
+    <string name="no_lamp_text" translatable="false">Tidak ada lampu. Tambahkan lampu dahulu</string>
+    <string name="pass" translatable="false"></string>
+    <string name="password_length" translatable="false">Password Anda harus lebih dari 6 karakter</string>
+    <string name="password_weak" translatable="false">Maaf password Anda terlalu lemah</string>
+    <string name="press_pushlink_button" translatable="false"></string>
 </resources>
