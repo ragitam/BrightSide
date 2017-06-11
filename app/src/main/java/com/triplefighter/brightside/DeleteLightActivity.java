@@ -39,7 +39,8 @@ public class DeleteLightActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete_light);
-
+        getSupportActionBar().setTitle(getText(R.string.delete_lamp_title));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         sdk = PHHueSDK.create();
         bridge = sdk.getInstance().getSelectedBridge();
 

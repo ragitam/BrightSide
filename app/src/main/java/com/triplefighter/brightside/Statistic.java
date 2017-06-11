@@ -3,6 +3,7 @@ package com.triplefighter.brightside;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -29,7 +30,10 @@ import com.triplefighter.brightside.data.AccessPointListAdapter;
 import com.triplefighter.brightside.data.HueSharedPreferences;
 import com.triplefighter.brightside.data.LampuListAdapter;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +42,7 @@ import static com.triplefighter.brightside.data.LampuListAdapter.arr_hour;
 import static com.triplefighter.brightside.data.LampuListAdapter.arr_intentsity;
 
 public class Statistic extends Fragment {
-    private TextView usageText, costText, statusText;
+    private TextView usageText, costText, statusText,month;
 
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
@@ -49,7 +53,8 @@ public class Statistic extends Fragment {
     static String key;
     String namaBridge;
     int biaya = 0;
-
+    DateFormat dateFormat=new SimpleDateFormat("MMMM");
+    Date date=new Date();
     int position = 0;
     public static int lampuNyala = 0, hour_total=0, j;
     public float usage_total=0,usage_cost=0;
@@ -71,7 +76,6 @@ public class Statistic extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_statistic, container, false);
-
         Typeface mTypeFace= Typeface.createFromAsset(getActivity().getAssets(),"Nexa Light.otf");
 
         int totalLampu = LampuListAdapter.total_lampu;
@@ -94,20 +98,22 @@ public class Statistic extends Fragment {
 
         TextView nyala = (TextView) v.findViewById(R.id.lamps_on);
         nyala.setText(String.valueOf(lampuNyala));
-
+        month= (TextView)v.findViewById(R.id.month);
         usageText = (TextView)v.findViewById(R.id.usage_kwh);
         costText = (TextView)v.findViewById(R.id.usage_cost);
         statusText = (TextView)v.findViewById(R.id.usage_status);
 
+        month.setTypeface(mTypeFace);
         usageText.setTypeface(mTypeFace);
         costText.setTypeface(mTypeFace);
         nyala.setTypeface(mTypeFace);
         total.setTypeface(mTypeFace);
         statusText.setTypeface(mTypeFace);
 
+        month.setText(toString().valueOf(dateFormat.format(date)));
         biaya = (int) usage_cost;
 
-        usageText.setText(String.valueOf(usage_total));
+        usageText.setText(String.format("%.4f", usage_total));
         costText.setText(String.valueOf(biaya));
 
         customHandler.postDelayed(updateTimerThread, 0);
@@ -236,10 +242,9 @@ public class Statistic extends Fragment {
                     Log.d("stats","onDataChange " +usage_total);
                     Log.d("stats","onDataChange " +usage_cost);
 
-                    String a = String.valueOf(post.usage);
                     biaya = (int) post.cost;
                     String b = String.valueOf(biaya);
-                    usageText.setText(a);
+                    usageText.setText(String.format("%.4f", post.getUsage()));
                     costText.setText(b);
 
                     Log.d("dataSnapshot","retrieve");

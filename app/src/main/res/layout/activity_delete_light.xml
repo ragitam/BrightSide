@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.triplefighter.brightside.DeleteLightActivity"
-    android:background="@color/colorPrimary">
+    android:background="@color/white">
 
     <ListView
         android:id="@+id/dataLampu"
@@ -24,7 +24,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="@string/no_lamp_text"
-            android:textColor="@color/colorAccent"/>
+            android:textColor="@color/colorPrimary"/>
 
     </RelativeLayout>
 
