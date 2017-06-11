@@ -61,6 +61,7 @@
     <string name="sign_out" translatable="false">Sign Out</string>
     <string name="clean_up">Clean Up Bridge</string>
     <string name="about">About</string>
+    <string name="lamp_name_label">Lamp Name</string>
 
     <string name="set_timer_title">Set Timer</string>
     <string name="edit_timer_title">Edit Timer</string>

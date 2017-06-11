@@ -134,7 +134,7 @@
                 android:id="@+id/lamp_name_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lamp Name"
+                android:text="@string/lamp_name_label"
                 android:textSize="17dp"/>
             <Spinner
                 android:id="@+id/lamp_name"

@@ -177,7 +177,7 @@ public class AlarmDetail extends AppCompatActivity {
                         light = lamp_name_arr.get(i);
                         choosen=light.getIdentifier();
                         nama = light.getName();
-                        lamp_name_view.setText(choosen);
+                        //lamp_name_view.setText(choosen);
                     }
 
                     @Override

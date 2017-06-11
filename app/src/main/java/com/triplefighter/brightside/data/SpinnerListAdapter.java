@@ -59,15 +59,11 @@ public class SpinnerListAdapter extends BaseAdapter {
         if (view == null) {
             view = inflater.inflate(R.layout.spinner_item, null);
 
-            TextView idLampuText = (TextView)view.findViewById(R.id.lamp_id);
             TextView namaLampuText = (TextView)view.findViewById(R.id.hue_lamp_name);
 
             light = lampuList.get(position);
             final String lampuName = light.getName();
             final String lampuId = light.getIdentifier();
-
-            idLampuText.setText(lampuId);
-            idLampuText.setVisibility(View.GONE);
 
             namaLampuText.setText(lampuName);
             namaLampuText.setTextSize(20);
@@ -81,15 +77,11 @@ public class SpinnerListAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.spinner_item, null);
 
-            TextView idLampuText = (TextView)convertView.findViewById(R.id.lamp_id);
             TextView namaLampuText = (TextView)convertView.findViewById(R.id.hue_lamp_name);
 
             light = lampuList.get(position);
             final String lampuName = light.getName();
             final String lampuId = light.getIdentifier();
-
-            idLampuText.setText(lampuId);
-            idLampuText.setVisibility(View.GONE);
 
             namaLampuText.setText(lampuName);
             namaLampuText.setTextSize(20);
