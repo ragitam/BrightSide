@@ -20,9 +20,6 @@
         </menu>
     </item>
 
-
-    <item android:id="@+id/clean_up"
-        android:title="@string/clean_up"/>
     <item android:id="@+id/delete_light"
         android:title="@string/delete_lamp_title"/>
     <item android:id="@+id/about"

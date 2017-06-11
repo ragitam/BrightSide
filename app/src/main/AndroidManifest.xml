@@ -37,7 +37,7 @@
 
         <receiver android:name=".AlarmReceiver" />
 
-        <activity android:name=".DeleteLightActivity"></activity>
+        <activity android:name=".DeleteLightActivity" android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>

@@ -2,6 +2,7 @@ package com.triplefighter.brightside;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,6 +41,9 @@ public class DeleteLightActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete_light);
 
+        getSupportActionBar().setTitle(getText(R.string.delete_lamp_title));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         sdk = PHHueSDK.create();
         bridge = sdk.getInstance().getSelectedBridge();
 
@@ -69,6 +73,7 @@ public class DeleteLightActivity extends AppCompatActivity {
                         builder.setPositiveButton(getText(R.string.delete_button), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 bridge.deleteLight(idLampu,listener);
+                                startActivity(new Intent(getApplicationContext(),MainActivity.class));
                             }
                         });
                         builder.setNegativeButton(getText(R.string.cancel_button), new DialogInterface.OnClickListener() {

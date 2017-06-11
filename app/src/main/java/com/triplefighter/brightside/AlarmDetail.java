@@ -76,6 +76,7 @@ public class AlarmDetail extends AppCompatActivity {
     List<PHLight> lamp_name_arr;
 
     int a = 0;
+    int lastPos = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +103,8 @@ public class AlarmDetail extends AppCompatActivity {
             }
 
             calendar = Calendar.getInstance();
+
+            lastPos = MainActivity.halaman;
 
             time_pick=(TimePicker) findViewById(R.id.time_pick);
             lamp_name_view=(TextView) findViewById(R.id.lamp_name_view);
@@ -205,6 +208,7 @@ public class AlarmDetail extends AppCompatActivity {
         if(currentApiVersion>android.os.Build.VERSION_CODES.LOLLIPOP_MR1){
             calendar.set(Calendar.HOUR_OF_DAY,time_pick.getHour());
             calendar.set(Calendar.MINUTE,time_pick.getMinute());
+            calendar.set(Calendar.SECOND, 0);
             jam=time_pick.getHour();
             menit=time_pick.getMinute();
             if(jam<cur_hour && menit<cur_minute){
@@ -230,6 +234,7 @@ public class AlarmDetail extends AppCompatActivity {
         }else {
             calendar.set(Calendar.HOUR_OF_DAY,time_pick.getCurrentHour());
             calendar.set(Calendar.MINUTE,time_pick.getCurrentMinute());
+            calendar.set(Calendar.SECOND, 0);
             jam=time_pick.getCurrentHour();
             menit=time_pick.getCurrentMinute();
             if(jam<=cur_hour && menit<=cur_minute){
@@ -319,7 +324,7 @@ public class AlarmDetail extends AppCompatActivity {
 
         //finish();
         Intent in = new Intent(this,MainActivity.class);
-        in.putExtra("halaman",1);
+        in.putExtra("halaman",lastPos);
         startActivity(in);
 
     }

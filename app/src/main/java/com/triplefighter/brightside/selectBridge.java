@@ -35,6 +35,8 @@ public class selectBridge extends AppCompatActivity {
 
     private boolean lastSearchWasIPScan = false;
 
+    ListView accessPointList;
+
     String lastIpAddress;
     String lastUsername;
 
@@ -62,7 +64,7 @@ public class selectBridge extends AppCompatActivity {
 
         adapter = new AccessPointListAdapter(getApplicationContext(), phHueSDK.getAccessPointsFound());
 
-        ListView accessPointList = (ListView) findViewById(R.id.listBridge);
+        accessPointList = (ListView) findViewById(R.id.listBridge);
 
         //Memilih salah satu bridge yg akan digunakan
         accessPointList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -268,6 +270,5 @@ public class selectBridge extends AppCompatActivity {
         }
         phHueSDK.disableAllHeartbeat();
     }
-
 
 }

@@ -140,7 +140,7 @@ public class LampuListAdapter extends BaseAdapter {
                 item.brightness_num.setText(persen +"%");
 
                 x= (float) persen/100;
-                arr_intentsity[position]= (float) (7.9836*Math.pow(x,3)-3.3322*Math.pow(x,2)+3.0089*x+1.3604)/360000;
+                arr_intentsity[position]= (float) (7.9836*Math.pow(x,3)-3.3322*Math.pow(x,2)+3.0089*x+1.3604)/3600000;
             }
         }else if(kondisiLampu == false){
             item.power_but.setChecked(false);
@@ -266,7 +266,7 @@ public class LampuListAdapter extends BaseAdapter {
                     finalItem1.brightness.setProgress(bright);
                     int persen = (bright*100/254);
                     x= (float) persen/100;
-                    arr_intentsity[position]= (float) (7.9836*Math.pow(x,3)-3.3322*Math.pow(x,2)+3.0089*x+1.3604)/360000;
+                    arr_intentsity[position]= (float) (7.9836*Math.pow(x,3)-3.3322*Math.pow(x,2)+3.0089*x+1.3604)/3600000;
                     finalItem1.brightness_num.setText(persen +"%");
                     finalItem1.brightness.setOnTouchListener(new View.OnTouchListener() {
                         @Override

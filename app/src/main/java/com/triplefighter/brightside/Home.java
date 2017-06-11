@@ -40,6 +40,8 @@ public class Home extends Fragment {
 
     ArrayList<String> a;
 
+    int lampuNyala;
+
     String TAG = "Brightside";
 
     public Home() {
@@ -93,25 +95,30 @@ public class Home extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        sdk = PHHueSDK.create();
+        bridge = sdk.getInstance().getSelectedBridge();
         lampu = bridge.getResourceCache().getAllLights();
         adapter = new LampuListAdapter(getActivity().getApplicationContext(),lampu);
         if(lampu.isEmpty()) {
             list.setEmptyView(emptyLamp);
         }else {
             adapter.notifyDataSetChanged();
-            list.setAdapter(adapter);
+            //list.setAdapter(adapter);
         }
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        PHHueSDK sdk = PHHueSDK.create();
+        PHBridge bridge = sdk.getInstance().getSelectedBridge();
         lampu = bridge.getResourceCache().getAllLights();
         adapter = new LampuListAdapter(getActivity().getApplicationContext(),lampu);
         if(lampu.isEmpty()) {
             list.setEmptyView(emptyLamp);
         }else {
-            list.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+            //list.setAdapter(adapter);
         }
     }
 

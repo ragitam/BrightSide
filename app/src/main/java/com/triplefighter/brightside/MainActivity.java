@@ -3,6 +3,7 @@ package com.triplefighter.brightside;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -26,6 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.philips.lighting.hue.listener.PHBridgeConfigurationListener;
 import com.philips.lighting.hue.listener.PHLightListener;
+import com.philips.lighting.hue.sdk.PHAccessPoint;
 import com.philips.lighting.hue.sdk.PHHueSDK;
 import com.philips.lighting.model.PHBridge;
 import com.philips.lighting.model.PHBridgeConfiguration;
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private PHBridge bridge;
     private PHBridgeConfiguration config;
 
-    int halaman = 0;
+    public static int halaman = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +75,27 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setCurrentItem(halaman);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Log.d("halaman","pilih " +tab.getPosition());
+                halaman = tab.getPosition();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
@@ -113,12 +134,6 @@ public class MainActivity extends AppCompatActivity {
             Intent i=new Intent(this,AlarmDetail.class);
             startActivity(i);
             return true;
-        }else if(id == R.id.clean_up){
-            dialog.setMessage("Please Wait");
-            dialog.show();
-            config.setReboot(true);
-            bridge.updateBridgeConfigurations(config,configListener);
-            dialog.cancel();
         }else if(id == R.id.delete_light){
             startActivity(new Intent(this,DeleteLightActivity.class));
         }
@@ -170,61 +185,35 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public static class PlaceholderFragment extends Fragment {
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = null;
-            if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
-                rootView = inflater.inflate(R.layout.fragment_home, container,false);
-            } else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
-                rootView=inflater.inflate(R.layout.fragment_alarm_list,container,false);
-            }else if(getArguments().getInt(ARG_SECTION_NUMBER)==3){
-                rootView=inflater.inflate(R.layout.fragment_statistic,container,false);
-            }
-
-            return rootView;
-        }
-    }
-
     PHLightListener listener = new PHLightListener() {
         @Override
         public void onReceivingLightDetails(PHLight phLight) {
             String nama = phLight.getName();
             Log.d("coba","nama " +nama);
-            Log.d("success","success");
-            dialog.cancel();
+            Log.d("onReceivingDetail","success");
         }
 
         @Override
         public void onReceivingLights(List<PHBridgeResource> list) {
-            Log.d("success","success");
-            dialog.cancel();
+            Log.d("onReceiving","success");
         }
 
         @Override
         public void onSearchComplete() {
-            Log.d("success","success");
-            dialog.cancel();
+            Log.d("onSearchComplete","success");
+            sdk.disconnect(bridge);
+            try {
+                Thread.sleep(3000);
+                dialog.cancel();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            startMainActivity();
         }
 
         @Override
         public void onSuccess() {
-            Log.d("success","success");
-            dialog.cancel();
+            Log.d("onSuccess","success");
         }
 
         @Override
@@ -237,6 +226,13 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
+
+    public void startMainActivity() {
+        Intent i = getBaseContext().getPackageManager()
+                .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
+    }
 
     PHBridgeConfigurationListener configListener = new PHBridgeConfigurationListener() {
         @Override

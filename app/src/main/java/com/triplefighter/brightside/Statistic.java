@@ -1,6 +1,5 @@
 package com.triplefighter.brightside;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -20,25 +19,22 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.philips.lighting.hue.sdk.PHHueSDK;
-import com.philips.lighting.model.PHBridge;
-import com.philips.lighting.model.PHLight;
 import com.triplefighter.brightside.Model.DataStatistic;
 import com.triplefighter.brightside.Model.UserInformation;
-import com.triplefighter.brightside.data.AccessPointListAdapter;
 import com.triplefighter.brightside.data.HueSharedPreferences;
 import com.triplefighter.brightside.data.LampuListAdapter;
 
-import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import static com.triplefighter.brightside.data.LampuListAdapter.arr_hour;
 import static com.triplefighter.brightside.data.LampuListAdapter.arr_intentsity;
 
 public class Statistic extends Fragment {
-    private TextView usageText, costText, statusText;
+    private TextView usageText, costText, statusText,month;
 
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
@@ -52,9 +48,14 @@ public class Statistic extends Fragment {
 
     int position = 0;
     public static int lampuNyala = 0, hour_total=0, j;
-    public float usage_total=0,usage_cost=0;
-    double stats_usage=0,temp_stats=0;
+    public float usage_total=0,usage_cost=0, stats_usage=0;
+    double temp_stats=0;
     String status;
+
+    DateFormat dateFormat=new SimpleDateFormat("MMMM");
+    Date date=new Date();
+
+    String bulan;
 
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
@@ -95,10 +96,12 @@ public class Statistic extends Fragment {
         TextView nyala = (TextView) v.findViewById(R.id.lamps_on);
         nyala.setText(String.valueOf(lampuNyala));
 
+        month = (TextView)v.findViewById(R.id.month);
         usageText = (TextView)v.findViewById(R.id.usage_kwh);
         costText = (TextView)v.findViewById(R.id.usage_cost);
         statusText = (TextView)v.findViewById(R.id.usage_status);
 
+        month.setTypeface(mTypeFace);
         usageText.setTypeface(mTypeFace);
         costText.setTypeface(mTypeFace);
         nyala.setTypeface(mTypeFace);
@@ -106,6 +109,9 @@ public class Statistic extends Fragment {
         statusText.setTypeface(mTypeFace);
 
         biaya = (int) usage_cost;
+
+        month.setText(toString().valueOf(dateFormat.format(date)));
+        bulan = dateFormat.format(date);
 
         usageText.setText(String.valueOf(usage_total));
         costText.setText(String.valueOf(biaya));
@@ -122,10 +128,14 @@ public class Statistic extends Fragment {
             for (int i=0;i<arr_intentsity.length;i++){
                 usage_total=usage_total+arr_intentsity[i];
                 usage_cost= (float) (usage_cost+(arr_intentsity[i]*1467.28));
-                stats_usage=stats_usage+arr_intentsity[i];
+                Calendar cal = Calendar.getInstance();
+                int a = cal.get(Calendar.HOUR_OF_DAY);
+                if(a == 24){
+                    stats_usage = 0;
+                }else {
+                    stats_usage=stats_usage+arr_intentsity[i];
+                }
             }
-            temp_stats=stats_usage/lampuNyala;
-
             // tambahin kodingan buat ngirim data ke firebase
         }
     }
@@ -133,6 +143,7 @@ public class Statistic extends Fragment {
     //Menentukan status pemakaian
     public void status(){
         //stats_usage=(double) usage_total*hour_total*30/2;
+        //temp_stats=usage_total/lampuNyala;
         if(temp_stats<0.04){
             statusText.setText(getText(R.string.eco_status));
         }else if(temp_stats>=0.04 && temp_stats<=0.084){
@@ -158,7 +169,7 @@ public class Statistic extends Fragment {
                         Toast.makeText(getContext(), "username not found", Toast.LENGTH_SHORT).show();
                     } else {
                         //Memasukkan data statistik ke dalam database
-                        FirebaseDatabase.getInstance().getReference().child("stats").child(namaBridge).child(key)
+                        FirebaseDatabase.getInstance().getReference().child("stats").child(namaBridge).child(key).child(bulan)
                                 .addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -167,12 +178,12 @@ public class Statistic extends Fragment {
                                         Log.d("dataSnapshot","isi " +dataSnapshot);
 
                                         if(a == null){
-                                            storeData(usage_total,usage_cost);
+                                            storeData(usage_total,usage_cost,stats_usage);
                                         }else {
                                             //showData();
                                             usageAndCost();
                                             status();
-                                            storeData(usage_total,usage_cost);
+                                            storeData(usage_total,usage_cost,stats_usage);
                                         }
                                     }
 
@@ -204,12 +215,12 @@ public class Statistic extends Fragment {
     };
 
     //Menyimpan data ke dalam database
-    public void storeData(float usage_total, float biaya){
-        DataStatistic post = new DataStatistic(usage_total,biaya);
+    public void storeData(float usage_total, float biaya, float stats_usage){
+        DataStatistic post = new DataStatistic(usage_total,biaya,stats_usage);
         Map<String, Object> postValues = post.toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/stats/" +namaBridge +"/" + key, postValues);
+        childUpdates.put("/stats/" +namaBridge +"/" + key +"/" +bulan, postValues);
 
         mDatabase.updateChildren(childUpdates);
         Log.d("dataSnapshot","upload");
@@ -232,17 +243,21 @@ public class Statistic extends Fragment {
 
                     usage_total = post.getUsage();
                     usage_cost = post.getCost();
+                    stats_usage = post.getUsageStat();
 
                     Log.d("stats","onDataChange " +usage_total);
                     Log.d("stats","onDataChange " +usage_cost);
+                    Log.d("stats","onDataChange " +stats_usage);
 
-                    String a = String.valueOf(post.usage);
                     biaya = (int) post.cost;
                     String b = String.valueOf(biaya);
-                    usageText.setText(a);
+                    usageText.setText(String.format("%.4f", post.getUsage()));
                     costText.setText(b);
 
                     Log.d("dataSnapshot","retrieve");
+
+                    status();
+                    Log.d("stats","tempData " +temp_stats);
                 }
 
             }
