@@ -228,7 +228,7 @@ public class Statistic extends Fragment {
 
     //Menampilkan data statistik yg telah tersimpan di database
     public void showData(){
-        statsReference = FirebaseDatabase.getInstance().getReference().child("stats").child(namaBridge).child(key);
+        statsReference = FirebaseDatabase.getInstance().getReference().child("stats").child(namaBridge).child(key).child(bulan);
 
         statsReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
