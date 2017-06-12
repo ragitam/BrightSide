@@ -6,28 +6,24 @@
     android:background="@color/colorPrimary">
 
     <!-- TODO: Update blank fragment layout -->
-    <RelativeLayout
+    <ListView
+        android:id="@+id/list_lamp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ListView
-            android:id="@+id/list_lamp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </ListView>
+    </ListView>
 
-        <RelativeLayout
-            android:id="@+id/emptyviewAlarm"
+    <RelativeLayout
+        android:id="@+id/emptyviewAlarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
+        <TextView
+            android:id="@+id/noAlarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true">
-            <TextView
-                android:id="@+id/noAlarm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no_alarm_text"
-                android:textColor="@color/colorAccent"/>
-        </RelativeLayout>
+            android:text="@string/no_alarm_text"
+            android:textColor="@color/colorAccent"/>
     </RelativeLayout>
 
 </RelativeLayout>

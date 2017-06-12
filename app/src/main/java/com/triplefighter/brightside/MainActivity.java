@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
 
     private PHHueSDK sdk;
     private PHBridge bridge;
-    private PHBridgeConfiguration config;
 
     public static int halaman = 0;
 
@@ -61,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
 
         sdk = PHHueSDK.create();
         bridge = sdk.getInstance().getSelectedBridge();
-        config = new PHBridgeConfiguration();
 
         halaman = getIntent().getIntExtra("halaman",0);
         Log.d("halaman","coba " +halaman);
