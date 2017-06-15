@@ -39,6 +39,8 @@ public class Statistic extends Fragment {
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private DatabaseReference statsReference;
+    private DatabaseReference statsLastMonthReference;
+    private DatabaseReference statsHarianReference;
     private ValueEventListener statsListener;
     private HueSharedPreferences prefs;
 
@@ -48,14 +50,19 @@ public class Statistic extends Fragment {
 
     int position = 0;
     public static int lampuNyala = 0, hour_total=0, j;
-    public float usage_total=0,usage_cost=0, stats_usage=0;
+    public float usage_total=0,usage_cost=0, stats_usage=0, predict_usage=0;
     double temp_stats=0;
     String status;
 
-    DateFormat dateFormat=new SimpleDateFormat("MMMM");
-    Date date=new Date();
+    DateFormat dateFormat = new SimpleDateFormat("MMMM");
+    DateFormat bulanInt = new SimpleDateFormat("M");
+    DateFormat dfTanggal = new SimpleDateFormat("dd-MM-yyyy");
+    DateFormat dfTanggalSekarang = new SimpleDateFormat("d");
+    Date date = new Date();
+    Calendar cal = Calendar.getInstance();
 
-    String bulan;
+    String bulan, tgl, bulanKemarin;
+    int tglHariIni;
 
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
@@ -116,6 +123,12 @@ public class Statistic extends Fragment {
 
         month.setText(toString().valueOf(dateFormat.format(date)));
         bulan = dateFormat.format(date);
+        tgl = dfTanggal.format(date);
+        tglHariIni = Integer.parseInt(dfTanggalSekarang.format(date));
+
+        cal.add(Calendar.MONTH, -1);
+        bulanKemarin = dateFormat.format(cal.getTime());
+        Log.d("tanggal","bulan " +tglHariIni);
 
         usageText.setText(String.valueOf(usage_total));
         costText.setText(String.valueOf(biaya));
@@ -136,8 +149,10 @@ public class Statistic extends Fragment {
                 int a = cal.get(Calendar.HOUR_OF_DAY);
                 if(a == 24){
                     stats_usage = 0;
+                    temp_stats = stats_usage/lampuNyala;
                 }else {
                     stats_usage=stats_usage+arr_intentsity[i];
+                    temp_stats = stats_usage/lampuNyala;
                 }
             }
             // tambahin kodingan buat ngirim data ke firebase
@@ -148,12 +163,16 @@ public class Statistic extends Fragment {
     public void status(){
         //stats_usage=(double) usage_total*hour_total*30/2;
         //temp_stats=usage_total/lampuNyala;
+        Log.d("statistik","coba "+temp_stats);
         if(temp_stats<0.04){
             statusText.setText(getText(R.string.eco_status));
+            Log.d("statistik","ekonomi");
         }else if(temp_stats>=0.04 && temp_stats<=0.084){
             statusText.setText(getText(R.string.normal_status));
+            Log.d("statistik","normal");
         }else if(temp_stats>0.084){
             statusText.setText(getText(R.string.boros_status));
+            Log.d("statistik","boros");
         }
     }
 
@@ -186,7 +205,6 @@ public class Statistic extends Fragment {
                                         }else {
                                             //showData();
                                             usageAndCost();
-                                            status();
                                             storeData(usage_total,usage_cost,stats_usage);
                                         }
                                     }
@@ -220,11 +238,14 @@ public class Statistic extends Fragment {
 
     //Menyimpan data ke dalam database
     public void storeData(float usage_total, float biaya, float stats_usage){
-        DataStatistic post = new DataStatistic(usage_total,biaya,stats_usage);
+        DataStatistic post = new DataStatistic(usage_total,biaya);
+        DataStatistic postHarian = new DataStatistic(stats_usage);
         Map<String, Object> postValues = post.toMap();
+        Map<String, Object> postValues2 = postHarian.toMapHarian();
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/stats/" +namaBridge +"/" + key +"/" +bulan, postValues);
+        childUpdates.put("/stats/" +namaBridge +"/" + key +"/" +tgl, postValues2);
 
         mDatabase.updateChildren(childUpdates);
         Log.d("dataSnapshot","upload");
@@ -233,6 +254,8 @@ public class Statistic extends Fragment {
     //Menampilkan data statistik yg telah tersimpan di database
     public void showData(){
         statsReference = FirebaseDatabase.getInstance().getReference().child("stats").child(namaBridge).child(key).child(bulan);
+        statsLastMonthReference = FirebaseDatabase.getInstance().getReference().child("stats").child(namaBridge).child(key).child(bulanKemarin);
+        statsHarianReference = FirebaseDatabase.getInstance().getReference().child("stats").child(namaBridge).child(key).child(tgl);
 
         statsReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -247,7 +270,6 @@ public class Statistic extends Fragment {
 
                     usage_total = post.getUsage();
                     usage_cost = post.getCost();
-                    stats_usage = post.getUsageStat();
 
                     Log.d("stats","onDataChange " +usage_total);
                     Log.d("stats","onDataChange " +usage_cost);
@@ -260,10 +282,8 @@ public class Statistic extends Fragment {
 
                     Log.d("dataSnapshot","retrieve");
 
-                    status();
-                    Log.d("stats","tempData " +temp_stats);
+                    usagePredict();
                 }
-
             }
 
             @Override
@@ -272,6 +292,52 @@ public class Statistic extends Fragment {
             }
         });
 
+        statsHarianReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                DataStatistic post = dataSnapshot.getValue(DataStatistic.class);
+                Log.d("onDataChange","coba" +post);
+                if(post == null){
+                    stats_usage = 0;
+                    status();
+                }else{
+                    stats_usage = post.getUsageStat();
+                    status();
+                    Log.d("statistik","temp_stats " +temp_stats);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getContext(), "Failed to load post.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        statsLastMonthReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                DataStatistic post = dataSnapshot.getValue(DataStatistic.class);
+                // [START_EXCLUDE]
+
+                if(post == null){
+                    usage_last_month.setText("0");
+                }else{
+                    usage_last_month.setText(String.format("%.4f", post.getUsage()));
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getContext(), "Failed to load post.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    public void usagePredict(){
+        predict_usage = usage_total/tglHariIni*30;
+        usage_predict.setText(String.format("%.4f", predict_usage));
+        Log.d("statistik","prediksi " +predict_usage);
     }
 
     @Override
