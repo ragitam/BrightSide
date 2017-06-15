@@ -1,233 +1,238 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
     android:background="@color/colorPrimary">
-
-    <TextView
-        android:id="@+id/month"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
-        android:textSize="35sp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="15dp"/>
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="1">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Usage"
-                android:textSize="20sp"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/light_blue" />
-            <TextView
-                android:id="@+id/usage_kwh"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="15"
-                android:textSize="35sp"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/yellow"
-                android:layout_marginTop="10dp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="kWh"
-                android:textSize="15dp"
-                android:textColor="@color/colorAccent" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Cost"
-                android:textSize="20sp"
-                android:textColor="@color/light_blue" />
-            <TextView
-                android:id="@+id/usage_cost"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="16.260"
-                android:textSize="35sp"
-                android:textColor="@color/yellow"
-                android:layout_marginTop="10dp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Rupiah"
-                android:textSize="15sp"
-                android:textColor="@color/colorAccent" />
-
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="1">
-
-        <LinearLayout
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Lamps On"
-                android:textSize="20sp"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/light_blue" />
+            android:textColor="@color/colorAccent"
+            android:textSize="35sp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="15dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_weight="1"
-                android:layout_gravity="center_horizontal">
+                android:orientation="vertical">
                 <TextView
-                    android:id="@+id/lamps_on"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="5"
-                    android:textSize="50sp"
-                    android:layout_gravity="bottom"
+                    android:text="Usage"
+                    android:textSize="20sp"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/light_blue" />
+                <TextView
+                    android:id="@+id/usage_kwh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="15"
+                    android:textSize="35sp"
+                    android:layout_gravity="center_horizontal"
                     android:textColor="@color/yellow"
                     android:layout_marginTop="10dp" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="/"
-                    android:textSize="20sp"
-                    android:layout_gravity="bottom"
-                    android:textColor="@color/light_blue"
-                    android:layout_marginTop="10dp" />
+                    android:layout_gravity="center_horizontal"
+                    android:text="kWh"
+                    android:textSize="15dp"
+                    android:textColor="@color/colorAccent" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
                 <TextView
-                    android:id="@+id/lamps_total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Cost"
                     android:textSize="20sp"
-                    android:layout_gravity="bottom"
-                    android:textColor="@color/light_blue"
+                    android:textColor="@color/light_blue" />
+                <TextView
+                    android:id="@+id/usage_cost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="16.260"
+                    android:textSize="35sp"
+                    android:textColor="@color/yellow"
                     android:layout_marginTop="10dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Rupiah"
+                    android:textSize="15sp"
+                    android:textColor="@color/colorAccent" />
+
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Status"
-                android:textSize="20sp"
-                android:textColor="@color/light_blue" />
-            <TextView
-                android:id="@+id/usage_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/eco_status"
-                android:textSize="29sp"
-                android:textColor="@color/yellow"
-                android:layout_marginTop="20dp" />
-
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="1">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_weight="1"
-            android:orientation="vertical">
-            <TextView
+            android:layout_marginTop="35dp">
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Usage Last Month"
-                android:textSize="19sp"
-                android:layout_gravity="center_horizontal"
-                android:textAlignment="center"
-                android:textColor="@color/light_blue" />
-            <TextView
-                android:id="@+id/usage_last_month"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lamps On"
+                    android:textSize="20sp"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/light_blue" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_horizontal">
+                    <TextView
+                        android:id="@+id/lamps_on"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5"
+                        android:textSize="50sp"
+                        android:layout_gravity="bottom"
+                        android:textColor="@color/yellow"
+                        android:layout_marginTop="10dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/"
+                        android:textSize="20sp"
+                        android:layout_gravity="bottom"
+                        android:textColor="@color/light_blue"
+                        android:layout_marginTop="10dp" />
+                    <TextView
+                        android:id="@+id/lamps_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10"
+                        android:textSize="20sp"
+                        android:layout_gravity="bottom"
+                        android:textColor="@color/light_blue"
+                        android:layout_marginTop="10dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5"
-                android:textSize="50sp"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/yellow"
-                android:layout_marginTop="10dp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="kWh"
-                android:textSize="15dp"
-                android:textColor="@color/colorAccent" />
+                android:orientation="vertical"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Status"
+                    android:textSize="20sp"
+                    android:textColor="@color/light_blue" />
+                <TextView
+                    android:id="@+id/usage_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/eco_status"
+                    android:textSize="29sp"
+                    android:textColor="@color/yellow"
+                    android:layout_marginTop="20dp" />
+
+            </LinearLayout>
         </LinearLayout>
-
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_marginTop="35dp">
 
-            <TextView
-                android:id="@+id/textView"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Usage Prediction"
-                android:textAlignment="center"
-                android:textColor="@color/light_blue"
-                android:textSize="19sp" />
-            <TextView
-                android:id="@+id/usage_predict"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Usage Last Month"
+                    android:textSize="19sp"
+                    android:layout_gravity="center_horizontal"
+                    android:textAlignment="center"
+                    android:textColor="@color/light_blue" />
+                <TextView
+                    android:id="@+id/usage_last_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5"
+                    android:textSize="50sp"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/yellow"
+                    android:layout_marginTop="10dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="kWh"
+                    android:textSize="15dp"
+                    android:textColor="@color/colorAccent" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5"
-                android:textSize="50sp"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/yellow"
-                android:layout_marginTop="10dp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="kWh"
-                android:textSize="15dp"
-                android:textColor="@color/colorAccent" />
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Usage Prediction"
+                    android:textAlignment="center"
+                    android:textColor="@color/light_blue"
+                    android:textSize="19sp" />
+                <TextView
+                    android:id="@+id/usage_predict"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5"
+                    android:textSize="50sp"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/yellow"
+                    android:layout_marginTop="10dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="kWh"
+                    android:textSize="15dp"
+                    android:textColor="@color/colorAccent" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>
