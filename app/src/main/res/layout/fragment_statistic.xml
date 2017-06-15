@@ -31,15 +31,17 @@
                 android:textSize="20sp"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/light_blue" />
+
             <TextView
                 android:id="@+id/usage_kwh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="15"
-                android:textSize="50sp"
                 android:layout_gravity="center_horizontal"
-                android:textColor="@color/colorAccent"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                android:text="15"
+                android:textColor="@color/yellow"
+                android:textSize="50sp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -68,7 +70,7 @@
                 android:layout_gravity="center_horizontal"
                 android:text="16.260"
                 android:textSize="35sp"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/yellow"
                 android:layout_marginTop="20dp" />
             <TextView
                 android:layout_width="wrap_content"
@@ -112,7 +114,7 @@
                     android:text="5"
                     android:textSize="50sp"
                     android:layout_gravity="bottom"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/yellow"
                     android:layout_marginTop="10dp" />
                 <TextView
                     android:layout_width="wrap_content"
@@ -153,9 +155,79 @@
                 android:layout_gravity="center_horizontal"
                 android:text="@string/eco_status"
                 android:textSize="29sp"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/yellow"
                 android:layout_marginTop="20dp" />
 
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Usage Last Month"
+                android:textSize="19sp"
+                android:layout_gravity="center_horizontal"
+                android:textAlignment="center"
+                android:textColor="@color/light_blue" />
+            <TextView
+                android:id="@+id/usage_last_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5"
+                android:textSize="50sp"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/yellow"
+                android:layout_marginTop="10dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="kWh"
+                android:textSize="15dp"
+                android:textColor="@color/colorAccent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Usage Prediction"
+                android:textAlignment="center"
+                android:textColor="@color/light_blue"
+                android:textSize="19sp" />
+            <TextView
+                android:id="@+id/usage_predict"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5"
+                android:textSize="50sp"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/yellow"
+                android:layout_marginTop="10dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="kWh"
+                android:textSize="15dp"
+                android:textColor="@color/colorAccent" />
         </LinearLayout>
     </LinearLayout>
 

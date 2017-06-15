@@ -128,8 +128,9 @@ public class LampuListAdapter extends BaseAdapter {
 
         if(kondisiLampu == true){
             item.power_but.setChecked(true);
-            lampu_nyala = 1;
+            //lampu_nyala = 1;
             lampu_nyala++;
+            Log.d("asd", String.valueOf(lampu_nyala));
             int persen = (intensitas*100/254);
             if(persen == 0){
                 item.brightness.setProgress(intensitas);
@@ -138,17 +139,17 @@ public class LampuListAdapter extends BaseAdapter {
             }else {
                 item.brightness.setProgress(intensitas);
                 item.brightness_num.setText(persen +"%");
-
                 x= (float) persen/100;
                 arr_intentsity[position]= (float) (7.9836*Math.pow(x,3)-3.3322*Math.pow(x,2)+3.0089*x+1.3604)/3600000;
             }
         }else if(kondisiLampu == false){
             item.power_but.setChecked(false);
-            lampu_nyala = 1;
+            //lampu_nyala = 1;
             if(lampu_nyala < 0){
                 lampu_nyala = 0;
             }else {
                 lampu_nyala--;
+                Log.d("asd", String.valueOf(lampu_nyala));
             }
             inte = 0;
             item.brightness.setProgress(1);

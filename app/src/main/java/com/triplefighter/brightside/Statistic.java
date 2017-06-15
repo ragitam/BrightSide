@@ -34,7 +34,7 @@ import java.util.Map;
 import static com.triplefighter.brightside.data.LampuListAdapter.arr_intentsity;
 
 public class Statistic extends Fragment {
-    private TextView usageText, costText, statusText,month;
+    private TextView usageText, costText, statusText,month,usage_last_month,usage_predict;
 
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
@@ -100,6 +100,8 @@ public class Statistic extends Fragment {
         usageText = (TextView)v.findViewById(R.id.usage_kwh);
         costText = (TextView)v.findViewById(R.id.usage_cost);
         statusText = (TextView)v.findViewById(R.id.usage_status);
+        usage_last_month =(TextView)v.findViewById(R.id.usage_last_month);
+        usage_predict =(TextView)v.findViewById(R.id.usage_predict);
 
         month.setTypeface(mTypeFace);
         usageText.setTypeface(mTypeFace);
@@ -107,6 +109,8 @@ public class Statistic extends Fragment {
         nyala.setTypeface(mTypeFace);
         total.setTypeface(mTypeFace);
         statusText.setTypeface(mTypeFace);
+        usage_last_month.setTypeface(mTypeFace);
+        usage_predict.setTypeface(mTypeFace);
 
         biaya = (int) usage_cost;
 
