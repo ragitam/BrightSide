@@ -10,15 +10,19 @@ public class DataStatistic {
 
     public DataStatistic(){}
 
-    public DataStatistic(float usage, float cost) {
-        this.usage = usage;
-        this.cost = cost;
+    public DataStatistic(float usageStat) {
+        this.usageStat = usageStat;
     }
 
     public DataStatistic(float usage, float cost, float usageStat) {
         this.usage = usage;
         this.cost = cost;
         this.usageStat = usageStat;
+    }
+
+    public DataStatistic(float usage, float cost) {
+        this.usage = usage;
+        this.cost = cost;
     }
 
     public float getUsage() {
@@ -37,6 +41,13 @@ public class DataStatistic {
         HashMap<String, Object> result = new HashMap<>();
         result.put("usage", usage);
         result.put("cost", cost);
+        result.put("usageStat", usageStat);
+
+        return result;
+    }
+
+    public Map<String, Object> toMapHarian() {
+        HashMap<String, Object> result = new HashMap<>();
         result.put("usageStat", usageStat);
 
         return result;
